@@ -8,7 +8,7 @@ import AdminLayout from "./layout/AdminLayout";
 import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
 import SiteSettings from "./pages/admin/settings/SiteSettings";
 import AdminProfile from "./pages/admin/profile/AdminProfile";
-import ContactPage from "./pages/user_side/Contactpage";
+import ContactPage from "./pages/user_side/ContactPage";
 import BlogsPage from "./pages/user_side/BlogsPage";
 import BlogDetail from "./pages/user_side/BlogDetail";
 import HRCompliancePage from "./pages/user_side/HRCompliancePage";
