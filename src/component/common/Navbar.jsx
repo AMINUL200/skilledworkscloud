@@ -281,8 +281,8 @@ const Navbar = ({ toggleMenu }) => {
 
         ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-sm py-4"
-            : "bg-transparent py-5"
+            ? "bg-white/80 backdrop-blur-xl shadow-sm "
+            : "bg-transparent "
         }
       `}
     >
@@ -306,54 +306,18 @@ const Navbar = ({ toggleMenu }) => {
           {/* LOGO ICON */}
           <div
             className="
-              w-14 h-14
+              w-28 h-26
               rounded-2xl
 
-              bg-gradient-to-br
-              from-blue-500
-              to-blue-700
-
+             
               flex items-center justify-center
 
-              shadow-lg
+           
             "
           >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="24" cy="24" r="20" stroke="white" strokeWidth="4" />
-
-              <path d="M16 24L24 14L32 24L24 34L16 24Z" fill="white" />
-            </svg>
+            <img src="/public/image/swc_logo.png" alt="logo" className="w-full h-full"  />
           </div>
 
-          {/* LOGO TEXT */}
-          <div>
-            <h1
-              className="
-                text-2xl
-                font-bold
-                text-text
-                leading-none
-              "
-            >
-              SWC
-            </h1>
-
-            <p
-              className="
-                text-xs
-                text-text-light
-                mt-1
-              "
-            >
-              Skilled Workers Cloud
-            </p>
-          </div>
         </div>
 
         {/* ---------------- DESKTOP NAV ---------------- */}
@@ -383,33 +347,7 @@ const Navbar = ({ toggleMenu }) => {
             {navLinks.map((item) => renderNavItem(item))}
           </nav>
 
-          {/* SEARCH */}
-          <button
-            className="
-              w-12 h-12
-
-              rounded-full
-
-              bg-white
-
-              border border-border
-
-              flex items-center justify-center
-
-              shadow-sm
-
-              hover:bg-primary-light
-
-              transition-all duration-300
-            "
-          >
-            <Search
-              className="
-                w-5 h-5
-                text-text-light
-              "
-            />
-          </button>
+          
 
           {/* CTA BUTTON */}
           <button
