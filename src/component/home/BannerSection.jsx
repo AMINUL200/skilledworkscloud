@@ -25,7 +25,8 @@ const BannerSection = () => {
           object-cover
         "
       >
-        <source src="/video/banner_video.mp4" type="video/mp4" />
+        {/* <source src="/video/banner_video.mp4" type="video/mp4" /> */}
+        <source src="/video/banner_video (2).mp4" />
         Your browser does not support the video tag.
       </video>
 
