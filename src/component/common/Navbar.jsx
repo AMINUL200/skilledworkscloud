@@ -315,7 +315,7 @@ const Navbar = ({ toggleMenu }) => {
            
             "
           >
-            <img src="/public/image/swc_logo.png" alt="logo" className="w-full h-full"  />
+            <img src="/image/swc_logo.png" alt="logo" className="w-full h-full"  />
           </div>
 
         </div>
