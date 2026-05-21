@@ -17,6 +17,7 @@ import AboutUsPage from "./pages/user_side/AboutUsPage";
 import OurTeamPage from "./pages/user_side/OurTeamPage";
 import TeamDetailsPage from "./pages/user_side/TeamDetailsPage";
 import CorporateSocialResponsibilityPage from "./pages/user_side/CorporateSocialResponsibilityPage";
+import ServiceDetails from "./pages/user_side/ServiceDetails";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/team" element={<OurTeamPage />} /> {/* Our Team page route */}
           <Route path="/team/:id" element={<TeamDetailsPage />} /> {/* Team member detail route */}
           <Route path="/corporate-social-responsibility" element={<CorporateSocialResponsibilityPage />} /> {/* Corporate Social Responsibility page route */}
+          <Route path="/services/:id" element={<ServiceDetails />} /> {/* Service details route */  }
         </Route>
 
         {/* Admin Layout */}
