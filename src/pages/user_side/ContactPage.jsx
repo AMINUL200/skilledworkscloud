@@ -1,27 +1,6 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin, Clock, ArrowRight, MessageSquareWarning, Headset } from "lucide-react";
 
-const offices = [
-  {
-    title: "Corporate Office",
-    address: "The Gherkin Level 28, 30 St. Mary Axe, London, EC3A 8BF",
-    phone: "+44 020 8087 2343",
-    email: "support@workpermitcloud.com",
-  },
-  {
-    title: "Branch Office",
-    address: "1st & 2nd Floor, 112-116 Whitechapel Road, London, E1 1JE",
-    phone: "+44 020 8087 2343",
-    email: "help@workpermitcloud.com",
-  },
-  {
-    title: "WPC Lawyers",
-    address: "1st floor, 531 Coventry Rd, Birmingham, B10 0LL",
-    phone: "+44 020 3633 0909",
-    email: "lawyers@wpcgroup.co.uk",
-  },
-];
-
 // ── Shared field styles ──────────────────────────────────────
 const fieldBase =
   "w-full rounded-xl border border-border bg-slate-50 px-4 text-sm text-text outline-none focus:border-primary focus:bg-white transition-all duration-300";
@@ -185,55 +164,65 @@ const ContactPage = () => {
         {activeTab === "contact" && (
           <div className="mt-10 sm:mt-14 grid grid-cols-1 xl:grid-cols-[1fr_440px] 2xl:grid-cols-[1fr_480px] gap-8 lg:gap-12 items-start">
 
-            {/* LEFT */}
+            {/* LEFT - UPDATED CONTACT INFO */}
             <div className="w-full min-w-0">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-text">Our Office Locations</h2>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-text">Get in Touch</h2>
               <p className="mt-2 sm:mt-3 text-sm sm:text-base leading-6 sm:leading-7 text-text-light max-w-2xl">
-                Work Permit Cloud has multiple offices across the UK and UAE to support businesses and
-                individuals with immigration, HR and compliance services.
+                Reach out to our skilled workers immigration team for any queries or support.
               </p>
 
-              {/* INFO */}
-              <div className="mt-4 sm:mt-5 space-y-2 text-text-light text-sm sm:text-base">
-                {[
-                  { icon: <Clock className="w-4 h-4 text-primary shrink-0" />, text: "Mon - Fri : 10am - 7pm" },
-                  { icon: <Phone className="w-4 h-4 text-primary shrink-0" />, text: "+44 020 8087 2343" },
-                  { icon: <Mail className="w-4 h-4 text-primary shrink-0" />, text: "support@workpermitcloud.com" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5">{item.icon}<p>{item.text}</p></div>
-                ))}
-              </div>
-
-              {/* OFFICE CARDS */}
-              <div className="mt-8 sm:mt-10 space-y-4 sm:space-y-5">
-                {offices.map((office, i) => (
-                  <div
-                    key={i}
-                    className="bg-white rounded-2xl sm:rounded-[24px] border border-border p-4 sm:p-5 lg:p-6 shadow-[0_6px_30px_rgba(15,23,42,0.05)] hover:-translate-y-0.5 transition-all duration-300"
-                  >
-                    <h3 className="text-base sm:text-lg font-bold text-primary">{office.title}</h3>
-
-                    <div className="mt-2.5 flex items-start gap-2">
-                      <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                      <p className="text-sm sm:text-[15px] leading-6 text-text-light">{office.address}</p>
-                    </div>
-
-                    <div className="mt-3 flex flex-wrap gap-4 sm:gap-6">
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-primary shrink-0" />
-                        <p className="text-sm font-semibold text-text">{office.phone}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-primary shrink-0" />
-                        <p className="text-sm font-semibold text-text">{office.email}</p>
-                      </div>
-                    </div>
-
-                    <button className="mt-4 border border-primary text-primary px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold hover:bg-primary hover:text-white transition-all duration-300 flex items-center gap-1.5">
-                      Find out more <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+              {/* Main Contact Card */}
+              <div className="mt-6 sm:mt-8 bg-white rounded-2xl sm:rounded-[24px] border border-border p-5 sm:p-6 shadow-[0_6px_30px_rgba(15,23,42,0.05)]">
+                {/* Office Address */}
+                <div className="flex items-start gap-3 pb-4 border-b border-border">
+                  <MapPin className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="font-bold text-text">Our Office</h3>
+                    <p className="text-sm sm:text-[15px] leading-6 text-text-light">
+                      Suite 602, 6th Floor, 252-262 Romford Road, London, E7 9HZ United Kingdom
+                    </p>
                   </div>
-                ))}
+                </div>
+
+                {/* Emails */}
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <div>
+                      <p className="font-semibold text-text">Email Us</p>
+                      <p className="text-sm text-primary hover:underline">
+                        <a href="mailto:info@skilledworkerscloud.com">info@skilledworkerscloud.com</a>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 pl-8">
+                    <div className="w-5 h-5 shrink-0" /> {/* Spacer for alignment */}
+                    <div>
+                      <p className="text-sm font-medium text-text">After Sales / Technical Support</p>
+                      <p className="text-sm text-primary hover:underline">
+                        <a href="mailto:support@skilledworkerscloud.co.uk">support@skilledworkerscloud.co.uk</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phone Numbers */}
+                <div className="mt-4 flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-semibold text-text">Call Us</p>
+                    <div className="flex flex-col gap-1 mt-1">
+                      <p className="text-sm text-text">Landline: <span className="font-medium">+44 0208 129 1655</span></p>
+                      <p className="text-sm text-text">Mobile & WhatsApp: <span className="font-medium">+44 074 6728 4718</span></p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Working Hours Hint */}
+                <div className="mt-5 pt-3 flex items-center gap-2 text-xs text-text-light border-t border-border">
+                  <Clock className="w-3.5 h-3.5 text-primary" />
+                  <span>Mon - Fri : 9am - 6pm</span>
+                </div>
               </div>
             </div>
 
