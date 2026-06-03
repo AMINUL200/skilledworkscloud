@@ -1,5 +1,5 @@
-import React from "react";
-import { Check, Phone, Calendar, ShieldCheck, Users, Globe, Trophy } from "lucide-react";
+import React, { useState } from "react";
+import { Check, Phone, Calendar, ShieldCheck, Users, Globe, Trophy, ArrowRight, Star, Clock } from "lucide-react";
 
 const features = [
   "Comprehensive Doctor Search & Specialist Matching",
@@ -16,66 +16,179 @@ const cards = [
     title: "Certified Doctors",
     description: "Board-certified specialists you can trust",
     icon: ShieldCheck,
-    color: "#2563EB",
+    stat: "500+",
   },
   {
-    title: "500+ Specialists",
+    title: "Expert Specialists",
     description: "Wide range of medical expertise available",
     icon: Users,
-    color: "#06B6D4",
+    stat: "20+",
   },
   {
     title: "Complete Care",
-    description: "End-to-end patient support from booking to recovery",
+    description: "End-to-end patient support",
     icon: Globe,
-    color: "#22C55E",
+    stat: "24/7",
   },
   {
     title: "Proven Results",
-    description: "20,000+ patients successfully treated",
+    description: "Patients successfully treated",
     icon: Trophy,
-    color: "#F59E0B",
+    stat: "20K+",
   },
 ];
 
 const WhyChooseUsSection = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
   return (
     <section
-      className="relative overflow-hidden py-10 sm:py-12 lg:py-14"
+      className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
       style={{ background: "#EEF5FD" }}
     >
-      {/* Background glow */}
-      <div
-        className="absolute top-0 right-0 rounded-full pointer-events-none"
-        style={{
-          width: "400px",
-          height: "400px",
-          background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-cyan-500/5 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-500/3 blur-3xl" />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_480px] gap-8 lg:gap-12 xl:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          
+          {/* LEFT SIDE - Cards (was on right) */}
+          <div className="order-2 lg:order-1">
+            {/* 2x2 Grid Cards */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {cards.map((card, index) => {
+                const Icon = card.icon;
+                const isHovered = hoveredCard === index;
+                
+                return (
+                  <div
+                    key={index}
+                    className="relative group rounded-2xl p-5 transition-all duration-300 cursor-pointer"
+                    style={{
+                      background: "white",
+                      boxShadow: isHovered
+                        ? "0 20px 30px -12px rgba(0, 0, 0, 0.1)"
+                        : "0 1px 3px rgba(0, 0, 0, 0.05)",
+                      transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+                    }}
+                    onMouseEnter={() => setHoveredCard(index)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
+                    {/* Top accent line */}
+                    <div
+                      className="absolute top-0 left-4 right-4 h-0.5 rounded-full transition-all duration-300"
+                      style={{
+                        background: "var(--color-primary)",
+                        opacity: isHovered ? 1 : 0,
+                      }}
+                    />
+                    
+                    {/* Icon */}
+                    <div
+                      className="flex items-center justify-center w-12 h-12 rounded-xl mb-3 transition-all duration-300 group-hover:scale-110"
+                      style={{ background: "#EFF6FF" }}
+                    >
+                      <Icon size={22} style={{ color: "var(--color-primary)" }} strokeWidth={1.8} />
+                    </div>
+                    
+                    {/* Stat Badge */}
+                    <div
+                      className="inline-block text-xs font-bold px-2 py-0.5 rounded mb-2"
+                      style={{ background: "#EFF6FF", color: "var(--color-primary)" }}
+                    >
+                      {card.stat}
+                    </div>
+                    
+                    <h3
+                      className="font-bold mb-1"
+                      style={{
+                        fontSize: "1rem",
+                        color: "var(--color-text-primary)",
+                      }}
+                    >
+                      {card.title}
+                    </h3>
+                    
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "var(--color-text-secondary)" }}
+                    >
+                      {card.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
 
-          {/* ── LEFT ── */}
-          <div>
-            {/* Badge */}
-            <span
-              className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3"
-              style={{ background: "#DBEAFE", color: "var(--color-primary)", border: "1px solid #BFDBFE" }}
+            {/* Bottom Info Card */}
+            <div
+              className="rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-lg"
+              style={{
+                background: "white",
+                border: "1px solid #E2E8F0",
+              }}
             >
-              Why Choose Us
-            </span>
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Star size={18} style={{ color: "var(--color-primary)" }} />
+                <h3
+                  className="font-bold"
+                  style={{
+                    fontSize: "1.1rem",
+                    color: "var(--color-text-primary)",
+                  }}
+                >
+                  Expert Medical Team
+                </h3>
+              </div>
+              
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
+                Our dedicated team of experienced medical professionals is
+                well-versed in assisting patients from initial consultation to
+                full recovery — locally and internationally.
+              </p>
+              
+              <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t" style={{ borderColor: "#E2E8F0" }}>
+                <div className="flex items-center gap-1">
+                  <Clock size={12} style={{ color: "var(--color-primary)" }} />
+                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>24/7 Available</span>
+                </div>
+                <div className="w-1 h-1 rounded-full" style={{ background: "#CBD5E1" }} />
+                <div className="flex items-center gap-1">
+                  <Users size={12} style={{ color: "var(--color-primary)" }} />
+                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>50+ Experts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT SIDE - Content (was on left) */}
+          <div className="order-1 lg:order-2">
+            {/* Badge */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4"
+              style={{ background: "#DBEAFE" }}
+            >
+              <span
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--color-primary)" }}
+              >
+                Why Choose Us
+              </span>
+            </div>
 
             {/* Heading */}
             <h2
-              className="font-extrabold leading-tight"
+              className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4"
               style={{
-                fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
                 color: "var(--color-text-primary)",
                 letterSpacing: "-0.02em",
-                fontFamily: "'DM Sans', sans-serif",
               }}
             >
               Why Doctor Appointment
@@ -83,48 +196,56 @@ const WhyChooseUsSection = () => {
 
             {/* Description */}
             <p
-              className="mt-3 leading-relaxed max-w-xl"
-              style={{
-                fontSize: "clamp(0.8rem, 1.1vw, 0.9rem)",
-                color: "var(--color-text-secondary)",
-                lineHeight: 1.7,
-              }}
+              className="text-base leading-relaxed mb-6"
+              style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}
             >
               DoctorAppointment specializes in connecting patients with the right
               specialists quickly and efficiently. Our platform is built for
               reliability, transparency, and the best patient experience possible.
             </p>
 
-            {/* Feature list */}
-            <div className="mt-5 space-y-2.5">
-              {features.map((feature, i) => (
-                <div key={i} className="flex items-start gap-2.5">
+            {/* Feature List - New design */}
+            <div className="space-y-3 mb-6">
+              {features.slice(0, 4).map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-2 rounded-lg transition-all duration-300 hover:translate-x-1"
+                  style={{
+                    background: "transparent",
+                  }}
+                >
                   <div
                     className="flex items-center justify-center rounded-full shrink-0 mt-0.5"
-                    style={{ width: "22px", height: "22px", background: "#DCFCE7" }}
+                    style={{ width: "20px", height: "20px", background: "#DCFCE7" }}
                   >
-                    <Check size={12} style={{ color: "#16A34A" }} strokeWidth={2.5} />
+                    <Check size={11} style={{ color: "#16A34A" }} strokeWidth={2.5} />
                   </div>
-                  <p
-                    style={{
-                      fontSize: "clamp(0.78rem, 1vw, 0.875rem)",
-                      color: "var(--color-text-primary)",
-                      lineHeight: 1.6,
-                    }}
+                  <span
+                    className="text-sm"
+                    style={{ color: "var(--color-text-primary)", lineHeight: 1.5 }}
                   >
                     {feature}
-                  </p>
+                  </span>
                 </div>
               ))}
             </div>
 
-            {/* Bottom description */}
+            {/* View More Features */}
+            <button
+              className="flex items-center gap-1 text-sm font-medium mb-6 transition-all duration-300 hover:gap-2"
+              style={{ color: "var(--color-primary)" }}
+            >
+              View all features
+              <ArrowRight size={14} />
+            </button>
+
+            {/* Bottom Description */}
             <p
-              className="mt-5 leading-relaxed max-w-xl"
+              className="text-sm leading-relaxed mb-6 p-4 rounded-xl"
               style={{
-                fontSize: "clamp(0.78rem, 1vw, 0.875rem)",
                 color: "var(--color-text-secondary)",
-                lineHeight: 1.7,
+                background: "white",
+                borderLeft: `3px solid var(--color-primary)`,
               }}
             >
               At DoctorAppointment, we are committed to helping patients navigate
@@ -134,134 +255,54 @@ const WhyChooseUsSection = () => {
             </p>
 
             {/* Buttons */}
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
-                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-white transition-all duration-200 hover:scale-105 w-full sm:w-auto"
+                className="group flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{
                   background: "var(--color-primary)",
                   fontSize: "0.875rem",
-                  boxShadow: "0 4px 16px rgba(37,99,235,0.25)",
+                  boxShadow: "0 4px 12px rgba(37,99,235,0.3)",
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = "var(--color-primary-hover)"}
-                onMouseLeave={e => e.currentTarget.style.background = "var(--color-primary)"}
               >
-                <Phone size={15} />
+                <Phone size={16} />
                 Call Us Now
+                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1" />
               </button>
 
               <button
-                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold transition-all duration-200 hover:scale-105 w-full sm:w-auto border"
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{
-                  color: "var(--color-primary)",
-                  borderColor: "var(--color-primary)",
                   background: "white",
+                  color: "var(--color-primary)",
+                  border: `1.5px solid var(--color-primary)`,
                   fontSize: "0.875rem",
                 }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = "var(--color-primary)";
-                  e.currentTarget.style.color = "white";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = "white";
-                  e.currentTarget.style.color = "var(--color-primary)";
-                }}
               >
-                <Calendar size={15} />
+                <Calendar size={16} />
                 Book Appointment
               </button>
             </div>
-          </div>
 
-          {/* ── RIGHT ── */}
-          <div
-            className="rounded-2xl border p-4 sm:p-5"
-            style={{
-              background: "rgba(255,255,255,0.85)",
-              backdropFilter: "blur(16px)",
-              borderColor: "rgba(255,255,255,0.6)",
-              boxShadow: "0 16px 48px rgba(15,23,42,0.08)",
-            }}
-          >
-            {/* 2×2 grid cards */}
-            <div className="grid grid-cols-2 gap-3">
-              {cards.map((card, i) => {
-                const Icon = card.icon;
-                return (
-                  <div
-                    key={i}
-                    className="relative flex flex-col items-center text-center rounded-xl p-4 overflow-hidden group transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                    style={{
-                      background: `linear-gradient(135deg, ${card.color} 0%, ${card.color}CC 100%)`,
-                      boxShadow: `0 8px 24px ${card.color}33`,
-                      minHeight: "150px",
-                    }}
-                  >
-                    {/* Glow blob */}
+            {/* Trust Badge */}
+            <div className="flex items-center gap-4 mt-6 pt-4 border-t" style={{ borderColor: "#E2E8F0" }}>
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4].map((i) => (
                     <div
-                      className="absolute top-0 right-0 rounded-full pointer-events-none"
-                      style={{ width: "80px", height: "80px", background: "rgba(255,255,255,0.12)", filter: "blur(16px)" }}
+                      key={i}
+                      className="w-6 h-6 rounded-full border-2 border-white"
+                      style={{ background: "#CBD5E1" }}
                     />
-
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center rounded-xl mb-3"
-                      style={{ width: "48px", height: "48px", background: "rgba(255,255,255,0.92)", boxShadow: "0 4px 12px rgba(0,0,0,0.12)" }}
-                    >
-                      <Icon size={22} style={{ color: card.color }} strokeWidth={1.8} />
-                    </div>
-
-                    <h3
-                      className="font-bold text-white leading-tight"
-                      style={{ fontSize: "clamp(0.78rem, 1.1vw, 0.9rem)" }}
-                    >
-                      {card.title}
-                    </h3>
-                    <p
-                      className="mt-1 text-white/80 leading-snug"
-                      style={{ fontSize: "clamp(0.68rem, 0.9vw, 0.78rem)" }}
-                    >
-                      {card.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Bottom summary card */}
-            <div
-              className="mt-3 rounded-xl p-4 text-center border"
-              style={{ background: "#F8FAFC", borderColor: "var(--color-border)" }}
-            >
-              <h3
-                className="font-bold"
-                style={{
-                  fontSize: "clamp(0.9rem, 1.2vw, 1rem)",
-                  color: "var(--color-text-primary)",
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
-              >
-                Expert Medical Team
-              </h3>
-              <p
-                className="mt-1.5 leading-relaxed"
-                style={{
-                  fontSize: "clamp(0.72rem, 0.95vw, 0.8rem)",
-                  color: "var(--color-text-secondary)",
-                  lineHeight: 1.65,
-                }}
-              >
-                Our dedicated team of experienced medical professionals is
-                well-versed in assisting patients from initial consultation to
-                full recovery — locally and internationally.
-              </p>
+                  ))}
+                </div>
+                <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                  Trusted by 10,000+ patients
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
-      `}</style>
     </section>
   );
 };

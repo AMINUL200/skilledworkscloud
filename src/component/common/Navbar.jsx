@@ -6,7 +6,7 @@ const Navbar = ({ toggleMenu }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const dropdownRefs = useRef({});
-  const closeTimers = useRef({});   // ← delay timers per item id
+  const closeTimers = useRef({}); // ← delay timers per item id
   const navigate = useNavigate();
 
   /* ---------------- SCROLL EFFECT ---------------- */
@@ -45,7 +45,11 @@ const Navbar = ({ toggleMenu }) => {
       dropdown: [
         { id: "about-us", label: "About Us", path: "/about-us" },
         { id: "team", label: "Our Team", path: "/team" },
-        { id: "csr", label: "Corporate Social Responsibility", path: "/corporate-social-responsibility" },
+        {
+          id: "csr",
+          label: "Corporate Social Responsibility",
+          path: "/corporate-social-responsibility",
+        },
       ],
     },
     {
@@ -56,33 +60,63 @@ const Navbar = ({ toggleMenu }) => {
         {
           title: "Sponsorship Licence",
           links: [
-            { label: "Sponsor Licence Renewal", path: "/services/sponsor-licence-renewal" },
-            { label: "Sponsor Licence Suspension", path: "/services/sponsor-licence-suspension" },
-            { label: "Sponsor Licence Application", path: "/services/sponsor-licence-application" },
+            {
+              label: "Sponsor Licence Renewal",
+              path: "/services/sponsor-licence-renewal",
+            },
+            {
+              label: "Sponsor Licence Suspension",
+              path: "/services/sponsor-licence-suspension",
+            },
+            {
+              label: "Sponsor Licence Application",
+              path: "/services/sponsor-licence-application",
+            },
           ],
         },
         {
           title: "Immigration Compliance",
           links: [
             { label: "Civil Penalty", path: "/services/civil-penalty" },
-            { label: "HO Compliance Visit", path: "/services/ho-compliance-visit" },
-            { label: "Right to Work Check", path: "/services/right-to-work-check" },
+            {
+              label: "HO Compliance Visit",
+              path: "/services/ho-compliance-visit",
+            },
+            {
+              label: "Right to Work Check",
+              path: "/services/right-to-work-check",
+            },
           ],
         },
         {
           title: "Skilled Worker Visas",
           links: [
-            { label: "Skilled Worker Visa", path: "/services/skilled-worker-visa" },
-            { label: "Minister of Religion Visa", path: "/services/minister-of-religion-visa" },
+            {
+              label: "Skilled Worker Visa",
+              path: "/services/skilled-worker-visa",
+            },
+            {
+              label: "Minister of Religion Visa",
+              path: "/services/minister-of-religion-visa",
+            },
             { label: "Health Care Visa", path: "/services/health-care-visa" },
           ],
         },
         {
           title: "Temporary (Tier 5) Visas",
           links: [
-            { label: "Religious Worker Visa", path: "/services/religious-worker-visa" },
-            { label: "Creative Worker Visa", path: "/services/creative-worker-visa" },
-            { label: "Charity Worker Visa", path: "/services/charity-worker-visa" },
+            {
+              label: "Religious Worker Visa",
+              path: "/services/religious-worker-visa",
+            },
+            {
+              label: "Creative Worker Visa",
+              path: "/services/creative-worker-visa",
+            },
+            {
+              label: "Charity Worker Visa",
+              path: "/services/charity-worker-visa",
+            },
           ],
         },
         {
@@ -90,15 +124,27 @@ const Navbar = ({ toggleMenu }) => {
           links: [
             { label: "Spouse Visa", path: "/services/spouse-visa" },
             { label: "Dependent Visa", path: "/services/dependent-visa" },
-            { label: "Unmarried Partner Visa", path: "/services/unmarried-partner-visa" },
+            {
+              label: "Unmarried Partner Visa",
+              path: "/services/unmarried-partner-visa",
+            },
           ],
         },
         {
           title: "Global Business Mobility",
           links: [
-            { label: "Graduate Trainee Visa", path: "/services/graduate-trainee-visa" },
-            { label: "UK Expansion Worker Visa", path: "/services/uk-expansion-worker-visa" },
-            { label: "Specialist Worker Visa", path: "/services/specialist-worker-visa" },
+            {
+              label: "Graduate Trainee Visa",
+              path: "/services/graduate-trainee-visa",
+            },
+            {
+              label: "UK Expansion Worker Visa",
+              path: "/services/uk-expansion-worker-visa",
+            },
+            {
+              label: "Specialist Worker Visa",
+              path: "/services/specialist-worker-visa",
+            },
           ],
         },
         {
@@ -113,38 +159,69 @@ const Navbar = ({ toggleMenu }) => {
           title: "Study Visas",
           links: [
             { label: "Student Visa", path: "/services/student-visa" },
-            { label: "Child Student Visa", path: "/services/child-student-visa" },
+            {
+              label: "Child Student Visa",
+              path: "/services/child-student-visa",
+            },
             { label: "Graduate Visa", path: "/services/graduate-visa" },
           ],
         },
         {
           title: "Business Visas",
           links: [
-            { label: "Self-Sponsorship In UK", path: "/services/self-sponsorship" },
-            { label: "Innovator Founder Visa", path: "/services/innovator-founder-visa" },
-            { label: "Turkish Businessperson Visa", path: "/services/turkish-businessperson-visa" },
+            {
+              label: "Self-Sponsorship In UK",
+              path: "/services/self-sponsorship",
+            },
+            {
+              label: "Innovator Founder Visa",
+              path: "/services/innovator-founder-visa",
+            },
+            {
+              label: "Turkish Businessperson Visa",
+              path: "/services/turkish-businessperson-visa",
+            },
           ],
         },
         {
           title: "Scale Up Visa",
           links: [
             { label: "Scale-up Visa", path: "/services/scale-up-visa" },
-            { label: "Scale-up Sponsor Licence", path: "/services/scale-up-sponsor-licence" },
+            {
+              label: "Scale-up Sponsor Licence",
+              path: "/services/scale-up-sponsor-licence",
+            },
             { label: "Scale up Business", path: "/services/scale-up-business" },
           ],
         },
       ],
     },
-    { id: "sponsor", label: "Sponsor Licence Checker", path: "/sponsor-checker" },
+    {
+      id: "sponsor",
+      label: "Sponsor Licence Checker",
+      path: "/sponsor-checker",
+    },
     { id: "self", label: "Self-Sponsorship", path: "/self-sponsorship" },
     {
       id: "tools",
       label: "Tools",
       dropdown: [
-        { id: "ihs", label: "IHS & Visa Fee Calculator", path: "/ihs-visa-fee-calculator" },
+        {
+          id: "ihs",
+          label: "IHS & Visa Fee Calculator",
+          path: "/ihs-visa-fee-calculator",
+        },
         { id: "ilr", label: "ILR Calculator", path: "/ilr-calculator" },
-        { id: "supplementary", label: "Supplementary Employment", path: "/supplementary-employment" },
-        { id: "temp-shortage", label: "Temp Shortage Occupation", path: "/temp-shortage-occupation" },
+        {
+          id: "supplementary",
+          label: "Supplementary Employment",
+          path: "/supplementary-employment",
+        },
+        {
+          id: "temp-shortage",
+          label: "Temp Shortage Occupation",
+          path: "/temp-shortage-occupation",
+        },
         { id: "rqf", label: "RQF Level 6", path: "/rqf-level-6" },
       ],
     },
@@ -177,7 +254,8 @@ const Navbar = ({ toggleMenu }) => {
 
   /* ---------------- NAV ITEM RENDERER ---------------- */
   const renderNavItem = (item) => {
-    const hasDropdown = (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
+    const hasDropdown =
+      (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
     const isOpen = !!openDropdowns[item.id];
 
     return (
@@ -193,12 +271,14 @@ const Navbar = ({ toggleMenu }) => {
             {/* NAV TRIGGER BUTTON */}
             <button
               className="
-                flex items-center gap-1
-                text-[15px] font-medium
-                text-text-light
-                hover:text-primary
-                transition-all duration-300
-              "
+    flex items-center gap-1
+    text-[11px]
+    min-[1286px]:text-[15px]
+    font-medium
+    text-text-light
+    hover:text-primary
+    transition-all duration-300
+  "
             >
               <span>{item.label}</span>
               <ChevronDown
@@ -213,17 +293,18 @@ const Navbar = ({ toggleMenu }) => {
             {item.megaMenu ? (
               <div
                 data-mega-panel
-                onMouseEnter={() => openMenu(item.id)}   // cancels the close timer
-                onMouseLeave={() => closeMenu(item.id)}  // starts a new close timer
+                onMouseEnter={() => openMenu(item.id)} // cancels the close timer
+                onMouseLeave={() => closeMenu(item.id)} // starts a new close timer
                 className={`
                   fixed left-0 w-screen bg-white
                   border-t border-gray-100
                   shadow-[0_20px_60px_rgba(0,0,0,0.10)]
                   z-[999]
                   transition-all duration-300 ease-out
-                  ${isOpen
-                    ? "opacity-100 visible translate-y-0 pointer-events-auto"
-                    : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                  ${
+                    isOpen
+                      ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                      : "opacity-0 invisible -translate-y-2 pointer-events-none"
                   }
                 `}
                 style={{ top: scrolled ? "72px" : "90px" }}
@@ -281,9 +362,10 @@ const Navbar = ({ toggleMenu }) => {
                   shadow-[0_20px_60px_rgba(15,23,42,0.12)]
                   p-3 z-50
                   transition-all duration-300
-                  ${isOpen
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible translate-y-3"
+                  ${
+                    isOpen
+                      ? "opacity-100 visible translate-y-0"
+                      : "opacity-0 invisible translate-y-3"
                   }
                 `}
               >
@@ -313,7 +395,8 @@ const Navbar = ({ toggleMenu }) => {
           <button
             onClick={() => handleNavigate(item.path)}
             className="
-              text-[15px] font-medium
+              text-[11px]
+    min-[1286px]:text-[15px] font-medium
               text-text-light
               hover:text-primary
               transition-all duration-300
@@ -335,7 +418,6 @@ const Navbar = ({ toggleMenu }) => {
       `}
     >
       <div className="max-w-[1450px] mx-auto px-5 lg:px-8 flex items-center justify-between">
-
         {/* LOGO */}
         <div
           className="flex items-center gap-3 cursor-pointer"
@@ -367,7 +449,9 @@ const Navbar = ({ toggleMenu }) => {
 
           <button
             className="
-              px-7 py-3 rounded-2xl
+               px-2 py-2
+    min-[1286px]:px-7
+    min-[1286px]:py-3 rounded-2xl
               bg-primary text-white font-semibold
               hover:scale-105 transition-all duration-300
             "

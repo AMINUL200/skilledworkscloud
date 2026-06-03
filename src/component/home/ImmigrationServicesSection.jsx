@@ -3,273 +3,179 @@ import { ArrowRight, FileText, ShieldCheck, Briefcase, Package, Heart, Globe } f
 
 const services = [
   {
+    id: "01",
     title: "Doctor Search",
     icon: FileText,
-    color: "#2563EB",
-    iconBg: "#DBEAFE",
-    items: [
-      "Find by Specialty",
-      "Filter by Location",
-      "Search by Availability",
-    ],
+    items: ["Find by Specialty", "Filter by Location", "Search by Availability"],
+    description: "Access 5,000+ verified doctors instantly with smart filtering by specialty and location.",
   },
   {
+    id: "02",
     title: "Health Compliance",
     icon: ShieldCheck,
-    color: "#22C55E",
-    iconBg: "#DCFCE7",
-    items: [
-      "Medical Record Access",
-      "Insurance Verification",
-      "Health Screening",
-    ],
+    items: ["Medical Record Access", "Insurance Verification", "Health Screening"],
+    description: "100% HIPAA compliant platform for secure health data management and insurance verification.",
   },
   {
+    id: "03",
     title: "Specialist Visas",
     icon: Briefcase,
-    color: "#06B6D4",
-    iconBg: "#CFFAFE",
-    items: [
-      "Cardiologist",
-      "Neurologist",
-      "Orthopedic Surgeon",
-    ],
+    items: ["Cardiologist", "Neurologist", "Orthopedic Surgeon"],
+    description: "Fast-track specialist appointments with minimal waiting time across top disciplines.",
   },
   {
+    id: "04",
     title: "Teleconsultation",
     icon: Package,
-    color: "#7C3AED",
-    iconBg: "#EDE9FE",
-    items: [
-      "Video Consultation",
-      "Chat with Doctor",
-      "Follow-up Sessions",
-    ],
+    items: ["Video Consultation", "Chat with Doctor", "Follow-up Sessions"],
+    description: "Connect with doctors remotely. Average wait time of just 5 minutes, any time of day.",
   },
   {
+    id: "05",
     title: "Family & Child Care",
     icon: Heart,
-    color: "#EF4444",
-    iconBg: "#FEE2E2",
-    items: [
-      "Pediatrics",
-      "Maternity Care",
-      "Family Health Plans",
-    ],
+    items: ["Pediatrics", "Maternity Care", "Family Health Plans"],
+    description: "24/7 pediatric emergency support and comprehensive family health plans for every stage.",
   },
   {
+    id: "06",
     title: "Global Health",
     icon: Globe,
-    color: "#F59E0B",
-    iconBg: "#FEF3C7",
-    items: [
-      "Medical Tourism",
-      "International Insurance",
-      "Cross-border Care",
-    ],
+    items: ["Medical Tourism", "International Insurance", "Cross-border Care"],
+    description: "Comprehensive healthcare coverage in 150+ countries with international insurance support.",
   },
 ];
 
 const ServicesSection = () => {
-  const [hovered, setHovered] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <section
-      className="relative overflow-hidden py-10 sm:py-12 lg:py-14"
-      style={{ background: "var(--color-background)" }}
-    >
-      {/* Background glow */}
-      <div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: "500px", height: "500px",
-          top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+    <section className="relative py-16 sm:py-20 lg:py-24 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ── Header ── */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <span
-            className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3"
-            style={{ background: "#EFF6FF", color: "var(--color-primary)", border: "1px solid #DBEAFE" }}
-          >
-            Our Services
-          </span>
-          <h2
-            className="font-extrabold leading-tight"
-            style={{
-              fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
-              color: "var(--color-text-primary)",
-              letterSpacing: "-0.02em",
-              fontFamily: "'DM Sans', sans-serif",
-            }}
-          >
-            Complete Healthcare Services
-          </h2>
-          <p
-            className="mt-2 mx-auto"
-            style={{
-              fontSize: "clamp(0.78rem, 1vw, 0.875rem)",
-              color: "var(--color-text-secondary)",
-              lineHeight: 1.65,
-              maxWidth: "480px",
-            }}
-          >
-            From specialist search to teleconsultation, we handle every aspect
-            of your healthcare journey.
+        {/* ── HEADER: two-col split ── */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 lg:mb-12">
+          <div>
+            <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+              Our Services
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.08] tracking-tight">
+              Complete<br />
+              <span className="text-blue-600">Healthcare Services</span>
+            </h2>
+          </div>
+          <p className="text-sm sm:text-base text-slate-500 leading-relaxed sm:max-w-xs lg:max-w-sm sm:pb-1">
+            From specialist search to teleconsultation, we handle every aspect of your healthcare journey.
           </p>
         </div>
 
-        {/* ── Grid ── */}
+        {/* ── MOSAIC GRID ── */}
+        {/*
+          Shared 1px dividers via gap-px on a slate-200 background.
+          Rounded outer container clips the corners cleanly.
+          Mobile: 1 col → sm: 2 col → lg: 3 col
+        */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+          className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-3
+            gap-px
+            bg-slate-200
+            border border-slate-200
+            rounded-2xl lg:rounded-3xl
+            overflow-hidden
+          "
         >
-          {services.map((service, i) => {
+          {services.map((service, index) => {
             const Icon = service.icon;
-            const isHovered = hovered === i;
+            const isHovered = hoveredCard === index;
 
             return (
               <div
-                key={i}
-                className="relative rounded-2xl overflow-hidden cursor-default"
-                style={{
-                  background: isHovered
-                    ? `linear-gradient(135deg, ${service.color}08 0%, white 100%)`
-                    : "var(--color-card)",
-                  border: `1.5px solid ${isHovered ? service.color + "30" : "var(--color-border)"}`,
-                  boxShadow: isHovered
-                    ? `0 12px 32px ${service.color}15`
-                    : "0 2px 10px rgba(15,23,42,0.04)",
-                  transform: isHovered ? "translateY(-3px)" : "translateY(0)",
-                  transition: "all 0.28s ease",
-                  padding: "16px 18px",
-                }}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
+                key={index}
+                className="
+                  group
+                  relative
+                  bg-white
+                  hover:bg-blue-50/60
+                  transition-colors duration-200
+                  px-6 pt-6 pb-6
+                  flex flex-col
+                  cursor-pointer
+                "
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Hover bg sweep */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: `linear-gradient(135deg, ${service.color}06 0%, transparent 60%)`,
-                    opacity: isHovered ? 1 : 0,
-                    transition: "opacity 0.3s ease",
-                  }}
-                />
-
-                <div className="relative flex items-start gap-4">
-                  {/* Icon */}
+                {/* Top: icon + number */}
+                <div className="flex items-start justify-between mb-5">
                   <div
-                    className="flex items-center justify-center rounded-xl shrink-0 transition-transform duration-300"
-                    style={{
-                      width: "44px",
-                      height: "44px",
-                      background: service.iconBg,
-                      transform: isHovered ? "scale(1.1) rotate(-4deg)" : "scale(1)",
-                    }}
+                    className="
+                      w-11 h-11 rounded-xl
+                      bg-blue-50 border border-blue-100
+                      flex items-center justify-center
+                      text-blue-600
+                      group-hover:bg-blue-100
+                      transition-colors duration-200
+                    "
                   >
-                    <Icon size={20} style={{ color: service.color }} strokeWidth={1.8} />
+                    <Icon size={20} strokeWidth={1.8} />
                   </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    {/* Title */}
-                    <h3
-                      className="font-bold leading-tight mb-2.5"
-                      style={{
-                        fontSize: "clamp(0.82rem, 1.1vw, 0.95rem)",
-                        color: "var(--color-text-primary)",
-                        fontFamily: "'DM Sans', sans-serif",
-                      }}
-                    >
-                      {service.title}
-                    </h3>
-
-                    {/* Items */}
-                    <div className="space-y-1.5">
-                      {service.items.map((item, j) => (
-                        <div key={j} className="flex items-center gap-2">
-                          <div
-                            className="rounded-full shrink-0"
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              background: isHovered ? service.color : "#CBD5E1",
-                              transition: "background 0.3s ease",
-                            }}
-                          />
-                          <span
-                            style={{
-                              fontSize: "clamp(0.72rem, 0.9vw, 0.8rem)",
-                              color: isHovered ? "var(--color-text-primary)" : "var(--color-text-secondary)",
-                              transition: "color 0.3s ease",
-                              lineHeight: 1.5,
-                            }}
-                          >
-                            {item}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Arrow indicator */}
-                  <div
-                    className="shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
-                    style={{
-                      width: "26px",
-                      height: "26px",
-                      background: isHovered ? service.color : "var(--color-background)",
-                      border: `1px solid ${isHovered ? service.color : "var(--color-border)"}`,
-                    }}
-                  >
-                    <ArrowRight
-                      size={12}
-                      style={{ color: isHovered ? "white" : "var(--color-text-secondary)" }}
-                    />
-                  </div>
+                  <span className="text-[10px] font-mono font-bold text-slate-300 tracking-widest">
+                    {service.id}
+                  </span>
                 </div>
 
-                {/* Bottom accent line */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 transition-all duration-300"
-                  style={{
-                    height: "2px",
-                    background: `linear-gradient(90deg, ${service.color}, transparent)`,
-                    opacity: isHovered ? 1 : 0,
-                  }}
-                />
+                {/* Title */}
+                <h3 className="text-[17px] font-black text-slate-900 leading-snug mb-2">
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-[13px] text-slate-400 leading-relaxed flex-1 mb-5">
+                  {service.description}
+                </p>
+
+                {/* Feature list — separated by top border */}
+                <div className="border-t border-slate-100 pt-4 flex flex-col gap-2">
+                  {service.items.map((item, i) => (
+                    <div key={i} className="flex items-center gap-2.5">
+                      <div
+                        className={`
+                          w-[5px] h-[5px] rounded-full shrink-0
+                          transition-colors duration-200
+                          ${isHovered ? "bg-blue-500" : "bg-slate-300"}
+                        `}
+                      />
+                      <span className="text-[12.5px] text-slate-600 font-medium leading-tight">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })}
         </div>
 
-        {/* ── CTA Button ── */}
-        <div className="flex justify-center mt-8">
+        {/* ── CTA ── */}
+        <div className="flex justify-center mt-10">
           <button
-            className="flex items-center gap-2 px-7 py-2.5 rounded-xl font-semibold text-white transition-all duration-200 hover:scale-105"
-            style={{
-              background: "var(--color-primary)",
-              fontSize: "0.875rem",
-              boxShadow: "0 4px 16px rgba(37,99,235,0.25)",
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = "var(--color-primary-hover)"}
-            onMouseLeave={e => e.currentTarget.style.background = "var(--color-primary)"}
+            className="
+              inline-flex items-center gap-2
+              bg-blue-600 hover:bg-blue-700
+              text-white text-sm font-bold
+              px-7 py-3 rounded-xl
+              transition-colors duration-200
+              active:scale-95
+            "
           >
             View All Services
-            <ArrowRight size={15} />
+            <ArrowRight size={16} />
           </button>
         </div>
       </div>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
-      `}</style>
     </section>
   );
 };
