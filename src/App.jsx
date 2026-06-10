@@ -18,13 +18,22 @@ import OurTeamPage from "./pages/user_side/OurTeamPage";
 import TeamDetailsPage from "./pages/user_side/TeamDetailsPage";
 import CorporateSocialResponsibilityPage from "./pages/user_side/CorporateSocialResponsibilityPage";
 import ServiceDetails from "./pages/user_side/ServiceDetails";
+import AuthPage from "./pages/auth/AuthPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import SMTPSettingsPage from "./pages/admin/settings/SMTPSettingsPage";
+import SEOSettingsPage from "./pages/admin/settings/SEOSettingsPage";
+import ServiceDetailsPage from "./pages/user_side/ServiceDetailsPage";
 
 const App = () => {
   return (
     <Router>
       <Routes>
+        {/* <Route path="/auth" element={<AuthPage />} /> */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+        {/* User-facing routes */}
 
         <Route element={<AppLayout />}>
           <Route index path="/" element={<LandingPage />} />
@@ -37,15 +46,18 @@ const App = () => {
           <Route path="/team" element={<OurTeamPage />} /> {/* Our Team page route */}
           <Route path="/team/:id" element={<TeamDetailsPage />} /> {/* Team member detail route */}
           <Route path="/corporate-social-responsibility" element={<CorporateSocialResponsibilityPage />} /> {/* Corporate Social Responsibility page route */}
-          <Route path="/services/:id" element={<ServiceDetails />} /> {/* Service details route */  }
+          {/* <Route path="/services/:id" element={<ServiceDetails />} /> */}
+          <Route path="/services/:slug" element={<ServiceDetailsPage />} /> {/* Service details route */  }
         </Route>
 
         {/* Admin Layout */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           {/* Additional admin routes can be added here */}
-          <Route path="site-settings" element={<SiteSettings />} />
           <Route path="profile" element={<AdminProfile />} />
+          <Route path="site-settings" element={<SiteSettings />} />
+          <Route path="seo-settings" element={<SEOSettingsPage />} />
+          <Route path="smtp-settings" element={<SMTPSettingsPage />} />
         </Route>
       </Routes>
     </Router>

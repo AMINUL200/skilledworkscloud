@@ -69,68 +69,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
         },
       ],
     },
-    {
-      id: "products",
-      label: "Products",
-      icon: <Package className="w-5 h-5" />,
-      children: [
-        {
-          id: "all-products",
-          label: "All Products",
-          icon: <Package className="w-4 h-4" />,
-          path: "/admin/products/all",
-        },
-        {
-          id: "categories",
-          label: "Categories",
-          icon: <Tag className="w-4 h-4" />,
-          path: "/admin/products/categories",
-        },
-        {
-          id: "inventory",
-          label: "Inventory",
-          icon: <Database className="w-4 h-4" />,
-          path: "/admin/products/inventory",
-        },
-      ],
-    },
-    {
-      id: "orders",
-      label: "Orders",
-      icon: <ShoppingCart className="w-5 h-5" />,
-      path: "/admin/orders",
-    },
-    {
-      id: "analytics",
-      label: "Analytics",
-      icon: <BarChart className="w-5 h-5" />,
-      children: [
-        {
-          id: "overview",
-          label: "Overview",
-          icon: <TrendingUp className="w-4 h-4" />,
-          path: "/admin/analytics/overview",
-        },
-        {
-          id: "sales",
-          label: "Sales Analytics",
-          icon: <DollarSign className="w-4 h-4" />,
-          path: "/admin/analytics/sales",
-        },
-        {
-          id: "user-behavior",
-          label: "User Behavior",
-          icon: <Users className="w-4 h-4" />,
-          path: "/admin/analytics/behavior",
-        },
-      ],
-    },
-    {
-      id: "reports",
-      label: "Reports",
-      icon: <FileText className="w-5 h-5" />,
-      path: "/admin/reports",
-    },
+   
     {
       id: "settings",
       label: "Settings",
@@ -141,6 +80,18 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           label: "Site Setting",
           icon: <Settings className="w-4 h-4" />,
           path: "/admin/site-settings",
+        },
+        {
+          id: "SMTP Settings",
+          label: "SMTP Settings",
+          icon: <Mail className="w-4 h-4" />,
+          path: "/admin/smtp-settings",
+        },
+        {
+          id: "SEO Settings",
+          label: "SEO Settings",
+          icon: <TrendingUp className="w-4 h-4" />,
+          path: "/admin/seo-settings",
         },
         {
           id: "appearance",

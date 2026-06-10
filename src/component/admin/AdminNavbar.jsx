@@ -111,62 +111,7 @@ const AdminNavbar = ({ setSidebarOpen }) => {
 
           {/* Right side */}
           <div className="flex items-center space-x-4">
-            {/* Notifications */}
-            <div className="relative" ref={notificationRef}>
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
-              >
-                <Bell className="w-5 h-5" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                    {unreadCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Notifications Dropdown */}
-              {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden animate-fadeIn">
-                  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-3">
-                    <h3 className="text-white font-semibold">Notifications</h3>
-                    <p className="text-white/80 text-xs">{unreadCount} unread messages</p>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={`px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors ${
-                          notification.unread ? "bg-blue-50/50" : ""
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          {notification.unread && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                          )}
-                          <div className="flex-1">
-                            <p className="text-sm font-semibold text-gray-900">
-                              {notification.title}
-                            </p>
-                            <p className="text-xs text-gray-600 mt-1">
-                              {notification.message}
-                            </p>
-                            <p className="text-xs text-gray-400 mt-1">
-                              {notification.time}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="px-4 py-3 bg-gray-50 text-center">
-                    <button className="text-sm text-indigo-600 hover:text-[#ffba00] font-semibold transition-colors">
-                      View all notifications
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            
 
             {/* User Profile Dropdown */}
             <div className="relative" ref={profileRef}>
@@ -226,39 +171,9 @@ const AdminNavbar = ({ setSidebarOpen }) => {
 
                   {/* Menu Items */}
                   <div className="py-2">
-                    <button
-                      onClick={handleProfileClick}
-                      className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors text-left"
-                    >
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <UserCircle className="w-4 h-4 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          My Profile
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          View and edit profile
-                        </p>
-                      </div>
-                    </button>
+                   
 
-                    <button
-                      onClick={handleSettingsClick}
-                      className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors text-left"
-                    >
-                      <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <Settings className="w-4 h-4 text-purple-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          Settings
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Manage preferences
-                        </p>
-                      </div>
-                    </button>
+                    
 
                     <button
                       className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors text-left"
