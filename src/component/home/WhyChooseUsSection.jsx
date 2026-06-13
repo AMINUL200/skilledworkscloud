@@ -1,40 +1,40 @@
 import React, { useState } from "react";
-import { Check, Phone, Calendar, ShieldCheck, Users, Globe, Trophy, ArrowRight, Star, Clock } from "lucide-react";
+import { Check, Phone, Calendar, ShieldCheck, Users, Globe, Trophy, ArrowRight, Star, Clock, Building2, FileCheck, Award, Headphones } from "lucide-react";
 
 const features = [
-  "Comprehensive Doctor Search & Specialist Matching",
-  "Robust Appointment Scheduling & Reminder System",
-  "Award-Winning Patient Management Platform",
-  "Outsourced Teleconsultation Services",
-  "Ministry of Health Compliance & Certification",
-  "Expert Guidance on Medical Record Management",
-  "Professional Advice on Insurance & Billing",
+  "Sponsorship Licence Application & Management",
+  "Home Office Compliance & Audit Preparation",
+  "Skilled Worker Visa Processing",
+  "Global Business Mobility Solutions",
+  "IAA Regulated Immigration Services",
+  "HR Compliance & Right to Work Checks",
+  "End-to-End Visa Application Support",
 ];
 
 const cards = [
   {
-    title: "Certified Doctors",
-    description: "Board-certified specialists you can trust",
+    title: "Licenced Experts",
+    description: "IAA regulated immigration specialists",
     icon: ShieldCheck,
-    stat: "500+",
+    stat: "IAA",
   },
   {
-    title: "Expert Specialists",
-    description: "Wide range of medical expertise available",
-    icon: Users,
-    stat: "20+",
-  },
-  {
-    title: "Complete Care",
-    description: "End-to-end patient support",
-    icon: Globe,
-    stat: "24/7",
-  },
-  {
-    title: "Proven Results",
-    description: "Patients successfully treated",
+    title: "Success Rate",
+    description: "High approval rate for visa applications",
     icon: Trophy,
-    stat: "20K+",
+    stat: "98%",
+  },
+  {
+    title: "Global Reach",
+    description: "Services across UK & MENA region",
+    icon: Globe,
+    stat: "Global",
+  },
+  {
+    title: "Happy Clients",
+    description: "Businesses & individuals served",
+    icon: Users,
+    stat: "1000+",
   },
 ];
 
@@ -56,7 +56,7 @@ const WhyChooseUsSection = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* LEFT SIDE - Cards (was on right) */}
+          {/* LEFT SIDE - Cards */}
           <div className="order-2 lg:order-1">
             {/* 2x2 Grid Cards */}
             <div className="grid grid-cols-2 gap-4 mb-6">
@@ -133,7 +133,7 @@ const WhyChooseUsSection = () => {
               }}
             >
               <div className="flex items-center justify-center gap-2 mb-3">
-                <Star size={18} style={{ color: "var(--color-primary)" }} />
+                <Award size={18} style={{ color: "var(--color-primary)" }} />
                 <h3
                   className="font-bold"
                   style={{
@@ -141,7 +141,7 @@ const WhyChooseUsSection = () => {
                     color: "var(--color-text-primary)",
                   }}
                 >
-                  Expert Medical Team
+                  IAA Regulated Experts
                 </h3>
               </div>
               
@@ -149,26 +149,26 @@ const WhyChooseUsSection = () => {
                 className="text-sm leading-relaxed"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                Our dedicated team of experienced medical professionals is
-                well-versed in assisting patients from initial consultation to
-                full recovery — locally and internationally.
+                Our team of experienced immigration professionals is well-versed in 
+                assisting clients from initial consultation to full visa approval — 
+                locally and internationally.
               </p>
               
               <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t" style={{ borderColor: "#E2E8F0" }}>
                 <div className="flex items-center gap-1">
-                  <Clock size={12} style={{ color: "var(--color-primary)" }} />
-                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>24/7 Available</span>
+                  <Headphones size={12} style={{ color: "var(--color-primary)" }} />
+                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>24/7 Support</span>
                 </div>
                 <div className="w-1 h-1 rounded-full" style={{ background: "#CBD5E1" }} />
                 <div className="flex items-center gap-1">
-                  <Users size={12} style={{ color: "var(--color-primary)" }} />
+                  <Building2 size={12} style={{ color: "var(--color-primary)" }} />
                   <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>50+ Experts</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE - Content (was on left) */}
+          {/* RIGHT SIDE - Content */}
           <div className="order-1 lg:order-2">
             {/* Badge */}
             <div
@@ -191,7 +191,7 @@ const WhyChooseUsSection = () => {
                 letterSpacing: "-0.02em",
               }}
             >
-              Why Doctor Appointment
+              Why Skilled Works Cloud 
             </h2>
 
             {/* Description */}
@@ -199,12 +199,12 @@ const WhyChooseUsSection = () => {
               className="text-base leading-relaxed mb-6"
               style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}
             >
-              DoctorAppointment specializes in connecting patients with the right
-              specialists quickly and efficiently. Our platform is built for
-              reliability, transparency, and the best patient experience possible.
+              Skilled Works Cloud specializes in connecting businesses and individuals with the right
+              immigration solutions quickly and efficiently. Our platform is built for
+              reliability, transparency, and the best client experience possible.
             </p>
 
-            {/* Feature List - New design */}
+            {/* Feature List */}
             <div className="space-y-3 mb-6">
               {features.slice(0, 4).map((feature, index) => (
                 <div
@@ -248,10 +248,10 @@ const WhyChooseUsSection = () => {
                 borderLeft: `3px solid var(--color-primary)`,
               }}
             >
-              At DoctorAppointment, we are committed to helping patients navigate
-              the healthcare system with ease. Our comprehensive services and
-              intuitive platform are designed to simplify access to quality care
-              while ensuring the highest standards of medical excellence.
+              At Skilled Works Cloud, we are committed to helping businesses and individuals navigate
+              the UK immigration system with ease. Our comprehensive services and
+              intuitive platform are designed to simplify access to quality immigration support
+              while ensuring the highest standards of professional excellence.
             </p>
 
             {/* Buttons */}
@@ -279,7 +279,7 @@ const WhyChooseUsSection = () => {
                 }}
               >
                 <Calendar size={16} />
-                Book Appointment
+                Book Consultation
               </button>
             </div>
 
@@ -290,13 +290,15 @@ const WhyChooseUsSection = () => {
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="w-6 h-6 rounded-full border-2 border-white"
-                      style={{ background: "#CBD5E1" }}
-                    />
+                      className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-bold"
+                      style={{ background: "#EFF6FF", color: "var(--color-primary)" }}
+                    >
+                      ✓
+                    </div>
                   ))}
                 </div>
                 <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
-                  Trusted by 10,000+ patients
+                  Trusted by 1000+ businesses
                 </span>
               </div>
             </div>

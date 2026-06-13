@@ -1,169 +1,416 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Facebook, 
-  Twitter, 
-  Linkedin, 
-  Instagram, 
-  Mail, 
-  Phone, 
-  MapPin,
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  ChevronUp,
+  Phone,
+  Facebook,
+  Linkedin,
+  Instagram,
+  Twitter,
+  Mail,
   ChevronRight,
-  Heart
-} from 'lucide-react';
+} from "lucide-react";
 
 const Footer = () => {
-  // Footer links organized based on sidebar structure
-  const footerLinks = {
-    company: {
-      title: "Company",
-      links: [
-        { name: "About Us", url: "/company" },
-        { name: "Our Team", url: "/team" },
-        { name: "Careers", url: "/careers" },
-        { name: "Blog", url: "/blogs" },
-        { name: "Contact", url: "/contact" }
-      ]
-    },
-    services: {
-      title: "Services",
-      links: [
-        { name: "Visa Services", url: "/visa-services" },
-        { name: "Immigration", url: "/immigration" },
-        { name: "HR Compliance", url: "/hr-compliance" },
-        { name: "Sponsor Licence Checker", url: "/sponsor-checker" },
-        { name: "Self Sponsorship", url: "/self-sponsorship" }
-      ]
-    },
-    resources: {
-      title: "Resources",
-      links: [
-        { name: "Visa Calculator", url: "/visa-calculator" },
-        { name: "Eligibility Checker", url: "/eligibility-checker" },
-        { name: "Documentation", url: "/docs" },
-        { name: "FAQs", url: "/faqs" },
-        { name: "Support", url: "/support" }
-      ]
-    },
-    legal: {
-      title: "Legal",
-      links: [
-        { name: "Privacy Policy", url: "/privacy" },
-        { name: "Terms of Service", url: "/terms" },
-        { name: "Cookie Policy", url: "/cookies" },
-        { name: "Compliance", url: "/compliance" }
-      ]
-    }
+  const navigate = useNavigate();
+
+  const quickLinks = [
+    { name: "Home", path: "/" },
+    { name: "About Us", path: "/about-us" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Contact", path: "/contact" },
+    { name: "Privacy Policy", path: "/privacy" },
+    { name: "Terms & Conditions", path: "/terms" },
+    { name: "Reviews", path: "/reviews" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Login", path: "/login" },
+    { name: "Register", path: "/register" },
+  ];
+
+  const externalLinks = [
+    { name: "UK Visa and Immigration", url: "https://www.gov.uk/uk-visa", external: true },
+    { name: "Companies House", url: "https://www.gov.uk/government/organisations/companies-house", external: true },
+    { name: "Immigration Advice Authority", url: "https://www.gov.uk/immigration-advice-authority", external: true },
+    { name: "Find a Job", url: "https://www.findajob.dwp.gov.uk/", external: true },
+    { name: "Sponsor Licence Register", url: "https://www.gov.uk/government/publications/register-of-licensed-sponsors-workers", external: true },
+  ];
+
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  const socialLinks = [
-    { icon: Facebook, url: "https://facebook.com", label: "Facebook" },
-    { icon: Twitter, url: "https://twitter.com", label: "Twitter" },
-    { icon: Linkedin, url: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Instagram, url: "https://instagram.com", label: "Instagram" }
-  ];
-
-  const contactInfo = [
-    { icon: Mail, text: "hello@swc.com", href: "mailto:hello@swc.com" },
-    { icon: Phone, text: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, text: "123 Business Avenue, London, UK", href: "#" }
-  ];
+  const handleNavigation = (path) => {
+    navigate(path);
+    scrollTop();
+  };
 
   return (
-    <footer className="relative bg-gradient-to-b from-navy to-navy-light text-white overflow-hidden">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 1px)`,
-          backgroundSize: '40px 40px'
-        }}></div>
-      </div>
+    <>
+      <footer className="relative bg-navy text-white overflow-hidden">
+        {/* Background Blur */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
 
-      {/* Main Footer Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-        {/* Top Section with Newsletter */}
-        <div className="mb-16 pb-8 border-b border-white/10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-[1800px] mx-auto px-5 lg:px-10 py-20">
+          {/* Top Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-10">
+            {/* Accreditation */}
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                Stay Updated
-              </h2>
-              <p className="text-gray-300 text-lg">
-                Get the latest immigration news and visa updates directly to your inbox.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
-              />
-              <button className="btn btn-primary px-8 py-4 whitespace-nowrap">
-                Subscribe
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
+              <div className="rounded-[24px] p-6">
+                <img
+                  src="/image/iaa-logo.webp"
+                  alt="IAA"
+                  className="h-20 object-contain"
+                />
 
-        {/* Footer Links Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {Object.entries(footerLinks).map(([key, section]) => (
-            <div key={key} className="space-y-4">
-              <h3 className="text-xl font-bold text-white relative inline-block pb-2">
-                {section.title}
-                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-gradient-to-r from-primary to-primary-light rounded-full"></span>
+                <h3 className="text-2xl font-bold mt-6">
+                  Accreditation
+                </h3>
+
+                <p className="mt-4 text-slate-300 leading-relaxed">
+                  Regulated to provide immigration
+                  services by the Immigration Advice
+                  Authority (IAA).
+                </p>
+
+                <button
+                  onClick={() => handleNavigation("/accreditation")}
+                  className="block mt-5 text-primary-light underline hover:no-underline transition-all"
+                >
+                  Registration Number: F202100311
+                </button>
+              </div>
+
+              <div className="rounded-[24px] p-6 mt-6">
+                <img
+                  src="/image/cyber-logo.webp"
+                  alt="Cyber Essentials"
+                  className="h-20 object-contain"
+                />
+
+                <h3 className="text-2xl font-bold mt-6">
+                  Cyber Essentials
+                </h3>
+
+                <button
+                  onClick={() => handleNavigation("/cyber-essentials")}
+                  className="block mt-5 text-primary-light underline hover:no-underline transition-all"
+                >
+                  View Certification
+                </button>
+              </div>
+            </div>
+
+            {/* British Council */}
+            <div>
+              <div className="rounded-[24px] p-6 h-full">
+                <img
+                  src="/image/british-council.webp"
+                  alt="British Council"
+                  className="h-20 object-contain"
+                />
+
+                <h3 className="text-2xl font-bold mt-8 leading-relaxed">
+                  UK Agent &
+                  <br />
+                  Counsellor
+                  <br />
+                  Training Certified
+                </h3>
+
+                <button
+                  onClick={() => handleNavigation("/british-council")}
+                  className="block mt-8 text-primary-light underline hover:no-underline transition-all"
+                >
+                  View Certification
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-2xl font-bold mb-8">
+                Quick Links
               </h3>
-              <ul className="space-y-3">
-                {section.links.map((link, index) => (
-                  <li key={index}>
-                    <Link
-                      to={link.url}
-                      className="text-gray-300 hover:text-white transition-all duration-300 flex items-center gap-2 group"
-                    >
-                      <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 -translate-x-2" />
-                      <span className="group-hover:translate-x-1 transition-transform duration-300">
-                        {link.name}
-                      </span>
-                    </Link>
-                  </li>
+
+              <div className="space-y-3">
+                {quickLinks.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleNavigation(item.path)}
+                    className="
+                      flex items-center gap-2
+                      text-slate-300
+                      hover:text-primary-light
+                      hover:translate-x-1
+                      transition-all duration-300
+                      group
+                    "
+                  >
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
+                    <span>{item.name}</span>
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))}
-        </div>
 
-      
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg">
-              <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="20" stroke="white" strokeWidth="4"/>
-                <path d="M16 24L24 14L32 24L24 34L16 24Z" fill="white"/>
-              </svg>
-            </div>
+            {/* External Links */}
             <div>
-              <p className="text-sm text-gray-400">
-                &copy; {new Date().getFullYear()} Skilled Workers Cloud (SWC). 
-                All rights reserved.
+              <h3 className="text-2xl font-bold mb-8">
+                External Links
+              </h3>
+
+              <div className="space-y-3">
+                {externalLinks.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+                      flex items-center gap-2
+                      text-slate-300
+                      hover:text-primary-light
+                      hover:translate-x-1
+                      transition-all duration-300
+                      group
+                    "
+                  >
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
+                    <span>{item.name}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <h3 className="text-2xl font-bold">
+                Subscribe To Our Newsletter
+              </h3>
+
+              <p className="mt-6 text-slate-300 leading-relaxed">
+                Stay updated with immigration news,
+                visa updates and policy changes.
               </p>
+
+              <div className="mt-8">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="
+                    w-full
+                    h-14
+                    px-5
+                    rounded-xl
+                    bg-white/10
+                    border
+                    border-white/20
+                    text-white
+                    placeholder:text-slate-400
+                    outline-none
+                    focus:border-primary
+                    transition-all
+                  "
+                />
+
+                <button
+                  className="
+                    w-full
+                    mt-4
+                    btn
+                    btn-primary
+                    hover:scale-105
+                    transition-all
+                  "
+                >
+                  Subscribe Now
+                </button>
+              </div>
+
+              {/* Contact */}
+              <div className="mt-10">
+                <button
+                  onClick={() => handleNavigation("/contact")}
+                  className="flex items-center gap-3 mb-4 hover:text-primary-light transition-all group w-full"
+                >
+                  <Phone
+                    size={18}
+                    className="text-primary-light group-hover:scale-110 transition-all"
+                  />
+                  <span className="text-slate-300 group-hover:text-primary-light transition-all">
+                    +44 123 456 7890
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => handleNavigation("/contact")}
+                  className="flex items-center gap-3 hover:text-primary-light transition-all group w-full"
+                >
+                  <Mail
+                    size={18}
+                    className="text-primary-light group-hover:scale-110 transition-all"
+                  />
+                  <span className="text-slate-300 group-hover:text-primary-light transition-all">
+                    info@swc.com
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-          
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-400 fill-red-400 animate-pulse" />
-            <span>for the global workforce</span>
+
+          {/* Divider */}
+          <div className="border-t border-white/10 mt-16 pt-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              {/* Copyright */}
+              <p className="text-slate-400 text-center lg:text-left">
+                © {new Date().getFullYear()} Skilled Workers
+                Cloud (SWC). All Rights Reserved.
+              </p>
+
+              {/* Social */}
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    w-11
+                    h-11
+                    rounded-full
+                    bg-white/10
+                    flex
+                    items-center
+                    justify-center
+                    hover:bg-primary
+                    hover:scale-110
+                    transition-all
+                  "
+                >
+                  <Facebook size={18} />
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    w-11
+                    h-11
+                    rounded-full
+                    bg-white/10
+                    flex
+                    items-center
+                    justify-center
+                    hover:bg-primary
+                    hover:scale-110
+                    transition-all
+                  "
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    w-11
+                    h-11
+                    rounded-full
+                    bg-white/10
+                    flex
+                    items-center
+                    justify-center
+                    hover:bg-primary
+                    hover:scale-110
+                    transition-all
+                  "
+                >
+                  <Instagram size={18} />
+                </a>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    w-11
+                    h-11
+                    rounded-full
+                    bg-white/10
+                    flex
+                    items-center
+                    justify-center
+                    hover:bg-primary
+                    hover:scale-110
+                    transition-all
+                  "
+                >
+                  <Twitter size={18} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </footer>
 
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"></div>
-    </footer>
+      {/* Back To Top */}
+      <button
+        onClick={scrollTop}
+        className="
+          fixed
+          right-6
+          bottom-28
+          w-14
+          h-14
+          rounded-full
+          bg-primary
+          text-white
+          flex
+          items-center
+          justify-center
+          shadow-lg
+          hover:scale-105
+          hover:bg-primary-dark
+          transition-all
+          z-50
+        "
+      >
+        <ChevronUp size={24} />
+      </button>
+
+      {/* Callback Button */}
+      <button
+        onClick={() => handleNavigation("/contact")}
+        className="
+          fixed
+          right-6
+          bottom-6
+          bg-white
+          border-2
+          border-primary
+          text-primary
+          px-6
+          py-4
+          rounded-full
+          shadow-xl
+          flex
+          items-center
+          gap-3
+          hover:bg-primary
+          hover:text-white
+          transition-all
+          z-50
+          hover:scale-105
+        "
+      >
+        <Phone size={18} />
+        <span className="font-semibold">
+          Request Callback
+        </span>
+      </button>
+    </>
   );
 };
 
