@@ -6,7 +6,7 @@ const Navbar = ({ toggleMenu }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const dropdownRefs = useRef({});
-  const closeTimers = useRef({}); // ← delay timers per item id
+  const closeTimers = useRef({});
   const navigate = useNavigate();
 
   /* ---------------- SCROLL EFFECT ---------------- */
@@ -18,7 +18,6 @@ const Navbar = ({ toggleMenu }) => {
 
   /* ---------------- HOVER HELPERS ---------------- */
   const openMenu = (id) => {
-    // Cancel any pending close for this id
     if (closeTimers.current[id]) {
       clearTimeout(closeTimers.current[id]);
       closeTimers.current[id] = null;
@@ -55,69 +54,39 @@ const Navbar = ({ toggleMenu }) => {
     {
       id: "services",
       label: "Services",
-      path: "/services", // Added path for services page
+      path: "/services",
       megaMenu: true,
       sections: [
         {
           title: "Sponsorship Licence",
           links: [
-            {
-              label: "Sponsor Licence Renewal",
-              path: "/services/sponsor-licence-renewal",
-            },
-            {
-              label: "Sponsor Licence Suspension",
-              path: "/services/sponsor-licence-suspension",
-            },
-            {
-              label: "Sponsor Licence Application",
-              path: "/services/sponsor-licence-application",
-            },
+            { label: "Sponsor Licence Renewal", path: "/services/sponsor-licence-renewal" },
+            { label: "Sponsor Licence Suspension", path: "/services/sponsor-licence-suspension" },
+            { label: "Sponsor Licence Application", path: "/services/sponsor-licence-application" },
           ],
         },
         {
           title: "Immigration Compliance",
           links: [
             { label: "Civil Penalty", path: "/services/civil-penalty" },
-            {
-              label: "HO Compliance Visit",
-              path: "/services/ho-compliance-visit",
-            },
-            {
-              label: "Right to Work Check",
-              path: "/services/right-to-work-check",
-            },
+            { label: "HO Compliance Visit", path: "/services/ho-compliance-visit" },
+            { label: "Right to Work Check", path: "/services/right-to-work-check" },
           ],
         },
         {
           title: "Skilled Worker Visas",
           links: [
-            {
-              label: "Skilled Worker Visa",
-              path: "/services/skilled-worker-visa",
-            },
-            {
-              label: "Minister of Religion Visa",
-              path: "/services/minister-of-religion-visa",
-            },
+            { label: "Skilled Worker Visa", path: "/services/skilled-worker-visa" },
+            { label: "Minister of Religion Visa", path: "/services/minister-of-religion-visa" },
             { label: "Health Care Visa", path: "/services/health-care-visa" },
           ],
         },
         {
           title: "Temporary (Tier 5) Visas",
           links: [
-            {
-              label: "Religious Worker Visa",
-              path: "/services/religious-worker-visa",
-            },
-            {
-              label: "Creative Worker Visa",
-              path: "/services/creative-worker-visa",
-            },
-            {
-              label: "Charity Worker Visa",
-              path: "/services/charity-worker-visa",
-            },
+            { label: "Religious Worker Visa", path: "/services/religious-worker-visa" },
+            { label: "Creative Worker Visa", path: "/services/creative-worker-visa" },
+            { label: "Charity Worker Visa", path: "/services/charity-worker-visa" },
           ],
         },
         {
@@ -125,27 +94,15 @@ const Navbar = ({ toggleMenu }) => {
           links: [
             { label: "Spouse Visa", path: "/services/spouse-visa" },
             { label: "Dependent Visa", path: "/services/dependent-visa" },
-            {
-              label: "Unmarried Partner Visa",
-              path: "/services/unmarried-partner-visa",
-            },
+            { label: "Unmarried Partner Visa", path: "/services/unmarried-partner-visa" },
           ],
         },
         {
           title: "Global Business Mobility",
           links: [
-            {
-              label: "Graduate Trainee Visa",
-              path: "/services/graduate-trainee-visa",
-            },
-            {
-              label: "UK Expansion Worker Visa",
-              path: "/services/uk-expansion-worker-visa",
-            },
-            {
-              label: "Specialist Worker Visa",
-              path: "/services/specialist-worker-visa",
-            },
+            { label: "Graduate Trainee Visa", path: "/services/graduate-trainee-visa" },
+            { label: "UK Expansion Worker Visa", path: "/services/uk-expansion-worker-visa" },
+            { label: "Specialist Worker Visa", path: "/services/specialist-worker-visa" },
           ],
         },
         {
@@ -160,38 +117,23 @@ const Navbar = ({ toggleMenu }) => {
           title: "Study Visas",
           links: [
             { label: "Student Visa", path: "/services/student-visa" },
-            {
-              label: "Child Student Visa",
-              path: "/services/child-student-visa",
-            },
+            { label: "Child Student Visa", path: "/services/child-student-visa" },
             { label: "Graduate Visa", path: "/services/graduate-visa" },
           ],
         },
         {
           title: "Business Visas",
           links: [
-            {
-              label: "Self-Sponsorship In UK",
-              path: "/services/self-sponsorship",
-            },
-            {
-              label: "Innovator Founder Visa",
-              path: "/services/innovator-founder-visa",
-            },
-            {
-              label: "Turkish Businessperson Visa",
-              path: "/services/turkish-businessperson-visa",
-            },
+            { label: "Self-Sponsorship In UK", path: "/services/self-sponsorship" },
+            { label: "Innovator Founder Visa", path: "/services/innovator-founder-visa" },
+            { label: "Turkish Businessperson Visa", path: "/services/turkish-businessperson-visa" },
           ],
         },
         {
           title: "Scale Up Visa",
           links: [
             { label: "Scale-up Visa", path: "/services/scale-up-visa" },
-            {
-              label: "Scale-up Sponsor Licence",
-              path: "/services/scale-up-sponsor-licence",
-            },
+            { label: "Scale-up Sponsor Licence", path: "/services/scale-up-sponsor-licence" },
             { label: "Scale up Business", path: "/services/scale-up-business" },
           ],
         },
@@ -207,22 +149,10 @@ const Navbar = ({ toggleMenu }) => {
       id: "tools",
       label: "Tools",
       dropdown: [
-        {
-          id: "ihs",
-          label: "IHS & Visa Fee Calculator",
-          path: "/ihs-visa-fee-calculator",
-        },
+        { id: "ihs", label: "IHS & Visa Fee Calculator", path: "/ihs-visa-fee-calculator" },
         { id: "ilr", label: "ILR Calculator", path: "/ilr-calculator" },
-        {
-          id: "supplementary",
-          label: "Supplementary Employment",
-          path: "/supplementary-employment",
-        },
-        {
-          id: "temp-shortage",
-          label: "Temp Shortage Occupation",
-          path: "/temp-shortage-occupation",
-        },
+        { id: "supplementary", label: "Supplementary Employment", path: "/supplementary-employment" },
+        { id: "temp-shortage", label: "Temp Shortage Occupation", path: "/temp-shortage-occupation" },
         { id: "rqf", label: "RQF Level 6", path: "/rqf-level-6" },
       ],
     },
@@ -238,7 +168,6 @@ const Navbar = ({ toggleMenu }) => {
       Object.values(dropdownRefs.current).forEach((ref) => {
         if (ref && ref.contains(event.target)) clickedOutside = false;
       });
-      // Also check if click is inside any mega panel (fixed, outside DOM tree)
       document.querySelectorAll("[data-mega-panel]").forEach((el) => {
         if (el.contains(event.target)) clickedOutside = false;
       });
@@ -255,8 +184,7 @@ const Navbar = ({ toggleMenu }) => {
 
   /* ---------------- NAV ITEM RENDERER ---------------- */
   const renderNavItem = (item) => {
-    const hasDropdown =
-      (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
+    const hasDropdown = (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
     const isOpen = !!openDropdowns[item.id];
 
     return (
@@ -269,83 +197,56 @@ const Navbar = ({ toggleMenu }) => {
       >
         {hasDropdown ? (
           <>
-            {/* NAV TRIGGER BUTTON - Now clickable to navigate to services page */}
             <button
               onClick={() => {
                 if (item.path) {
                   handleNavigate(item.path);
                 }
               }}
-              className="
-                flex items-center gap-1
-                text-[11px]
-                min-[1286px]:text-[15px]
-                font-medium
-                text-text-light
-                hover:text-primary
-                transition-all duration-300
-              "
+              className="flex items-center gap-1 text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
             >
               <span>{item.label}</span>
               <ChevronDown
-                className={`
-                  w-4 h-4 transition-transform duration-300
-                  ${isOpen ? "rotate-180 text-primary" : ""}
-                `}
+                className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-primary" : ""}`}
               />
             </button>
 
-            {/* ===== MEGA MENU ===== */}
+            {/* ===== MEGA MENU - Responsive Width ===== */}
             {item.megaMenu ? (
               <div
                 data-mega-panel
                 onMouseEnter={() => openMenu(item.id)}
                 onMouseLeave={() => closeMenu(item.id)}
                 className={`
-                  fixed left-0 w-screen bg-white
-                  border-t border-gray-100
+                  fixed left-0 right-0
+                  bg-white
+                  rounded-none lg:rounded-[32px]
+                  border-t lg:border-t-0 border-gray-100
                   shadow-[0_20px_60px_rgba(0,0,0,0.10)]
                   z-[999]
                   transition-all duration-300 ease-out
-                  ${
-                    isOpen
-                      ? "opacity-100 visible translate-y-0 pointer-events-auto"
-                      : "opacity-0 invisible -translate-y-2 pointer-events-none"
-                  }
+                  ${isOpen ? "opacity-100 visible translate-y-0 pointer-events-auto" : "opacity-0 invisible -translate-y-2 pointer-events-none"}
                 `}
                 style={{ top: scrolled ? "72px" : "90px" }}
               >
-                <div className="w-full px-10 py-10">
+                <div className="w-full px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
                   {/* View All Services Link */}
                   <div className="mb-6 pb-4 border-b border-gray-100">
                     <RouterLink
                       to="/services"
                       onClick={() => setOpenDropdowns({})}
-                      className="
-                        inline-flex items-center gap-2
-                        text-primary font-semibold text-sm
-                        hover:gap-3 transition-all duration-300
-                      "
+                      className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all duration-300"
                     >
                       View All Services
                       <ChevronDown className="w-4 h-4 -rotate-90" />
                     </RouterLink>
                   </div>
 
-                  <div
-                    className="grid gap-x-8 gap-y-10 mx-auto"
-                    style={{ gridTemplateColumns: "repeat(5, 1fr)" }}
-                  >
+                  {/* Responsive Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
                     {item.sections?.map((section, index) => (
                       <div key={index} className="min-w-0">
-                        <h3
-                          className="
-                            text-[13px] font-bold uppercase tracking-wider
-                            text-primary
-                            mb-4 pb-2
-                            border-b-2 border-primary/20
-                          "
-                        >
+                        <h3 className="text-[12px] lg:text-[13px] font-bold uppercase tracking-wider text-primary mb-3 pb-2 border-b-2 border-primary/20">
                           {section.title}
                         </h3>
                         <div className="space-y-2">
@@ -354,13 +255,7 @@ const Navbar = ({ toggleMenu }) => {
                               key={i}
                               to={link.path}
                               onClick={() => setOpenDropdowns({})}
-                              className="
-                                block
-                                text-[14px] text-gray-600
-                                hover:text-primary hover:translate-x-1
-                                transition-all duration-200
-                                leading-snug
-                              "
+                              className="block text-[13px] lg:text-[14px] text-gray-600 hover:text-primary hover:translate-x-1 transition-all duration-200 leading-snug"
                             >
                               {link.label}
                             </RouterLink>
@@ -377,18 +272,14 @@ const Navbar = ({ toggleMenu }) => {
               <div
                 className={`
                   absolute top-full left-0 mt-5
-                  w-72
+                  w-64 sm:w-72
                   bg-white/95 backdrop-blur-xl
                   border border-white/50
-                  rounded-3xl
+                  rounded-2xl sm:rounded-3xl
                   shadow-[0_20px_60px_rgba(15,23,42,0.12)]
-                  p-3 z-50
+                  p-2 sm:p-3 z-50
                   transition-all duration-300
-                  ${
-                    isOpen
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible translate-y-3"
-                  }
+                  ${isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-3"}
                 `}
               >
                 <div className="space-y-1">
@@ -397,14 +288,7 @@ const Navbar = ({ toggleMenu }) => {
                       key={subItem.id}
                       to={subItem.path}
                       onClick={() => setOpenDropdowns({})}
-                      className="
-                        flex items-center
-                        px-4 py-3 rounded-2xl
-                        text-[15px] font-medium
-                        text-text-light
-                        hover:bg-primary-light hover:text-primary
-                        transition-all duration-300
-                      "
+                      className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[14px] sm:text-[15px] font-medium text-text-light hover:bg-primary-light hover:text-primary transition-all duration-300"
                     >
                       {subItem.label}
                     </RouterLink>
@@ -416,13 +300,7 @@ const Navbar = ({ toggleMenu }) => {
         ) : (
           <button
             onClick={() => handleNavigate(item.path)}
-            className="
-              text-[11px]
-              min-[1286px]:text-[15px] font-medium
-              text-text-light
-              hover:text-primary
-              transition-all duration-300
-            "
+            className="text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
           >
             {item.label}
           </button>
@@ -441,43 +319,19 @@ const Navbar = ({ toggleMenu }) => {
     >
       <div className="max-w-[1450px] mx-auto px-5 lg:px-8 flex items-center justify-between">
         {/* LOGO */}
-        <div
-          className="flex items-center gap-3 cursor-pointer"
-          onClick={() => navigate("/")}
-        >
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
           <div className="w-28 h-24 rounded-2xl flex items-center justify-center">
-            <img
-              src="/image/swc_logo.png"
-              alt="logo"
-              className="w-full h-full object-contain"
-            />
+            <img src="/image/swc_logo.png" alt="logo" className="w-full h-full object-contain" />
           </div>
         </div>
 
         {/* DESKTOP NAV */}
         <div className="hidden lg:flex items-center gap-5">
-          <nav
-            className="
-              flex items-center gap-8
-              bg-white/80 backdrop-blur-xl
-              border border-white/50
-              rounded-full
-              px-8 py-4
-              shadow-[0_8px_30px_rgba(15,23,42,0.08)]
-            "
-          >
+          <nav className="flex items-center gap-6 xl:gap-8 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 xl:px-8 py-3 xl:py-4 shadow-[0_8px_30px_rgba(15,23,42,0.08)]">
             {navLinks.map((item) => renderNavItem(item))}
           </nav>
 
-          <button
-            className="
-              px-2 py-2
-              min-[1286px]:px-7
-              min-[1286px]:py-3 rounded-2xl
-              bg-primary text-white font-semibold
-              hover:scale-105 transition-all duration-300
-            "
-          >
+          <button className="px-3 py-2 min-[1286px]:px-7 min-[1286px]:py-3 rounded-2xl bg-primary text-white font-semibold hover:scale-105 transition-all duration-300 text-sm min-[1286px]:text-base">
             Get Started
           </button>
         </div>
@@ -486,11 +340,7 @@ const Navbar = ({ toggleMenu }) => {
         <div className="lg:hidden">
           <button
             onClick={toggleMenu}
-            className="
-              w-11 h-11 rounded-xl bg-white
-              border border-border
-              flex items-center justify-center shadow-sm
-            "
+            className="w-11 h-11 rounded-xl bg-white border border-border flex items-center justify-center shadow-sm"
           >
             <Menu className="w-6 h-6 text-text" />
           </button>
