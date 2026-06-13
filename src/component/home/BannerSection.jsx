@@ -6,7 +6,9 @@ const BannerSection = () => {
       className="
         relative
         w-full
-        h-screen
+
+        h-[70vh]
+        md:h-screen
         overflow-hidden
       "
     >

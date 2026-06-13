@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArrowRight, FileText, ShieldCheck, Briefcase, Package, Heart, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const services = [
   {
@@ -48,6 +49,7 @@ const services = [
 
 const ServicesSection = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 bg-slate-50">
@@ -170,6 +172,7 @@ const ServicesSection = () => {
               transition-colors duration-200
               active:scale-95
             "
+            onClick={() => navigate("/services")}
           >
             View All Services
             <ArrowRight size={16} />

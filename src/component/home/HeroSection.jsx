@@ -125,11 +125,11 @@ const HeroSection = () => {
             {/* Heading */}
             <div>
               <h1 className="text-5xl sm:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight text-gray-900">
-                UK
+                Skilled
                 <br />
-                <span className="text-blue-600">Immigration</span>
+                <span className="text-blue-600">Works Clouds</span>
                 <br />
-                <span className="text-blue-600">Specialists</span>
+                {/* <span className="text-blue-600">Cloud</span> */}
               </h1>
             </div>
 

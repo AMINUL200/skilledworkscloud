@@ -40,7 +40,7 @@ const OfficeLocationsSection = () => {
             </h2>
 
             <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg leading-7 sm:leading-8 text-text-light max-w-2xl">
-              Reach out to our skilled workers immigration team for any queries or support.
+              Reach out to our skilled workers Cloud team for any queries or support.
             </p>
 
             {/* CONTACT INFO CARD */}
@@ -124,7 +124,7 @@ const OfficeLocationsSection = () => {
 
             {/* TITLE */}
             <h3 className="mt-4 sm:mt-5 text-xl sm:text-2xl lg:text-3xl font-black tracking-tight leading-tight text-text">
-              Request a Callback with Our Immigration Experts
+              Request a Callback with Our Skilled Works Cloud Experts
             </h3>
 
             {/* FORM */}

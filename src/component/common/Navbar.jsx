@@ -55,6 +55,7 @@ const Navbar = ({ toggleMenu }) => {
     {
       id: "services",
       label: "Services",
+      path: "/services", // Added path for services page
       megaMenu: true,
       sections: [
         {
@@ -268,17 +269,22 @@ const Navbar = ({ toggleMenu }) => {
       >
         {hasDropdown ? (
           <>
-            {/* NAV TRIGGER BUTTON */}
+            {/* NAV TRIGGER BUTTON - Now clickable to navigate to services page */}
             <button
+              onClick={() => {
+                if (item.path) {
+                  handleNavigate(item.path);
+                }
+              }}
               className="
-    flex items-center gap-1
-    text-[11px]
-    min-[1286px]:text-[15px]
-    font-medium
-    text-text-light
-    hover:text-primary
-    transition-all duration-300
-  "
+                flex items-center gap-1
+                text-[11px]
+                min-[1286px]:text-[15px]
+                font-medium
+                text-text-light
+                hover:text-primary
+                transition-all duration-300
+              "
             >
               <span>{item.label}</span>
               <ChevronDown
@@ -289,12 +295,12 @@ const Navbar = ({ toggleMenu }) => {
               />
             </button>
 
-            {/* ===== MEGA MENU (fixed, outside DOM tree — uses timer bridge) ===== */}
+            {/* ===== MEGA MENU ===== */}
             {item.megaMenu ? (
               <div
                 data-mega-panel
-                onMouseEnter={() => openMenu(item.id)} // cancels the close timer
-                onMouseLeave={() => closeMenu(item.id)} // starts a new close timer
+                onMouseEnter={() => openMenu(item.id)}
+                onMouseLeave={() => closeMenu(item.id)}
                 className={`
                   fixed left-0 w-screen bg-white
                   border-t border-gray-100
@@ -310,6 +316,22 @@ const Navbar = ({ toggleMenu }) => {
                 style={{ top: scrolled ? "72px" : "90px" }}
               >
                 <div className="w-full px-10 py-10">
+                  {/* View All Services Link */}
+                  <div className="mb-6 pb-4 border-b border-gray-100">
+                    <RouterLink
+                      to="/services"
+                      onClick={() => setOpenDropdowns({})}
+                      className="
+                        inline-flex items-center gap-2
+                        text-primary font-semibold text-sm
+                        hover:gap-3 transition-all duration-300
+                      "
+                    >
+                      View All Services
+                      <ChevronDown className="w-4 h-4 -rotate-90" />
+                    </RouterLink>
+                  </div>
+
                   <div
                     className="grid gap-x-8 gap-y-10 mx-auto"
                     style={{ gridTemplateColumns: "repeat(5, 1fr)" }}
@@ -396,7 +418,7 @@ const Navbar = ({ toggleMenu }) => {
             onClick={() => handleNavigate(item.path)}
             className="
               text-[11px]
-    min-[1286px]:text-[15px] font-medium
+              min-[1286px]:text-[15px] font-medium
               text-text-light
               hover:text-primary
               transition-all duration-300
@@ -449,9 +471,9 @@ const Navbar = ({ toggleMenu }) => {
 
           <button
             className="
-               px-2 py-2
-    min-[1286px]:px-7
-    min-[1286px]:py-3 rounded-2xl
+              px-2 py-2
+              min-[1286px]:px-7
+              min-[1286px]:py-3 rounded-2xl
               bg-primary text-white font-semibold
               hover:scale-105 transition-all duration-300
             "

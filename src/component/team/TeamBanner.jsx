@@ -82,7 +82,7 @@ const TeamBanner = () => {
             "
           >
             Welcome to
-            <span className="block text-blue-400">WorkPermitCloud Team</span>
+            <span className="block text-blue-400">Skilled Works Cloud Team</span>
           </h1>
 
           {/* DESCRIPTION */}
@@ -100,7 +100,7 @@ const TeamBanner = () => {
               text-blue-100
             "
           >
-            The WorkPermitCloud team is a dedicated group of professionals who
+            The Skilled Works Cloud team is a dedicated group of professionals who
             excel in the field of immigration and work permits.
             <br />
             <br />

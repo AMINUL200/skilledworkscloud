@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import {
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   X,
   ChevronRight,
@@ -21,32 +16,25 @@ import {
   Phone,
 } from "lucide-react";
 
-const SideBar = ({
-  toggleMenu,
-  isOpen,
-}) => {
+const SideBar = ({ toggleMenu, isOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState({});
-
+  const [openNestedDropdowns, setOpenNestedDropdowns] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* ---------------- SIDEBAR LINKS ---------------- */
-
+  /* ---------------- SIDEBAR LINKS WITH NESTED SERVICES ---------------- */
   const sidebarLinks = [
     {
       id: "about",
       label: "About",
       icon: <Info className="w-5 h-5" />,
       dropdown: [
+        { id: "about-us", label: "About Us", path: "/about-us" },
+        { id: "team", label: "Our Team", path: "/team" },
         {
-          id: "company",
-          label: "Company",
-          path: "/company",
-        },
-        {
-          id: "team",
-          label: "Our Team",
-          path: "/team",
+          id: "csr",
+          label: "Corporate Social Responsibility",
+          path: "/corporate-social-responsibility",
         },
       ],
     },
@@ -56,19 +44,94 @@ const SideBar = ({
       icon: <Briefcase className="w-5 h-5" />,
       dropdown: [
         {
-          id: "visa",
-          label: "Visa Services",
-          path: "/visa-services",
+          id: "sponsorship-licence",
+          label: "Sponsorship Licence",
+          nestedDropdown: [
+            { label: "Sponsor Licence Renewal", path: "/services/sponsor-licence-renewal" },
+            { label: "Sponsor Licence Suspension", path: "/services/sponsor-licence-suspension" },
+            { label: "Sponsor Licence Application", path: "/services/sponsor-licence-application" },
+          ],
         },
         {
-          id: "immigration",
-          label: "Immigration",
-          path: "/immigration",
+          id: "immigration-compliance",
+          label: "Immigration Compliance",
+          nestedDropdown: [
+            { label: "Civil Penalty", path: "/services/civil-penalty" },
+            { label: "HO Compliance Visit", path: "/services/ho-compliance-visit" },
+            { label: "Right to Work Check", path: "/services/right-to-work-check" },
+          ],
         },
         {
-          id: "compliance",
-          label: "HR Compliance",
-          path: "/hr-compliance",
+          id: "skilled-worker-visas",
+          label: "Skilled Worker Visas",
+          nestedDropdown: [
+            { label: "Skilled Worker Visa", path: "/services/skilled-worker-visa" },
+            { label: "Minister of Religion Visa", path: "/services/minister-of-religion-visa" },
+            { label: "Health Care Visa", path: "/services/health-care-visa" },
+          ],
+        },
+        {
+          id: "temporary-visas",
+          label: "Temporary (Tier 5) Visas",
+          nestedDropdown: [
+            { label: "Religious Worker Visa", path: "/services/religious-worker-visa" },
+            { label: "Creative Worker Visa", path: "/services/creative-worker-visa" },
+            { label: "Charity Worker Visa", path: "/services/charity-worker-visa" },
+          ],
+        },
+        {
+          id: "partner-family-visas",
+          label: "Partner and Family Visas",
+          nestedDropdown: [
+            { label: "Spouse Visa", path: "/services/spouse-visa" },
+            { label: "Dependent Visa", path: "/services/dependent-visa" },
+            { label: "Unmarried Partner Visa", path: "/services/unmarried-partner-visa" },
+          ],
+        },
+        {
+          id: "global-business-mobility",
+          label: "Global Business Mobility",
+          nestedDropdown: [
+            { label: "Graduate Trainee Visa", path: "/services/graduate-trainee-visa" },
+            { label: "UK Expansion Worker Visa", path: "/services/uk-expansion-worker-visa" },
+            { label: "Specialist Worker Visa", path: "/services/specialist-worker-visa" },
+          ],
+        },
+        {
+          id: "standard-visitor-visa",
+          label: "Standard Visitor Visa",
+          nestedDropdown: [
+            { label: "Tourist Visa", path: "/services/tourist-visa" },
+            { label: "Business Visit", path: "/services/business-visit" },
+            { label: "UK Fiancé Visa", path: "/services/uk-fiance-visa" },
+          ],
+        },
+        {
+          id: "study-visas",
+          label: "Study Visas",
+          nestedDropdown: [
+            { label: "Student Visa", path: "/services/student-visa" },
+            { label: "Child Student Visa", path: "/services/child-student-visa" },
+            { label: "Graduate Visa", path: "/services/graduate-visa" },
+          ],
+        },
+        {
+          id: "business-visas",
+          label: "Business Visas",
+          nestedDropdown: [
+            { label: "Self-Sponsorship In UK", path: "/services/self-sponsorship" },
+            { label: "Innovator Founder Visa", path: "/services/innovator-founder-visa" },
+            { label: "Turkish Businessperson Visa", path: "/services/turkish-businessperson-visa" },
+          ],
+        },
+        {
+          id: "scale-up-visa",
+          label: "Scale Up Visa",
+          nestedDropdown: [
+            { label: "Scale-up Visa", path: "/services/scale-up-visa" },
+            { label: "Scale-up Sponsor Licence", path: "/services/scale-up-sponsor-licence" },
+            { label: "Scale up Business", path: "/services/scale-up-business" },
+          ],
         },
       ],
     },
@@ -80,7 +143,7 @@ const SideBar = ({
     },
     {
       id: "self",
-      label: "Self Sponsorship",
+      label: "Self-Sponsorship",
       path: "/self-sponsorship",
       icon: <ShieldCheck className="w-5 h-5" />,
     },
@@ -89,16 +152,11 @@ const SideBar = ({
       label: "Tools",
       icon: <Wrench className="w-5 h-5" />,
       dropdown: [
-        {
-          id: "calculator",
-          label: "Visa Calculator",
-          path: "/visa-calculator",
-        },
-        {
-          id: "eligibility",
-          label: "Eligibility Checker",
-          path: "/eligibility-checker",
-        },
+        { id: "ihs", label: "IHS & Visa Fee Calculator", path: "/ihs-visa-fee-calculator" },
+        { id: "ilr", label: "ILR Calculator", path: "/ilr-calculator" },
+        { id: "supplementary", label: "Supplementary Employment", path: "/supplementary-employment" },
+        { id: "temp-shortage", label: "Temp Shortage Occupation", path: "/temp-shortage-occupation" },
+        { id: "rqf", label: "RQF Level 6", path: "/rqf-level-6" },
       ],
     },
     {
@@ -122,14 +180,10 @@ const SideBar = ({
   ];
 
   /* ---------------- AUTH ---------------- */
-
   const isAuthenticated = false;
-  const userData = {
-    user_type: 2,
-  };
+  const userData = { user_type: 2 };
 
   /* ---------------- CLOSE ON ROUTE CHANGE ---------------- */
-
   useEffect(() => {
     if (isOpen) {
       toggleMenu();
@@ -137,7 +191,6 @@ const SideBar = ({
   }, [location.pathname]);
 
   /* ---------------- TOGGLE DROPDOWN ---------------- */
-
   const toggleDropdown = (id) => {
     setOpenDropdowns((prev) => ({
       ...prev,
@@ -145,196 +198,276 @@ const SideBar = ({
     }));
   };
 
-  /* ---------------- ACTIVE PATH ---------------- */
+  /* ---------------- TOGGLE NESTED DROPDOWN ---------------- */
+  const toggleNestedDropdown = (id) => {
+    setOpenNestedDropdowns((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
+  /* ---------------- ACTIVE PATH ---------------- */
   const isActivePath = (path) => {
     return location.pathname === path;
   };
 
   /* ---------------- NAVIGATION ---------------- */
-
   const handleNavigate = (path) => {
     navigate(path);
     setOpenDropdowns({});
+    setOpenNestedDropdowns({});
     toggleMenu();
   };
 
   /* ---------------- LOGOUT ---------------- */
-
   const handleLogout = () => {
     navigate("/");
     toggleMenu();
   };
 
-  /* ---------------- DROPDOWN ITEM ---------------- */
-
-  const renderDropdownItem = (item, level = 1) => {
-    const hasSubDropdown = item.dropdown && item.dropdown.length > 0;
-    const dropdownKey = `${item.id}-${level}`;
-    const isOpen = openDropdowns[dropdownKey];
-    const isActive = item.path && isActivePath(item.path);
-
+  /* ---------------- RENDER NESTED DROPDOWN ITEMS ---------------- */
+  const renderNestedDropdownItems = (items, parentId) => {
+    const isOpen = openNestedDropdowns[parentId];
+    
     return (
-      <div key={item.id}>
-        {hasSubDropdown ? (
-          <>
-            <div
-              onClick={() => toggleDropdown(dropdownKey)}
-              className={`
-                flex items-center justify-between
-                px-4 py-3
-                rounded-2xl
-                cursor-pointer
-                transition-all duration-300
-                ${level > 1 ? "ml-6" : "ml-3"}
-                ${isOpen 
-                  ? "bg-primary-light text-primary" 
-                  : "text-text-light hover:bg-primary-light hover:text-primary"
-                }
-              `}
-            >
-              <span className="font-medium text-sm">
-                {item.label}
-              </span>
-              <ChevronRight
-                className={`
-                  w-4 h-4 transition-all duration-300
-                  ${isOpen ? "rotate-90" : ""}
-                `}
-              />
-            </div>
-            <div
-              className={`
-                overflow-hidden transition-all duration-300
-                ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
-              `}
-            >
-              <div className="mt-2 space-y-1">
-                {item.dropdown.map((subItem) =>
-                  renderDropdownItem(subItem, level + 1)
-                )}
-              </div>
-            </div>
-          </>
-        ) : (
-          <div
-            onClick={() => handleNavigate(item.path)}
+      <div>
+        <div
+          onClick={() => toggleNestedDropdown(parentId)}
+          className={`
+            flex items-center justify-between
+            px-4 py-3 ml-6
+            rounded-xl
+            cursor-pointer
+            transition-all duration-300
+            ${isOpen
+              ? "bg-primary-light text-primary"
+              : "text-text-light hover:bg-primary-light hover:text-primary"
+            }
+          `}
+        >
+          <span className="text-sm font-medium">View All</span>
+          <ChevronRight
             className={`
-              flex items-center
-              px-4 py-3
-              rounded-2xl
-              cursor-pointer
-              transition-all duration-300
-              ${level > 1 ? "ml-6" : "ml-3"}
-              ${isActive
-                ? `
-                  bg-gradient-to-r
-                  from-blue-500
-                  to-blue-700
-                  text-white
-                  shadow-lg
-                `
-                : `
-                  text-text-light
-                  hover:bg-primary-light
-                  hover:text-primary
-                `
-              }
+              w-4 h-4 transition-all duration-300
+              ${isOpen ? "rotate-90" : ""}
             `}
-          >
-            <span className="font-medium text-sm">
-              {item.label}
-            </span>
+          />
+        </div>
+        
+        <div
+          className={`
+            overflow-hidden transition-all duration-300
+            ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+          `}
+        >
+          <div className="ml-10 mt-2 space-y-1">
+            {items.map((item, idx) => (
+              <div
+                key={idx}
+                onClick={() => handleNavigate(item.path)}
+                className={`
+                  flex items-center gap-2
+                  px-4 py-2 rounded-lg
+                  text-sm cursor-pointer
+                  transition-all duration-200
+                  ${isActivePath(item.path)
+                    ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+                    : "text-text-light hover:bg-primary-light hover:text-primary"
+                  }
+                `}
+              >
+                <div className="w-1 h-1 rounded-full bg-current" />
+                <span>{item.label}</span>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     );
   };
 
-  /* ---------------- NAV ITEM ---------------- */
-
-  const renderNavItem = (item) => {
-    const hasDropdown = item.dropdown && item.dropdown.length > 0;
+  /* ---------------- RENDER DROPDOWN WITH NESTED ITEMS ---------------- */
+  const renderDropdownWithNested = (item) => {
     const isOpen = openDropdowns[item.id];
-    const isActive = item.path && isActivePath(item.path);
 
     return (
       <div key={item.id} className="mb-2">
-        {hasDropdown ? (
-          <>
-            <div
-              onClick={() => toggleDropdown(item.id)}
-              className={`
-                flex items-center justify-between
-                px-4 py-4
-                rounded-2xl
-                cursor-pointer
-                transition-all duration-300
-                ${isOpen
-                  ? "bg-primary-light text-primary"
-                  : "text-text-light hover:bg-primary-light hover:text-primary"
-                }
-              `}
-            >
-              <div className="flex items-center gap-3">
-                {item.icon}
-                <span className="font-semibold text-[15px]">
-                  {item.label}
-                </span>
-              </div>
-              <ChevronRight
-                className={`
-                  w-5 h-5 transition-all duration-300
-                  ${isOpen ? "rotate-90" : ""}
-                `}
-              />
-            </div>
-            <div
-              className={`
-                overflow-hidden transition-all duration-300
-                ${isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}
-              `}
-            >
-              <div className="mt-2 space-y-1">
-                {item.dropdown.map((dropdownItem) =>
-                  renderDropdownItem(dropdownItem)
+        <div
+          onClick={() => toggleDropdown(item.id)}
+          className={`
+            flex items-center justify-between
+            px-4 py-4
+            rounded-2xl
+            cursor-pointer
+            transition-all duration-300
+            ${isOpen
+              ? "bg-primary-light text-primary"
+              : "text-text-light hover:bg-primary-light hover:text-primary"
+            }
+          `}
+        >
+          <div className="flex items-center gap-3">
+            {item.icon}
+            <span className="font-semibold text-[15px]">{item.label}</span>
+          </div>
+          <ChevronRight
+            className={`
+              w-5 h-5 transition-all duration-300
+              ${isOpen ? "rotate-90" : ""}
+            `}
+          />
+        </div>
+
+        {/* Nested Dropdown Content */}
+        <div
+          className={`
+            overflow-hidden transition-all duration-300
+            ${isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}
+          `}
+        >
+          <div className="mt-2 space-y-1">
+            {item.dropdown?.map((subItem) => (
+              <div key={subItem.id}>
+                {subItem.nestedDropdown ? (
+                  // Title with nested dropdown
+                  <div>
+                    <div className="px-4 py-3 ml-3">
+                      <h3 className="text-sm font-bold text-primary">
+                        {subItem.label}
+                      </h3>
+                    </div>
+                    {renderNestedDropdownItems(subItem.nestedDropdown, subItem.id)}
+                  </div>
+                ) : (
+                  // Regular dropdown item
+                  <div
+                    onClick={() => handleNavigate(subItem.path)}
+                    className={`
+                      flex items-center gap-2
+                      px-4 py-3 ml-6 rounded-xl
+                      text-sm cursor-pointer
+                      transition-all duration-200
+                      ${isActivePath(subItem.path)
+                        ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+                        : "text-text-light hover:bg-primary-light hover:text-primary"
+                      }
+                    `}
+                  >
+                    <ChevronRight size={14} />
+                    <span>{subItem.label}</span>
+                  </div>
                 )}
               </div>
-            </div>
-          </>
-        ) : (
-          <div
-            onClick={() => handleNavigate(item.path)}
-            className={`
-              flex items-center gap-3
-              px-4 py-4
-              rounded-2xl
-              cursor-pointer
-              transition-all duration-300
-              ${isActive
-                ? `
-                  bg-gradient-to-r
-                  from-blue-500
-                  to-blue-700
-                  text-white
-                  shadow-lg
-                `
-                : `
-                  text-text-light
-                  hover:bg-primary-light
-                  hover:text-primary
-                `
-              }
-            `}
-          >
-            {item.icon}
-            <span className="font-semibold text-[15px]">
-              {item.label}
-            </span>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     );
+  };
+
+  /* ---------------- RENDER REGULAR DROPDOWN ---------------- */
+  const renderRegularDropdown = (item) => {
+    const isOpen = openDropdowns[item.id];
+
+    return (
+      <div key={item.id} className="mb-2">
+        <div
+          onClick={() => toggleDropdown(item.id)}
+          className={`
+            flex items-center justify-between
+            px-4 py-4
+            rounded-2xl
+            cursor-pointer
+            transition-all duration-300
+            ${isOpen
+              ? "bg-primary-light text-primary"
+              : "text-text-light hover:bg-primary-light hover:text-primary"
+            }
+          `}
+        >
+          <div className="flex items-center gap-3">
+            {item.icon}
+            <span className="font-semibold text-[15px]">{item.label}</span>
+          </div>
+          <ChevronRight
+            className={`
+              w-5 h-5 transition-all duration-300
+              ${isOpen ? "rotate-90" : ""}
+            `}
+          />
+        </div>
+
+        <div
+          className={`
+            overflow-hidden transition-all duration-300
+            ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+          `}
+        >
+          <div className="mt-2 ml-6 space-y-1">
+            {item.dropdown?.map((subItem) => (
+              <div
+                key={subItem.id}
+                onClick={() => handleNavigate(subItem.path)}
+                className={`
+                  flex items-center gap-2
+                  px-4 py-3 rounded-xl
+                  text-sm cursor-pointer
+                  transition-all duration-200
+                  ${isActivePath(subItem.path)
+                    ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+                    : "text-text-light hover:bg-primary-light hover:text-primary"
+                  }
+                `}
+              >
+                <ChevronRight size={14} />
+                <span>{subItem.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  /* ---------------- RENDER SIMPLE LINK ---------------- */
+  const renderSimpleLink = (item) => {
+    const isActive = item.path && isActivePath(item.path);
+
+    return (
+      <div
+        key={item.id}
+        onClick={() => handleNavigate(item.path)}
+        className={`
+          flex items-center gap-3
+          px-4 py-4
+          rounded-2xl
+          cursor-pointer
+          transition-all duration-300
+          mb-2
+          ${isActive
+            ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg"
+            : "text-text-light hover:bg-primary-light hover:text-primary"
+          }
+        `}
+      >
+        {item.icon}
+        <span className="font-semibold text-[15px]">{item.label}</span>
+      </div>
+    );
+  };
+
+  /* ---------------- RENDER NAV ITEM ---------------- */
+  const renderNavItem = (item) => {
+    if (item.dropdown && item.dropdown.length > 0) {
+      // Check if any dropdown item has nestedDropdown (Services section)
+      const hasNested = item.dropdown.some(subItem => subItem.nestedDropdown);
+      if (hasNested) {
+        return renderDropdownWithNested(item);
+      }
+      return renderRegularDropdown(item);
+    } else {
+      return renderSimpleLink(item);
+    }
   };
 
   return (
@@ -356,8 +489,8 @@ const SideBar = ({
       <aside
         className={`
           fixed top-0 right-0 z-50
-          h-full w-[340px]
-          bg-white/90
+          h-full w-[380px]
+          bg-white/95
           backdrop-blur-2xl
           border-l border-white/40
           shadow-[0_20px_80px_rgba(15,23,42,0.18)]
@@ -368,13 +501,7 @@ const SideBar = ({
       >
         {/* ---------------- HEADER ---------------- */}
         <div className="flex-shrink-0">
-          <div
-            className="
-              flex items-center justify-between
-              p-6
-              border-b border-border
-            "
-          >
+          <div className="flex items-center justify-between p-6 border-b border-border">
             {/* LOGO */}
             <div className="flex items-center gap-3">
               <div
@@ -388,33 +515,14 @@ const SideBar = ({
                   shadow-lg
                 "
               >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="24"
-                    cy="24"
-                    r="20"
-                    stroke="white"
-                    strokeWidth="4"
-                  />
-                  <path
-                    d="M16 24L24 14L32 24L24 34L16 24Z"
-                    fill="white"
-                  />
+                <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" stroke="white" strokeWidth="4" />
+                  <path d="M16 24L24 14L32 24L24 34L16 24Z" fill="white" />
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-text">
-                  SWC
-                </h1>
-                <p className="text-xs text-text-light">
-                  Skilled Workers Cloud
-                </p>
+                <h1 className="text-xl font-bold text-text">SWC</h1>
+                <p className="text-xs text-text-light">Skilled Workers Cloud</p>
               </div>
             </div>
 
@@ -463,11 +571,7 @@ const SideBar = ({
                   navigate("/signin");
                   toggleMenu();
                 }}
-                className="
-                  btn btn-primary
-                  w-full
-                  py-4
-                "
+                className="btn btn-primary w-full py-4"
               >
                 <User className="w-5 h-5" />
                 <span>Get Started</span>
@@ -475,14 +579,7 @@ const SideBar = ({
             )}
 
             {isAuthenticated && userData?.user_type === 4 && (
-              <button
-                onClick={handleLogout}
-                className="
-                  btn btn-danger
-                  w-full
-                  py-4
-                "
-              >
+              <button onClick={handleLogout} className="btn btn-danger w-full py-4">
                 <LogOut className="w-5 h-5" />
                 <span>Logout</span>
               </button>
@@ -494,11 +591,7 @@ const SideBar = ({
                   navigate("/dashboard");
                   toggleMenu();
                 }}
-                className="
-                  btn btn-primary
-                  w-full
-                  py-4
-                "
+                className="btn btn-primary w-full py-4"
               >
                 <LayoutDashboard className="w-5 h-5" />
                 <span>Dashboard</span>
@@ -510,22 +603,18 @@ const SideBar = ({
 
       {/* Custom Scrollbar Styles */}
       <style jsx>{`
-        /* For Webkit browsers (Chrome, Safari, Edge) */
         nav::-webkit-scrollbar {
           width: 6px;
         }
-        
         nav::-webkit-scrollbar-track {
           background: #F1F5F9;
           border-radius: 10px;
         }
-        
         nav::-webkit-scrollbar-thumb {
           background: #CBD5E1;
           border-radius: 10px;
           transition: background 0.3s ease;
         }
-        
         nav::-webkit-scrollbar-thumb:hover {
           background: #94A3B8;
         }

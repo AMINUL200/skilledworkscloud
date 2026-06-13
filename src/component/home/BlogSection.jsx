@@ -39,7 +39,7 @@ const BlogSection = () => {
         {/* ── HEADER ── */}
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black tracking-tight text-primary leading-tight">
-            UK Immigration Blog | Visa & Compliance Updates
+            Skilled Works Cloud | Visa & Compliance Updates
           </h2>
 
           <div className="mt-4 w-24 sm:w-32 h-[3px] bg-text mx-auto rounded-full" />

@@ -240,7 +240,7 @@ const BlogsPage = () => {
               text-white
             "
           >
-            Immigration Updates & Industry Insights
+            Skilled Works Cloud Updates & Industry Insights
           </h1>
 
           <p
@@ -258,7 +258,7 @@ const BlogsPage = () => {
               mx-auto
             "
           >
-            Explore the latest UK immigration news, sponsor licence updates, HR
+            Explore the latest Skilled Works Cloud news, sponsor licence updates, HR
             compliance tips, and visa guidance from WorkPermitCloud experts.
           </p>
         </div>

@@ -23,6 +23,7 @@ import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import SMTPSettingsPage from "./pages/admin/settings/SMTPSettingsPage";
 import SEOSettingsPage from "./pages/admin/settings/SEOSettingsPage";
 import ServiceDetailsPage from "./pages/user_side/ServiceDetailsPage";
+import ServicePage from "./pages/user_side/ServicePage";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/team/:id" element={<TeamDetailsPage />} /> {/* Team member detail route */}
           <Route path="/corporate-social-responsibility" element={<CorporateSocialResponsibilityPage />} /> {/* Corporate Social Responsibility page route */}
           {/* <Route path="/services/:id" element={<ServiceDetails />} /> */}
+          <Route path="/services" element={<ServicePage />} /> {/* Services page route */}
           <Route path="/services/:slug" element={<ServiceDetailsPage />} /> {/* Service details route */  }
         </Route>
 
