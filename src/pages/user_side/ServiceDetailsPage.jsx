@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ServHeroSection from "../../component/service-sections/ServHeroSection";
 import ServAboutSection from "../../component/service-sections/ServAboutSection";
 import ServFeaturesSection from "../../component/service-sections/ServFeaturesSection";
@@ -19,6 +19,7 @@ import ServGallerySection from "../../component/service-sections/ServGallerySect
 import ServTeamSection from "../../component/service-sections/ServTeamSection";
 import { useParams } from "react-router-dom";
 import { services } from "../../utils/services";
+import PageLoader from "../../component/common/PageLoader";
 
 const sectionMapper = {
   hero: ServHeroSection,
@@ -45,6 +46,21 @@ const ServiceDetailsPage = () => {
   const { slug } = useParams();
 
   const service = services.find((item) => item.slug === slug);
+
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   if (!service) {
     return <div>Service Not Found</div>;

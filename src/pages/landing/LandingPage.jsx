@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeroSection from '../../component/home/HeroSection'
 import EcosystemSection from '../../component/home/EcosystemSection'
 import RegulationSection from '../../component/home/RegulationSection'
@@ -11,8 +11,26 @@ import InsideWPCSection from '../../component/home/InsideWPCSection'
 import TrustedClientsSection from '../../component/home/TrustedClientsSection'
 import OfficeLocationsSection from '../../component/home/OfficeLocationsSection'
 import BannerSection from '../../component/home/BannerSection'
+import PageLoader from '../../component/common/PageLoader'
 
 const LandingPage = () => {
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
+
+
   return (
     <div>
       {/* Banner Section */}

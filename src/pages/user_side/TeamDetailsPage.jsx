@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   ArrowLeft,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useNavigate, useParams } from "react-router-dom";
+import PageLoader from "../../component/common/PageLoader";
 
 const TeamDetailsPage = () => {
   const navigate = useNavigate();
@@ -53,6 +54,21 @@ const TeamDetailsPage = () => {
 
   const member =
     teamMembers.find((item) => item.id === Number(id)) || teamMembers[0];
+
+    
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="bg-[#F5F9FF] min-h-screen">

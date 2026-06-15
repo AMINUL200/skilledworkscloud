@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import {
-  ShieldCheck,
-  FileCheck2,
-  Users,
-  BadgeCheck,
-} from "lucide-react";
+import { ShieldCheck, FileCheck2, Users, BadgeCheck } from "lucide-react";
 import HRComplianceBanner from "../../component/hrCompliance/HRComplianceBanner";
 import HRComplianceFreeAuditSection from "../../component/hrCompliance/HRComplianceFreeAuditSection";
 import HRComplianceHRMSInfoSection from "../../component/hrCompliance/HRComplianceFreeHRMSInfoSection";
 import HRPricingSection from "../../component/hrCompliance/HRPricingSection";
-
+import PageLoader from "../../component/common/PageLoader";
 
 const HRCompliancePage = () => {
   const services = [
@@ -43,6 +38,19 @@ const HRCompliancePage = () => {
     },
   ];
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
   return (
     <div className="bg-[#EEF5FD] overflow-hidden">
       {/* BANNER */}
@@ -54,8 +62,6 @@ const HRCompliancePage = () => {
       <HRComplianceHRMSInfoSection />
 
       <HRPricingSection />
-
-     
     </div>
   );
 };

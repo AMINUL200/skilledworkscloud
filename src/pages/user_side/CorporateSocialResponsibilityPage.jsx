@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   ArrowRight,
@@ -10,8 +10,10 @@ import {
   Globe,
   Quote,
 } from "lucide-react";
+import PageLoader from "../../component/common/PageLoader";
 
 const CorporateSocialResponsibilityPage = () => {
+
   const initiatives = [
     {
       title: "Education Support",
@@ -67,6 +69,22 @@ const CorporateSocialResponsibilityPage = () => {
       title: "Global Community Partnerships",
     },
   ];
+
+
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="bg-background overflow-hidden">

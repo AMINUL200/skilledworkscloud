@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   CalendarDays,
@@ -11,6 +11,7 @@ import {
   ArrowRight,
   CheckCircle2,
 } from "lucide-react";
+import PageLoader from "../../component/common/PageLoader";
 
 const BlogDetail = () => {
   /* ================= RELATED BLOGS ================= */
@@ -64,6 +65,21 @@ const BlogDetail = () => {
         "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop",
     },
   ];
+
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="bg-[#EEF5FD]">

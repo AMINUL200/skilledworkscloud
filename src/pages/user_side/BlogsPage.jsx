@@ -1,4 +1,4 @@
-import React, { use, useMemo, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 
 import {
   CalendarDays,
@@ -13,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import PageLoader from "../../component/common/PageLoader";
 
 const BlogsPage = () => {
     const navigate = useNavigate();
@@ -148,6 +149,22 @@ const BlogsPage = () => {
     startIndex,
     startIndex + blogsPerPage,
   );
+
+
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the duration as needed
+    return () => clearTimeout(timer);
+  } , []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="bg-[#EEF5FD]">
