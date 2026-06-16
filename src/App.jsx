@@ -24,6 +24,7 @@ import SMTPSettingsPage from "./pages/admin/settings/SMTPSettingsPage";
 import SEOSettingsPage from "./pages/admin/settings/SEOSettingsPage";
 import ServiceDetailsPage from "./pages/user_side/ServiceDetailsPage";
 import ServicePage from "./pages/user_side/ServicePage";
+import GalleryPage from "./pages/user_side/GalleryPage";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
 
         <Route element={<AppLayout />}>
           <Route index path="/" element={<LandingPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/blog/:id" element={<BlogDetail />} /> {/* Blog detail route */}

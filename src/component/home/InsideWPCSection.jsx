@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArrowRight, Play, Camera, Users, Building2, Coffee, Calendar, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const InsideWPCSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -69,6 +70,8 @@ const InsideWPCSection = () => {
   const prevSlide = () => {
     setActiveIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
   };
+
+  const navigate = useNavigate();
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-28 bg-[#EEF5FD]">
@@ -223,7 +226,9 @@ const InsideWPCSection = () => {
 
         {/* View More Button */}
         <div className="flex justify-center">
-          <button className="group relative inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 overflow-hidden" style={{ background: "var(--color-primary)", color: "white", boxShadow: "0 4px 16px rgba(37,99,235,0.3)" }}>
+          <button 
+          onClick={() => navigate("/gallery")}
+          className="group relative inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 overflow-hidden" style={{ background: "var(--color-primary)", color: "white", boxShadow: "0 4px 16px rgba(37,99,235,0.3)" }}>
             <span className="relative z-10">Explore Full Gallery</span>
             <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

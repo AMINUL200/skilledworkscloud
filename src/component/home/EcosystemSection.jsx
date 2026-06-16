@@ -183,12 +183,12 @@ const EcosystemSection = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+                  {/* <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                     <span className="text-[13px] font-bold text-[#0B4EA2]">{card.company}</span>
                     <button className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-[#0B4EA2] hover:bg-[#0B4EA2] hover:text-white transition-all duration-200">
                       <ArrowRight className="w-4 h-4" />
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );
@@ -262,7 +262,7 @@ const EcosystemSection = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                    {/* <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-[13px] font-bold text-[#0B4EA2]">{card.company}</span>
                       <button
                         className="flex items-center gap-2 bg-[#0B4EA2] text-white text-xs font-semibold px-3.5 py-2 rounded-xl hover:bg-[#0d4fa8] transition-colors"
@@ -270,7 +270,7 @@ const EcosystemSection = () => {
                       >
                         Learn more <ArrowRight className="w-3.5 h-3.5" />
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

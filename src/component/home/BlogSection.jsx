@@ -1,33 +1,40 @@
 import React from "react";
 import { Share2, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const BlogSection = () => {
   const blogs = [
     {
+      id: 1,
       category: "Compliance",
       title: "Skilled Worker Visa Caseworker Guidance Updated May 2026: What UK Sponsors Need to Know",
       date: "14 May, 2026",
       image: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop",
     },
     {
+      id: 2,
       category: "Compliance",
       title: "Home Office Salary Checks for Sponsor Licences: What Every UK Employer Must Know in 2026",
       date: "12 May, 2026",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop",
     },
     {
+      id: 3,
       category: "Compliance",
       title: "FLR(HRO) Fee Waiver Pending? Why Switching to a Skilled Worker Visa Could Cost You More",
       date: "06 May, 2026",
       image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop",
     },
     {
+      id: 4,
       category: "ILR",
       title: "Completed 5 Years on a Skilled Worker Visa for ILR — But Your Partner Joined Later. Here's What You Need to Know",
       date: "18 April, 2026",
       image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
     },
   ];
+
+  const navigate = useNavigate();
 
   return (
     <section className="relative overflow-hidden py-14 sm:py-18 lg:py-24 bg-[#EEF5FD] w-full">
@@ -54,8 +61,9 @@ const BlogSection = () => {
         <div className="mt-10 sm:mt-14 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
           {blogs.map((blog, index) => (
             <div
-              key={index}
-              className="group bg-white rounded-2xl sm:rounded-[24px] lg:rounded-[28px] border border-border overflow-hidden shadow-[0_6px_30px_rgba(15,23,42,0.05)] hover:-translate-y-1 hover:shadow-[0_16px_50px_rgba(15,23,42,0.10)] transition-all duration-500 flex flex-col"
+              key={blog.id || index}
+              onClick={() => navigate(`/blog/${blog.id}`)} // Navigate to blog detail page
+              className="group bg-white rounded-2xl sm:rounded-[24px] lg:rounded-[28px] border border-border overflow-hidden shadow-[0_6px_30px_rgba(15,23,42,0.05)] hover:-translate-y-1 hover:shadow-[0_16px_50px_rgba(15,23,42,0.10)] transition-all duration-500 flex flex-col cursor-pointer"
             >
               {/* IMAGE — aspect-ratio keeps proportions at every width */}
               <div className="relative aspect-[16/10] overflow-hidden shrink-0">
@@ -92,7 +100,10 @@ const BlogSection = () => {
 
         {/* ── BOTTOM CTA ── */}
         <div className="mt-10 sm:mt-14 flex justify-center">
-          <button className="bg-white border border-border text-primary px-7 sm:px-10 py-3 sm:py-4 rounded-[18px] sm:rounded-[22px] text-sm sm:text-base font-semibold flex items-center gap-2 shadow-sm hover:bg-primary hover:text-white transition-all duration-300">
+          <button 
+            className="bg-white border border-border text-primary px-7 sm:px-10 py-3 sm:py-4 rounded-[18px] sm:rounded-[22px] text-sm sm:text-base font-semibold flex items-center gap-2 shadow-sm hover:bg-primary hover:text-white transition-all duration-300"
+            onClick={() => navigate("/blogs")}
+          >
             View All Blogs
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
