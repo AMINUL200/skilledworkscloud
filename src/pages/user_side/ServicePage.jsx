@@ -4,6 +4,7 @@ import ServServiceOverviewSection from '../../component/common/service_page_sect
 import ServCustomerReview from '../../component/common/service_page_sections/ServCustomerReview'
 import ServCTASection from '../../component/common/service_page_sections/ServCTASection'
 import PageLoader from '../../component/common/PageLoader'
+import ServFaqSection from '../../component/common/service_page_sections/ServFaqSection'
 
 const ServicePage = () => {
 
@@ -27,6 +28,7 @@ const ServicePage = () => {
       <ServBannerSection />
       <ServServiceOverviewSection />
       <ServCustomerReview/>
+      <ServFaqSection/>
       <ServCTASection/>
     </div>
   )

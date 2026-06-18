@@ -11,8 +11,12 @@ import {
   Mail,
   ChevronDown,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { api } from "../../utils/app";
+import { toast } from "react-toastify";
 
 const AdminNavbar = ({ setSidebarOpen }) => {
+  const { logout, user, token } = useAuth();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const profileRef = useRef(null);
@@ -21,58 +25,36 @@ const AdminNavbar = ({ setSidebarOpen }) => {
 
   // Dummy user data - replace with your actual user data
   const userData = {
-    name: "Admin User",
-    email: "admin@example.com",
+    name: `${user?.name || "Admin User"}`,
+    email: `${user?.email || "admin@example.com"}`,
     role: "Administrator",
     avatar: null, // Set to image URL if available
   };
 
-  // Dummy notifications - replace with your actual notifications
-  const notifications = [
-    {
-      id: 1,
-      title: "New user registered",
-      message: "John Doe just signed up",
-      time: "5 min ago",
-      unread: true,
-    },
-    {
-      id: 2,
-      title: "Payment received",
-      message: "Payment of $299 received",
-      time: "1 hour ago",
-      unread: true,
-    },
-    {
-      id: 3,
-      title: "System update",
-      message: "System updated successfully",
-      time: "2 hours ago",
-      unread: false,
-    },
-  ];
-
-  const unreadCount = notifications.filter((n) => n.unread).length;
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setShowProfileMenu(false);
+  const handleLogout = async () => {
+    try {
+      if (token) {
+        const res = await api.post("/logout");
+        if (res.data.status) {
+          logout();
+          navigate("/login", { replace: true });
+          toast.success("Logged out successfully!");
+        } else {
+          console.error("Logout failed:", res.data.message);
+          toast.error("Logout failed. Please try again.");
+        }
+      } else {
+        logout();
+        navigate("/login", { replace: true });
       }
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotifications(false);
-      }
-    };
+    } catch (error) {
+      console.error("Logout Error:", error);
+      toast.error("Logout failed. Please try again.");
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    console.log("Logging out...");
-    // Add your logout logic here
-    navigate("/signin");
+      // Optional: still logout locally if API fails
+      logout();
+      navigate("/login", { replace: true });
+    }
   };
 
   const handleProfileClick = () => {
@@ -111,8 +93,6 @@ const AdminNavbar = ({ setSidebarOpen }) => {
 
           {/* Right side */}
           <div className="flex items-center space-x-4">
-            
-
             {/* User Profile Dropdown */}
             <div className="relative" ref={profileRef}>
               <button
@@ -164,20 +144,16 @@ const AdminNavbar = ({ setSidebarOpen }) => {
                         <p className="text-white font-semibold text-sm">
                           {userData.name}
                         </p>
-                        <p className="text-white/80 text-xs">{userData.email}</p>
+                        <p className="text-white/80 text-xs">
+                          {userData.email}
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Menu Items */}
                   <div className="py-2">
-                   
-
-                    
-
-                    <button
-                      className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors text-left"
-                    >
+                    <button className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors text-left">
                       <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                         <Mail className="w-4 h-4 text-green-600" />
                       </div>

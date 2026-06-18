@@ -7,6 +7,9 @@ import {
   ArrowRight,
   MessageSquareWarning,
   Headset,
+  Globe,
+  Building2,
+  Navigation,
 } from "lucide-react";
 import PageLoader from "../../component/common/PageLoader";
 
@@ -160,17 +163,70 @@ const ComplaintForm = () => (
   </div>
 );
 
+// ── Map Component ────────────────────────────────────────────
+const LocationMap = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  return (
+    <div className="relative w-full h-[400px] sm:h-[450px] lg:h-[500px] rounded-2xl sm:rounded-[28px] overflow-hidden shadow-[0_15px_60px_rgba(15,23,42,0.08)] border border-border">
+      {/* Embedded Google Map */}
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.523079412905!2d0.025334!3d51.507351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Office Location Map"
+        className={`transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      />
+      
+      {/* Loading Skeleton */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+          <div className="animate-pulse flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-gray-300" />
+            <div className="h-4 w-32 bg-gray-300 rounded" />
+          </div>
+        </div>
+      )}
+
+      {/* Map Overlay Info */}
+      <div className="absolute bottom-6 left-6 right-6 md:left-8 md:right-auto md:bottom-8 bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-lg border border-white/20 max-w-[320px]">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+            <Navigation size={20} className="text-primary" />
+          </div>
+          <div>
+            <h4 className="font-bold text-text text-sm">Visit Our Office</h4>
+            <p className="text-xs text-text-light leading-5 mt-0.5">
+              Suite 602, 6th Floor, 252-262 Romford Road, London, E7 9HZ
+            </p>
+            <button className="mt-2 text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+              Get Directions
+              <ArrowRight size={12} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ── Main component ───────────────────────────────────────────
 const ContactPage = () => {
   const [activeTab, setActiveTab] = useState("contact");
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust the duration as needed
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -319,6 +375,66 @@ const ContactPage = () => {
 
         {/* ── COMPLAINT TAB ── */}
         {activeTab === "complaint" && <ComplaintForm />}
+
+        {/* ── MAP SECTION ── */}
+        <div className="mt-16 sm:mt-20 lg:mt-24">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <Globe size={16} className="text-primary" />
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                Find Us
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text">
+              Visit Our <span className="text-primary">Office</span>
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-text-light max-w-2xl mx-auto">
+              We're conveniently located in London. Come visit us or get in touch
+              through any of the channels above.
+            </p>
+          </div>
+
+          <LocationMap />
+
+          {/* Quick Info Cards */}
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl p-4 border border-border shadow-sm hover:shadow-md transition-all group">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <MapPin size={18} className="text-primary" />
+                </div>
+                <div>
+                  <h5 className="font-semibold text-text text-sm">Address</h5>
+                  <p className="text-xs text-text-light">London, E7 9HZ</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-4 border border-border shadow-sm hover:shadow-md transition-all group">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Phone size={18} className="text-primary" />
+                </div>
+                <div>
+                  <h5 className="font-semibold text-text text-sm">Phone</h5>
+                  <p className="text-xs text-text-light">+44 0208 129 1655</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-4 border border-border shadow-sm hover:shadow-md transition-all group">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Clock size={18} className="text-primary" />
+                </div>
+                <div>
+                  <h5 className="font-semibold text-text text-sm">Hours</h5>
+                  <p className="text-xs text-text-light">Mon-Fri: 9am - 6pm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -14,6 +14,16 @@ import {
   Building2,
   Newspaper,
   Phone,
+  Calculator,
+  Search,
+  ClipboardCheck,
+  Clock,
+  GraduationCap,
+  Users,
+  AlertCircle,
+  Star,
+  CheckSquare,
+  Briefcase as BriefcaseIcon,
 } from "lucide-react";
 
 const SideBar = ({ toggleMenu, isOpen }) => {
@@ -152,11 +162,84 @@ const SideBar = ({ toggleMenu, isOpen }) => {
       label: "Tools",
       icon: <Wrench className="w-5 h-5" />,
       dropdown: [
-        { id: "ihs", label: "IHS & Visa Fee Calculator", path: "/ihs-visa-fee-calculator" },
-        { id: "ilr", label: "ILR Calculator", path: "/ilr-calculator" },
-        { id: "supplementary", label: "Supplementary Employment", path: "/supplementary-employment" },
-        { id: "temp-shortage", label: "Temp Shortage Occupation", path: "/temp-shortage-occupation" },
-        { id: "rqf", label: "RQF Level 6", path: "/rqf-level-6" },
+        { 
+          id: "sponsor-licence", 
+          label: "Get Your Sponsor Licence Today", 
+          path: "/tools/get-your-sponsor-licence",
+          icon: <FileCheck className="w-4 h-4" />
+        },
+        { 
+          id: "sponsor-status", 
+          label: "Sponsor Licence Status Check", 
+          path: "/tools/sponsor-licence-status-check",
+          icon: <Search className="w-4 h-4" />
+        },
+        { 
+          id: "ilr-eligibility", 
+          label: "ILR Eligibility - Free Assessment", 
+          path: "/tools/ilr-eligibility",
+          icon: <ClipboardCheck className="w-4 h-4" />
+        },
+        { 
+          id: "ihs", 
+          label: "IHS & Visa Fee Calculator", 
+          path: "/tools/ihs-visa-fee-calculator",
+          icon: <Calculator className="w-4 h-4" />
+        },
+        { 
+          id: "right-to-work", 
+          label: "Right To Work Check", 
+          path: "/tools/right-to-work-check",
+          icon: <CheckSquare className="w-4 h-4" />
+        },
+        { 
+          id: "additional-work", 
+          label: "Can I Take Additional Work?", 
+          path: "/tools/can-i-take-additional-work",
+          icon: <BriefcaseIcon className="w-4 h-4" />
+        },
+        { 
+          id: "sponsored-job", 
+          label: "Looking for a Sponsored Job?", 
+          path: "/tools/looking-for-sponsored-job",
+          icon: <Users className="w-4 h-4" />
+        },
+        { 
+          id: "hr-audit", 
+          label: "Get Free HR Compliance Audit", 
+          path: "/tools/free-hr-compliance-audit",
+          icon: <AlertCircle className="w-4 h-4" />
+        },
+        // Divider - Resources & Additional Tools
+        {
+          id: "divider-1",
+          type: "divider",
+          label: "Resources & Additional Tools",
+        },
+        { 
+          id: "temporary-shortage", 
+          label: "Temporary Shortage Occupation", 
+          path: "/tools/temporary-shortage-occupation",
+          icon: <Clock className="w-4 h-4" />
+        },
+        { 
+          id: "rqf-level", 
+          label: "RQF Level 6", 
+          path: "/tools/rqf-level-6",
+          icon: <GraduationCap className="w-4 h-4" />
+        },
+        { 
+          id: "wpc-calculator", 
+          label: "WPC Visa Fee Calculator", 
+          path: "/tools/wpc-visa-fee-calculator",
+          icon: <Calculator className="w-4 h-4" />
+        },
+        { 
+          id: "supplementary", 
+          label: "Supplementary Employment", 
+          path: "/tools/supplementary-employment",
+          icon: <BriefcaseIcon className="w-4 h-4" />
+        },
       ],
     },
     {
@@ -400,29 +483,48 @@ const SideBar = ({ toggleMenu, isOpen }) => {
         <div
           className={`
             overflow-hidden transition-all duration-300
-            ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+            ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}
           `}
         >
           <div className="mt-2 ml-6 space-y-1">
-            {item.dropdown?.map((subItem) => (
-              <div
-                key={subItem.id}
-                onClick={() => handleNavigate(subItem.path)}
-                className={`
-                  flex items-center gap-2
-                  px-4 py-3 rounded-xl
-                  text-sm cursor-pointer
-                  transition-all duration-200
-                  ${isActivePath(subItem.path)
-                    ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
-                    : "text-text-light hover:bg-primary-light hover:text-primary"
-                  }
-                `}
-              >
-                <ChevronRight size={14} />
-                <span>{subItem.label}</span>
-              </div>
-            ))}
+            {item.dropdown?.map((subItem) => {
+              // Check if it's a divider
+              if (subItem.type === "divider") {
+                return (
+                  <div
+                    key={subItem.id}
+                    className="px-4 py-3 mt-2 border-t border-gray-200"
+                  >
+                    <span className="text-[11px] uppercase font-bold text-gray-400 tracking-wider">
+                      {subItem.label}
+                    </span>
+                  </div>
+                );
+              }
+              
+              return (
+                <div
+                  key={subItem.id}
+                  onClick={() => handleNavigate(subItem.path)}
+                  className={`
+                    flex items-center gap-2
+                    px-4 py-3 rounded-xl
+                    text-sm cursor-pointer
+                    transition-all duration-200
+                    ${isActivePath(subItem.path)
+                      ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+                      : "text-text-light hover:bg-primary-light hover:text-primary"
+                    }
+                  `}
+                >
+                  {subItem.icon && (
+                    <span className="text-gray-400">{subItem.icon}</span>
+                  )}
+                  <ChevronRight size={14} className="text-gray-400" />
+                  <span>{subItem.label}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

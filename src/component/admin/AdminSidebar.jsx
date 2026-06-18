@@ -38,38 +38,24 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       icon: <LayoutDashboard className="w-5 h-5" />,
       path: "/admin",
     },
-    {
-      id: "profile",
-      label: "Profile",
-      icon: <User2 className="w-5 h-5" />,
-      path: "/admin/profile",
-    },
-    {
-      id: "users",
-      label: "Users Management",
-      icon: <Users className="w-5 h-5" />,
-      children: [
-        {
-          id: "all-users",
-          label: "All Users",
-          icon: <Users className="w-4 h-4" />,
-          path: "/admin/users/all",
-        },
-        {
-          id: "user-roles",
-          label: "User Roles",
-          icon: <UserCog className="w-4 h-4" />,
-          path: "/admin/users/roles",
-        },
-        {
-          id: "permissions",
-          label: "Permissions",
-          icon: <Shield className="w-4 h-4" />,
-          path: "/admin/users/permissions",
-        },
-      ],
-    },
-   
+    // {
+    //   id: "profile",
+    //   label: "Profile",
+    //   icon: <User2 className="w-5 h-5" />,
+    //   path: "/admin/profile",
+    // },
+   {
+    id: "banners",
+    label: "Banners",
+    icon: <LayoutDashboard className="w-5 h-5" />,
+    path: "/admin/manage-banners",
+   },
+   {
+    id: "teams",
+    label: "Teams",
+    icon: <Users className="w-5 h-5" />,
+    path: "/admin/manage-teams",
+   },
     {
       id: "settings",
       label: "Settings",
@@ -93,24 +79,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           icon: <TrendingUp className="w-4 h-4" />,
           path: "/admin/seo-settings",
         },
-        {
-          id: "appearance",
-          label: "Appearance",
-          icon: <Palette className="w-4 h-4" />,
-          path: "/admin/settings/appearance",
-        },
-        {
-          id: "notifications",
-          label: "Notifications",
-          icon: <Bell className="w-4 h-4" />,
-          path: "/admin/settings/notifications",
-        },
-        {
-          id: "integrations",
-          label: "Integrations",
-          icon: <Globe className="w-4 h-4" />,
-          path: "/admin/settings/integrations",
-        },
+       
       ],
     },
   ];

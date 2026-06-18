@@ -60,33 +60,63 @@ const Navbar = ({ toggleMenu }) => {
         {
           title: "Sponsorship Licence",
           links: [
-            { label: "Sponsor Licence Renewal", path: "/services/sponsor-licence-renewal" },
-            { label: "Sponsor Licence Suspension", path: "/services/sponsor-licence-suspension" },
-            { label: "Sponsor Licence Application", path: "/services/sponsor-licence-application" },
+            {
+              label: "Sponsor Licence Renewal",
+              path: "/services/sponsor-licence-renewal",
+            },
+            {
+              label: "Sponsor Licence Suspension",
+              path: "/services/sponsor-licence-suspension",
+            },
+            {
+              label: "Sponsor Licence Application",
+              path: "/services/sponsor-licence-application",
+            },
           ],
         },
         {
           title: "Immigration Compliance",
           links: [
             { label: "Civil Penalty", path: "/services/civil-penalty" },
-            { label: "HO Compliance Visit", path: "/services/ho-compliance-visit" },
-            { label: "Right to Work Check", path: "/services/right-to-work-check" },
+            {
+              label: "HO Compliance Visit",
+              path: "/services/ho-compliance-visit",
+            },
+            {
+              label: "Right to Work Check",
+              path: "/services/right-to-work-check",
+            },
           ],
         },
         {
           title: "Skilled Worker Visas",
           links: [
-            { label: "Skilled Worker Visa", path: "/services/skilled-worker-visa" },
-            { label: "Minister of Religion Visa", path: "/services/minister-of-religion-visa" },
+            {
+              label: "Skilled Worker Visa",
+              path: "/services/skilled-worker-visa",
+            },
+            {
+              label: "Minister of Religion Visa",
+              path: "/services/minister-of-religion-visa",
+            },
             { label: "Health Care Visa", path: "/services/health-care-visa" },
           ],
         },
         {
           title: "Temporary (Tier 5) Visas",
           links: [
-            { label: "Religious Worker Visa", path: "/services/religious-worker-visa" },
-            { label: "Creative Worker Visa", path: "/services/creative-worker-visa" },
-            { label: "Charity Worker Visa", path: "/services/charity-worker-visa" },
+            {
+              label: "Religious Worker Visa",
+              path: "/services/religious-worker-visa",
+            },
+            {
+              label: "Creative Worker Visa",
+              path: "/services/creative-worker-visa",
+            },
+            {
+              label: "Charity Worker Visa",
+              path: "/services/charity-worker-visa",
+            },
           ],
         },
         {
@@ -94,15 +124,27 @@ const Navbar = ({ toggleMenu }) => {
           links: [
             { label: "Spouse Visa", path: "/services/spouse-visa" },
             { label: "Dependent Visa", path: "/services/dependent-visa" },
-            { label: "Unmarried Partner Visa", path: "/services/unmarried-partner-visa" },
+            {
+              label: "Unmarried Partner Visa",
+              path: "/services/unmarried-partner-visa",
+            },
           ],
         },
         {
           title: "Global Business Mobility",
           links: [
-            { label: "Graduate Trainee Visa", path: "/services/graduate-trainee-visa" },
-            { label: "UK Expansion Worker Visa", path: "/services/uk-expansion-worker-visa" },
-            { label: "Specialist Worker Visa", path: "/services/specialist-worker-visa" },
+            {
+              label: "Graduate Trainee Visa",
+              path: "/services/graduate-trainee-visa",
+            },
+            {
+              label: "UK Expansion Worker Visa",
+              path: "/services/uk-expansion-worker-visa",
+            },
+            {
+              label: "Specialist Worker Visa",
+              path: "/services/specialist-worker-visa",
+            },
           ],
         },
         {
@@ -117,23 +159,38 @@ const Navbar = ({ toggleMenu }) => {
           title: "Study Visas",
           links: [
             { label: "Student Visa", path: "/services/student-visa" },
-            { label: "Child Student Visa", path: "/services/child-student-visa" },
+            {
+              label: "Child Student Visa",
+              path: "/services/child-student-visa",
+            },
             { label: "Graduate Visa", path: "/services/graduate-visa" },
           ],
         },
         {
           title: "Business Visas",
           links: [
-            { label: "Self-Sponsorship In UK", path: "/services/self-sponsorship" },
-            { label: "Innovator Founder Visa", path: "/services/innovator-founder-visa" },
-            { label: "Turkish Businessperson Visa", path: "/services/turkish-businessperson-visa" },
+            {
+              label: "Self-Sponsorship In UK",
+              path: "/services/self-sponsorship",
+            },
+            {
+              label: "Innovator Founder Visa",
+              path: "/services/innovator-founder-visa",
+            },
+            {
+              label: "Turkish Businessperson Visa",
+              path: "/services/turkish-businessperson-visa",
+            },
           ],
         },
         {
           title: "Scale Up Visa",
           links: [
             { label: "Scale-up Visa", path: "/services/scale-up-visa" },
-            { label: "Scale-up Sponsor Licence", path: "/services/scale-up-sponsor-licence" },
+            {
+              label: "Scale-up Sponsor Licence",
+              path: "/services/scale-up-sponsor-licence",
+            },
             { label: "Scale up Business", path: "/services/scale-up-business" },
           ],
         },
@@ -149,11 +206,74 @@ const Navbar = ({ toggleMenu }) => {
       id: "tools",
       label: "Tools",
       dropdown: [
-        { id: "ihs", label: "IHS & Visa Fee Calculator", path: "/ihs-visa-fee-calculator" },
-        { id: "ilr", label: "ILR Calculator", path: "/ilr-calculator" },
-        { id: "supplementary", label: "Supplementary Employment", path: "/supplementary-employment" },
-        { id: "temp-shortage", label: "Temp Shortage Occupation", path: "/temp-shortage-occupation" },
-        { id: "rqf", label: "RQF Level 6", path: "/rqf-level-6" },
+        {
+          id: "sponsor-licence",
+          label: "Get Your Sponsor Licence Today",
+          path: "/tools/get-your-sponsor-licence",
+        },
+        {
+          id: "sponsor-status",
+          label: "Sponsor Licence Status Check",
+          path: "/tools/sponsor-licence-status-check",
+        },
+        {
+          id: "ilr-eligibility",
+          label: "ILR Eligibility - Free Assessment",
+          path: "/tools/ilr-eligibility",
+        },
+        {
+          id: "ihs",
+          label: "IHS & Visa Fee Calculator",
+          path: "/tools/ihs-visa-fee-calculator",
+        },
+        {
+          id: "right-to-work",
+          label: "Right To Work Check",
+          path: "/tools/right-to-work-check",
+        },
+        {
+          id: "additional-work",
+          label: "Can I Take Additional Work?",
+          path: "/tools/can-i-take-additional-work",
+        },
+        {
+          id: "sponsored-job",
+          label: "Looking for a Sponsored Job?",
+          path: "/tools/looking-for-sponsored-job",
+        },
+        {
+          id: "hr-audit",
+          label: "Get Free HR Compliance Audit",
+          path: "/tools/free-hr-compliance-audit",
+        },
+
+        // Divider Title
+        {
+          id: "divider",
+          type: "divider",
+          label: "Resources & Additional Tools",
+        },
+
+        {
+          id: "temporary-shortage",
+          label: "Temporary Shortage Occupation",
+          path: "/tools/temporary-shortage-occupation",
+        },
+        {
+          id: "rqf-level",
+          label: "RQF Level 6",
+          path: "/tools/rqf-level-6",
+        },
+        {
+          id: "wpc-calculator",
+          label: "WPC Visa Fee Calculator",
+          path: "/tools/wpc-visa-fee-calculator",
+        },
+        {
+          id: "supplementary",
+          label: "Supplementary Employment",
+          path: "/tools/supplementary-employment",
+        },
       ],
     },
     { id: "hr", label: "HR Compliance", path: "/hr-compliance" },
@@ -184,7 +304,8 @@ const Navbar = ({ toggleMenu }) => {
 
   /* ---------------- NAV ITEM RENDERER ---------------- */
   const renderNavItem = (item) => {
-    const hasDropdown = (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
+    const hasDropdown =
+      (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
     const isOpen = !!openDropdowns[item.id];
 
     return (
@@ -268,7 +389,7 @@ const Navbar = ({ toggleMenu }) => {
                 <div className="h-1 w-full bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
               </div>
             ) : (
-              /* ===== NORMAL DROPDOWN ===== */
+              /* ===== NORMAL DROPDOWN WITH SCROLL ===== */
               <div
                 className={`
                   absolute top-full left-0 mt-5
@@ -282,17 +403,36 @@ const Navbar = ({ toggleMenu }) => {
                   ${isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-3"}
                 `}
               >
-                <div className="space-y-1">
-                  {item.dropdown?.map((subItem) => (
-                    <RouterLink
-                      key={subItem.id}
-                      to={subItem.path}
-                      onClick={() => setOpenDropdowns({})}
-                      className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[14px] sm:text-[15px] font-medium text-text-light hover:bg-primary-light hover:text-primary transition-all duration-300"
-                    >
-                      {subItem.label}
-                    </RouterLink>
-                  ))}
+                {/* Scrollable container with fixed height */}
+                <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+                  <div className="space-y-1">
+                    {item.dropdown?.map((subItem) => {
+                      // Check if it's a divider
+                      if (subItem.type === "divider") {
+                        return (
+                          <div
+                            key={subItem.id}
+                            className="px-3 sm:px-4 py-2 mt-2 border-t border-gray-200"
+                          >
+                            <span className="text-[11px] uppercase font-bold text-gray-400 tracking-wider">
+                              {subItem.label}
+                            </span>
+                          </div>
+                        );
+                      }
+                      
+                      return (
+                        <RouterLink
+                          key={subItem.id}
+                          to={subItem.path}
+                          onClick={() => setOpenDropdowns({})}
+                          className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[14px] sm:text-[15px] font-medium text-text-light hover:bg-primary-light hover:text-primary transition-all duration-300"
+                        >
+                          {subItem.label}
+                        </RouterLink>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}
@@ -319,9 +459,16 @@ const Navbar = ({ toggleMenu }) => {
     >
       <div className="max-w-[1450px] mx-auto px-5 lg:px-8 flex items-center justify-between">
         {/* LOGO */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
+        <div
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <div className="w-28 h-24 rounded-2xl flex items-center justify-center">
-            <img src="/image/swc_logo.png" alt="logo" className="w-full h-full object-contain" />
+            <img
+              src="/image/swc_logo.png"
+              alt="logo"
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
 
@@ -346,6 +493,24 @@ const Navbar = ({ toggleMenu }) => {
           </button>
         </div>
       </div>
+
+      {/* Custom scrollbar styles */}
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #d1d5db;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #9ca3af;
+        }
+      `}</style>
     </header>
   );
 };

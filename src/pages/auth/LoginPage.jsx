@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, LogIn } from "lucide-react";
 import CustomInput from "../../component/form/CustomInput";
+import { useAuth } from "../../context/AuthContext";
+import { api } from "../../utils/app";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "admin@gmail.com",
+    password: "admin@123",
   });
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,11 +27,17 @@ const LoginPage = () => {
       [name]: value,
     }));
 
+    // Clear field-specific error when user types
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
+    }
+
+    // Clear API error when user types
+    if (apiError) {
+      setApiError("");
     }
   };
 
@@ -46,25 +57,66 @@ const LoginPage = () => {
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Clear previous API error
+    setApiError("");
+
     if (!validateForm()) return;
 
     try {
       setIsLoading(true);
 
-      // API CALL HERE
-      console.log(formData);
+      // API CALL
+      const response = await api.post("/login", {
+        email: formData.email,
+        password: formData.password,
+      });
 
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1500);
+      // Check if login was successful
+      if (response.data.status === true) {
+        // Use the login function from AuthContext
+        login(response.data);
+        
+        // Redirect to dashboard or home page
+        navigate("/admin"); // Adjust the route as needed
+        toast.success("Login successful!");
+      } else {
+        // Handle unexpected response structure
+        setApiError(response.data.message || "Login failed. Please try again.");
+      }
     } catch (error) {
+      // Handle API errors
+      console.error("Login error:", error);
+      toast.error("Login failed. Please try again.");
+      // Extract error message from the interceptor's formatted error
+      if (error.message) {
+        setApiError(error.message);
+      } else if (error.data?.message) {
+        setApiError(error.data.message);
+      } else if (error.response?.data?.message) {
+        setApiError(error.response.data.message);
+      } else if (error.response?.data?.errors) {
+        // Handle validation errors from backend
+        const validationErrors = error.response.data.errors;
+        if (typeof validationErrors === 'object') {
+          // Set field-specific errors
+          const fieldErrors = {};
+          Object.keys(validationErrors).forEach((key) => {
+            fieldErrors[key] = validationErrors[key][0] || validationErrors[key];
+          });
+          setErrors(fieldErrors);
+        } else {
+          setApiError(validationErrors);
+        }
+      } else {
+        setApiError("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -155,6 +207,13 @@ const LoginPage = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                {/* API Error Message */}
+                {apiError && (
+                  <div className="bg-danger/10 border border-danger/20 text-danger p-3 rounded-lg text-sm">
+                    {apiError}
+                  </div>
+                )}
+
                 {/* Email */}
                 <div>
                   <CustomInput
@@ -164,6 +223,7 @@ const LoginPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     autoComplete="email"
+                    disabled={isLoading}
                   />
 
                   {errors.email && (
@@ -182,6 +242,7 @@ const LoginPage = () => {
                     value={formData.password}
                     onChange={handleChange}
                     autoComplete="current-password"
+                    disabled={isLoading}
                   />
 
                   {errors.password && (
@@ -197,6 +258,7 @@ const LoginPage = () => {
                     <input
                       type="checkbox"
                       className="w-4 h-4 accent-primary"
+                      disabled={isLoading}
                     />
                     <span className="text-sm text-text-light">
                       Remember me
