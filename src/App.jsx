@@ -33,10 +33,13 @@ import GalleryPage from "./pages/user_side/GalleryPage";
 import ToolDetailsPage from "./pages/user_side/ToolDetailsPage";
 import ManageBanner from "./pages/admin/banner/MangeBanner";
 import ManageTeam from "./pages/admin/team/MangeTeam";
+import ManageBlogs from "./pages/admin/blog/ManageBlog";
 
 
 import { useAuth } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
+import ManageAbout from "./pages/admin/about/ManageAbout";
+import ManageSocialResponsibilities from "./pages/admin/social_responsibilits/ManageSocialResponsibilities";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -65,7 +68,7 @@ const App = () => {
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blogs" element={<BlogsPage />} />
-          <Route path="/blog/:id" element={<BlogDetail />} />{" "}
+          <Route path="/blog/:slug" element={<BlogDetail />} />{" "}
           {/* Blog detail route */}
           <Route path="/hr-compliance" element={<HRCompliancePage />} />{" "}
           {/* HR Compliance page route */}
@@ -106,6 +109,9 @@ const App = () => {
 
             <Route path="manage-banners" element={<ManageBanner />} />
             <Route path="manage-teams" element={<ManageTeam />} />
+            <Route path="manage-blogs" element={<ManageBlogs />} />
+            <Route path="manage-about" element={<ManageAbout />} />
+            <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
 
 
 

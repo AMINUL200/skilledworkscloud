@@ -51,6 +51,24 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
     path: "/admin/manage-banners",
    },
    {
+    id: "blogs",
+    label: "Blogs",
+    icon: <FileText className="w-5 h-5" />,
+    path: "/admin/manage-blogs",
+   },
+   {
+    id: "about",
+    label: "About",
+    icon: <UserCog className="w-5 h-5" />,
+    path: "/admin/manage-about",
+   },
+   {
+    id: "social-responsibilities",
+    label: "Social Responsibilities",
+    icon: <Globe className="w-5 h-5" />,
+    path: "/admin/manage-social-responsibilities",
+   },
+   {
     id: "teams",
     label: "Teams",
     icon: <Users className="w-5 h-5" />,
