@@ -1,54 +1,6 @@
 import React, { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
-
-const principles = [
-  {
-    title: "Making Life Easy",
-    dark: false,
-    points: [
-      "Dedicated time to organise patient needs",
-      "Offer customised healthcare solutions",
-      "Take away the health burden to make life easy",
-    ],
-  },
-  {
-    title: "Doing Things Fast",
-    dark: true,
-    points: [
-      "Save time with instant booking",
-      "Get the right result first time",
-      "Streamline your health process",
-    ],
-  },
-  {
-    title: "Complying with all Health Regulations",
-    dark: false,
-    points: [
-      "Automated check of health records",
-      "Insights — implementation — right results",
-      "Ministry of Health latest policy & guidelines",
-    ],
-    centered: true,
-  },
-  {
-    title: "Doing Things Right",
-    dark: true,
-    points: [
-      "Do the right thing first time",
-      "No more, no less! Ensuring patients are compliant",
-      "Get it right first time",
-    ],
-  },
-  {
-    title: "Transforming Healthcare",
-    dark: false,
-    points: [
-      "Choose the right specialist",
-      "Guiding patients down the right path",
-      "Better results, better health",
-    ],
-  },
-];
+import { getImageUrl } from "../../utils/getImageUrl";
 
 const PrincipleCard = ({ item, centered }) => {
   const [hovered, setHovered] = useState(false);
@@ -115,7 +67,66 @@ const PrincipleCard = ({ item, centered }) => {
   );
 };
 
-const AboutPrinciplesSection = () => {
+const AboutPrinciplesSection = ({ data }) => {
+  console.log("About Principles Section Data:", data);
+
+  // If no data, return null
+  if (!data) {
+    return null;
+  }
+
+  // Get image URL with base UR
+
+  // Build principles array from API data
+  const principles = [
+    {
+      title: data.card1_title || "Making Life Easy",
+      dark: false,
+      points: data.card1_desc || [
+        "Dedicated time to organise patient needs",
+        "Take away the health burden to make life easy",
+        "Offer customised healthcare solutions"
+      ],
+    },
+    {
+      title: data.card2_title || "Doing Things Fast",
+      dark: true,
+      points: data.card2_desc || [
+        "Get the right result first time",
+        "Streamline your health process",
+        "Save time with instant booking"
+      ],
+    },
+    {
+      title: data.card3_title || "Complying with all Health Regulations",
+      dark: false,
+      points: data.card3_desc || [
+        "Ministry of Health latest policy & guidelines",
+        "Automated check of health records",
+        "Insights — implementation — right results"
+      ],
+      centered: true,
+    },
+    {
+      title: data.card4_title || "Doing Things Right",
+      dark: true,
+      points: data.card4_desc || [
+        "Do the right thing first time",
+        "No more, no less! Ensuring patients are compliant",
+        "Get it right first time"
+      ],
+    },
+    {
+      title: data.card5_title || "Transforming Healthcare",
+      dark: false,
+      points: data.card5_desc || [
+        "Choose the right specialist",
+        "Guiding patients down the right path",
+        "Better results, better health"
+      ],
+    },
+  ];
+
   return (
     <section
       className="relative overflow-hidden py-10 sm:py-12 lg:py-14"
@@ -140,19 +151,29 @@ const AboutPrinciplesSection = () => {
           <div className="flex flex-col gap-4">
             {/* Top image */}
             <div className="relative rounded-2xl overflow-hidden group" style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}>
-              <img
-                src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"
-                alt="Knowledge"
-                className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
-                style={{ height: "clamp(300px, 22vh, 280px)" }}
-              />
+              <picture>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet={getImageUrl(data.mobile_image1) || getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                />
+                <source
+                  media="(min-width: 769px)"
+                  srcSet={getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                />
+                <img
+                  src={getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                  alt={data.image1_alt || "Knowledge and Expertise"}
+                  className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  style={{ height: "clamp(300px, 22vh, 280px)" }}
+                />
+              </picture>
               <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), transparent)" }} />
               <div className="absolute bottom-0 left-0 p-4">
                 <h3
                   className="font-black text-white leading-tight"
                   style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)", fontFamily: "'DM Sans', sans-serif" }}
                 >
-                  Knowledge & Expertise
+                  {data.image1_alt || "Knowledge & Expertise"}
                 </h3>
                 <p
                   className="mt-0.5"
@@ -165,19 +186,29 @@ const AboutPrinciplesSection = () => {
 
             {/* Bottom image */}
             <div className="relative rounded-2xl overflow-hidden group" style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}>
-              <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"
-                alt="Team"
-                className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
-                style={{ height: "clamp(300px, 22vh, 280px)" }}
-              />
+              <picture>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet={getImageUrl(data.mobile_image2) || getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                />
+                <source
+                  media="(min-width: 769px)"
+                  srcSet={getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                />
+                <img
+                  src={getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                  alt={data.image2_alt || "Team Collaboration"}
+                  className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  style={{ height: "clamp(300px, 22vh, 280px)" }}
+                />
+              </picture>
               <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), transparent)" }} />
               <div className="absolute bottom-0 left-0 p-4">
                 <h3
                   className="font-black text-white leading-tight"
                   style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)", fontFamily: "'DM Sans', sans-serif" }}
                 >
-                  Team Collaboration
+                  {data.image2_alt || "Team Collaboration"}
                 </h3>
                 <p
                   className="mt-0.5"
@@ -203,7 +234,7 @@ const AboutPrinciplesSection = () => {
                 letterSpacing: "0.05em",
               }}
             >
-              Our Principles
+              {data.batch || "Our Principles"}
             </span>
 
             {/* Heading */}
@@ -217,7 +248,7 @@ const AboutPrinciplesSection = () => {
                 marginBottom: "8px",
               }}
             >
-              Our Core Principles
+              {data.title || "Our Core Principles"}
             </h2>
 
             {/* Description */}
@@ -230,8 +261,7 @@ const AboutPrinciplesSection = () => {
                 maxWidth: "480px",
               }}
             >
-              We strive to become an effective Healthcare & Patient Management
-              partner for our client's day-to-day wellbeing.
+              {data.description || "We strive to become an effective Healthcare & Patient Management partner for our client's day-to-day wellbeing."}
             </p>
 
             {/* 
@@ -250,7 +280,6 @@ const AboutPrinciplesSection = () => {
 
               {/* Row 2: right-offset single card (matches reference exactly) */}
               <div className="flex justify-center gap-3">
-                {/* <div /> empty left cell */}
                 <PrincipleCard item={principles[2]} />
               </div>
 
@@ -260,25 +289,6 @@ const AboutPrinciplesSection = () => {
                 <PrincipleCard item={principles[4]} />
               </div>
             </div>
-
-            {/* CTA button */}
-            {/* <div className="mt-5">
-              <button
-                className="group flex items-center gap-2 rounded-xl font-semibold transition-all duration-200 border hover:scale-105"
-                style={{
-                  color: "var(--color-primary)",
-                  borderColor: "var(--color-primary)",
-                  background: "white",
-                  padding: "9px 20px",
-                  fontSize: "clamp(0.75rem, 0.95vw, 0.825rem)",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = "var(--color-primary)"; e.currentTarget.style.color = "white"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "white"; e.currentTarget.style.color = "var(--color-primary)"; }}
-              >
-                Explore More
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
-            </div> */}
           </div>
 
         </div>

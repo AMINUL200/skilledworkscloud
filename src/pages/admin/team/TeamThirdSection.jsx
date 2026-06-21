@@ -1,35 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { api } from '../../../utils/app';
-import { Save, Plus, Edit, Trash2, X, User, Mail, Phone, MapPin, Briefcase, Star, Users, Calendar, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { api } from "../../../utils/app";
+import {
+  Save,
+  Plus,
+  Edit,
+  Trash2,
+  X,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Star,
+  Users,
+  Calendar,
+  ExternalLink,
+} from "lucide-react";
+import CustomTextEditor from "../../../component/common/CustomTextEditor";
 
 const TeamThirdSection = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [showForm, setShowForm] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
-  const [expertiseInput, setExpertiseInput] = useState('');
+  const [expertiseInput, setExpertiseInput] = useState("");
   const [formData, setFormData] = useState({
-    name: '',
-    designation: '',
-    email: '',
-    phone: '',
-    address: '',
-    experience: '',
-    short_desc: '',
-    long_desc: '',
-    desc2: '',
-    button1_name: '',
-    button1_url: '',
-    button2_name: '',
-    button2_url: '',
-    button3_name: '',
-    button3_url: '',
-    image_alt: '',
+    name: "",
+    designation: "",
+    email: "",
+    phone: "",
+    address: "",
+    experience: "",
+    short_desc: "",
+    long_desc: "",
+    desc2: "",
+    button1_name: "",
+    button1_url: "",
+    button2_name: "",
+    button2_url: "",
+    button3_name: "",
+    button3_url: "",
+    image_alt: "",
     expertise: [],
-    status: 1
+    status: 1,
   });
 
   const [webImage, setWebImage] = useState(null);
@@ -44,10 +60,10 @@ const TeamThirdSection = () => {
   // Cleanup preview URLs
   useEffect(() => {
     return () => {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
     };
@@ -56,18 +72,28 @@ const TeamThirdSection = () => {
   const fetchMembers = async () => {
     try {
       setFetching(true);
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
 
-      const response = await api.get('/admin/team-member-list');
+      const response = await api.get("/admin/team-member-list");
 
       if (response.data.status && response.data.data) {
-        setMembers(response.data.data);
+        // Parse expertise from string to array for display
+        const membersData = response.data.data.map((member) => {
+          if (member.expertise && typeof member.expertise === "string") {
+            member.expertise = member.expertise
+              .split(",")
+              .map((item) => item.trim())
+              .filter((item) => item);
+          }
+          return member;
+        });
+        setMembers(membersData);
       }
     } catch (error) {
-      console.error('Error fetching team members:', error);
+      console.error("Error fetching team members:", error);
       setMessage({
-        type: 'error',
-        text: error.message || 'Failed to fetch team members'
+        type: "error",
+        text: error.message || "Failed to fetch team members",
       });
     } finally {
       setFetching(false);
@@ -81,50 +107,64 @@ const TeamThirdSection = () => {
 
       if (response.data.status && response.data.data) {
         const data = response.data.data;
+
+        // Parse expertise from string to array
+        let expertiseArray = [];
+        if (data.expertise) {
+          if (typeof data.expertise === "string") {
+            expertiseArray = data.expertise
+              .split(",")
+              .map((item) => item.trim())
+              .filter((item) => item);
+          } else if (Array.isArray(data.expertise)) {
+            expertiseArray = data.expertise;
+          }
+        }
+
         setFormData({
-          name: data.name || '',
-          designation: data.designation || '',
-          email: data.email || '',
-          phone: data.phone || '',
-          address: data.address || '',
-          experience: data.experience || '',
-          short_desc: data.short_desc || '',
-          long_desc: data.long_desc || '',
-          desc2: data.desc2 || '',
-          button1_name: data.button1_name || '',
-          button1_url: data.button1_url || '',
-          button2_name: data.button2_name || '',
-          button2_url: data.button2_url || '',
-          button3_name: data.button3_name || '',
-          button3_url: data.button3_url || '',
-          image_alt: data.image_alt || '',
-          expertise: data.expertise || [],
-          status: data.status !== undefined ? data.status : 1
+          name: data.name || "",
+          designation: data.designation || "",
+          email: data.email || "",
+          phone: data.phone || "",
+          address: data.address || "",
+          experience: data.experience || "",
+          short_desc: data.short_desc || "",
+          long_desc: data.long_desc || "",
+          desc2: data.desc2 || "",
+          button1_name: data.button1_name || "",
+          button1_url: data.button1_url || "",
+          button2_name: data.button2_name || "",
+          button2_url: data.button2_url || "",
+          button3_name: data.button3_name || "",
+          button3_url: data.button3_url || "",
+          image_alt: data.image_alt || "",
+          expertise: expertiseArray,
+          status: data.status !== undefined ? data.status : 1,
         });
 
         // Set image previews
         if (data.web_image) {
-          const url = data.web_image.startsWith('http')
+          const url = data.web_image.startsWith("http")
             ? data.web_image
-            : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${data.web_image}`;
+            : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${data.web_image}`;
           setWebImagePreview(url);
         }
         if (data.mobile_image) {
-          const url = data.mobile_image.startsWith('http')
+          const url = data.mobile_image.startsWith("http")
             ? data.mobile_image
-            : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${data.mobile_image}`;
+            : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${data.mobile_image}`;
           setMobileImagePreview(url);
         }
 
         setEditingMember(data);
         setShowForm(true);
-        setMessage({ type: '', text: '' });
+        setMessage({ type: "", text: "" });
       }
     } catch (error) {
-      console.error('Error fetching member details:', error);
+      console.error("Error fetching member details:", error);
       setMessage({
-        type: 'error',
-        text: error.message || 'Failed to fetch member details'
+        type: "error",
+        text: error.message || "Failed to fetch member details",
       });
     } finally {
       setLoading(false);
@@ -133,13 +173,13 @@ const TeamThirdSection = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     }));
 
     if (message.text) {
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
@@ -147,28 +187,34 @@ const TeamThirdSection = () => {
     const file = e.target.files[0];
 
     if (file) {
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/svg+xml'];
+      const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/webp",
+        "image/svg+xml",
+      ];
       if (!validTypes.includes(file.type)) {
         setMessage({
-          type: 'error',
-          text: 'Please upload a valid image file (JPEG, PNG, WEBP, or SVG)'
+          type: "error",
+          text: "Please upload a valid image file (JPEG, PNG, WEBP, or SVG)",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       if (file.size > 2 * 1024 * 1024) {
         setMessage({
-          type: 'error',
-          text: 'Image size should be less than 2MB'
+          type: "error",
+          text: "Image size should be less than 2MB",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       const previewUrl = URL.createObjectURL(file);
 
-      if (type === 'web') {
+      if (type === "web") {
         setWebImage(file);
         setWebImagePreview(previewUrl);
       } else {
@@ -176,76 +222,83 @@ const TeamThirdSection = () => {
         setMobileImagePreview(previewUrl);
       }
 
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
   const removeImage = (type) => {
-    if (type === 'web') {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+    if (type === "web") {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
       setWebImage(null);
       setWebImagePreview(null);
       const input = document.querySelector('input[name="web_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     } else {
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
       setMobileImage(null);
       setMobileImagePreview(null);
       const input = document.querySelector('input[name="mobile_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     }
   };
 
   const handleAddExpertise = () => {
     if (expertiseInput.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        expertise: [...prev.expertise, expertiseInput.trim()]
+        expertise: [...prev.expertise, expertiseInput.trim()],
       }));
-      setExpertiseInput('');
+      setExpertiseInput("");
     }
   };
 
   const handleRemoveExpertise = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      expertise: prev.expertise.filter((_, i) => i !== index)
+      expertise: prev.expertise.filter((_, i) => i !== index),
     }));
+  };
+
+  const handleExpertiseKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddExpertise();
+    }
   };
 
   const handleAddNew = () => {
     setEditingMember(null);
     setFormData({
-      name: '',
-      designation: '',
-      email: '',
-      phone: '',
-      address: '',
-      experience: '',
-      short_desc: '',
-      long_desc: '',
-      desc2: '',
-      button1_name: '',
-      button1_url: '',
-      button2_name: '',
-      button2_url: '',
-      button3_name: '',
-      button3_url: '',
-      image_alt: '',
+      name: "",
+      designation: "",
+      email: "",
+      phone: "",
+      address: "",
+      experience: "",
+      short_desc: "",
+      long_desc: "",
+      desc2: "",
+      button1_name: "",
+      button1_url: "",
+      button2_name: "",
+      button2_url: "",
+      button3_name: "",
+      button3_url: "",
+      image_alt: "",
       expertise: [],
-      status: 1
+      status: 1,
     });
     setWebImage(null);
     setMobileImage(null);
     setWebImagePreview(null);
     setMobileImagePreview(null);
-    setExpertiseInput('');
+    setExpertiseInput("");
     setShowForm(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
   };
 
   const handleEdit = (member) => {
@@ -253,7 +306,7 @@ const TeamThirdSection = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this team member?')) {
+    if (!window.confirm("Are you sure you want to delete this team member?")) {
       return;
     }
 
@@ -263,17 +316,17 @@ const TeamThirdSection = () => {
 
       if (response.data.status) {
         setMessage({
-          type: 'success',
-          text: 'Team member deleted successfully!'
+          type: "success",
+          text: "Team member deleted successfully!",
         });
         await fetchMembers();
-        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+        setTimeout(() => setMessage({ type: "", text: "" }), 3000);
       }
     } catch (error) {
-      console.error('Error deleting team member:', error);
+      console.error("Error deleting team member:", error);
       setMessage({
-        type: 'error',
-        text: error.message || 'Failed to delete team member'
+        type: "error",
+        text: error.message || "Failed to delete team member",
       });
     } finally {
       setLoading(false);
@@ -282,17 +335,17 @@ const TeamThirdSection = () => {
 
   const validateForm = () => {
     if (!formData.name) {
-      setMessage({ type: 'error', text: 'Name is required!' });
+      setMessage({ type: "error", text: "Name is required!" });
       return false;
     }
 
     if (!formData.designation) {
-      setMessage({ type: 'error', text: 'Designation is required!' });
+      setMessage({ type: "error", text: "Designation is required!" });
       return false;
     }
 
     if (!formData.short_desc) {
-      setMessage({ type: 'error', text: 'Short description is required!' });
+      setMessage({ type: "error", text: "Short description is required!" });
       return false;
     }
 
@@ -307,37 +360,47 @@ const TeamThirdSection = () => {
     }
 
     setSaving(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
 
     try {
       const submitData = new FormData();
 
       // Append all form data
-      Object.keys(formData).forEach(key => {
-        if (key === 'expertise') {
-          submitData.append('expertise', JSON.stringify(formData.expertise));
-        } else if (formData[key] !== null && formData[key] !== '') {
+      Object.keys(formData).forEach((key) => {
+        if (key === "expertise") {
+          // Convert expertise array to comma-separated string
+          const expertiseString = formData.expertise.join(",");
+          submitData.append(key, expertiseString);
+        } else if (formData[key] !== null && formData[key] !== "") {
           submitData.append(key, formData[key]);
         }
       });
 
-      if (webImage) {
-        submitData.append('web_image', webImage);
-      }
-      if (mobileImage) {
-        submitData.append('mobile_image', mobileImage);
+      // Append editing ID if editing
+      if (editingMember) {
+        submitData.append("id", editingMember.id);
       }
 
-      const response = await api.post('/admin/team-member/save', submitData, {
+      if (webImage) {
+        submitData.append("web_image", webImage);
+      }
+      if (mobileImage) {
+        submitData.append("mobile_image", mobileImage);
+      }
+
+      // Use the same endpoint for both add and update
+      const response = await api.post("/admin/team-member/save", submitData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.data.status) {
         setMessage({
-          type: 'success',
-          text: response.data.message || `Team member ${editingMember ? 'updated' : 'added'} successfully!`
+          type: "success",
+          text:
+            response.data.message ||
+            `Team member ${editingMember ? "updated" : "added"} successfully!`,
         });
 
         await fetchMembers();
@@ -345,28 +408,28 @@ const TeamThirdSection = () => {
         setEditingMember(null);
 
         setTimeout(() => {
-          setMessage({ type: '', text: '' });
+          setMessage({ type: "", text: "" });
         }, 5000);
       } else {
         setMessage({
-          type: 'error',
-          text: response.data.message || 'Failed to save team member'
+          type: "error",
+          text: response.data.message || "Failed to save team member",
         });
       }
     } catch (error) {
-      console.error('Error saving team member:', error);
+      console.error("Error saving team member:", error);
 
       if (error.response?.data?.errors) {
         const errors = error.response.data.errors;
-        const errorMessages = Object.values(errors).flat().join(', ');
+        const errorMessages = Object.values(errors).flat().join(", ");
         setMessage({
-          type: 'error',
-          text: `Validation Error: ${errorMessages}`
+          type: "error",
+          text: `Validation Error: ${errorMessages}`,
         });
       } else {
         setMessage({
-          type: 'error',
-          text: error.message || 'Failed to save. Please try again.'
+          type: "error",
+          text: error.message || "Failed to save. Please try again.",
         });
       }
     } finally {
@@ -377,7 +440,7 @@ const TeamThirdSection = () => {
   const handleCancel = () => {
     setShowForm(false);
     setEditingMember(null);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
   };
 
   if (fetching) {
@@ -386,8 +449,12 @@ const TeamThirdSection = () => {
         <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">Section 3: Team Members</h2>
-              <p className="text-sm text-gray-600">Manage individual team members with detailed profiles</p>
+              <h2 className="text-xl font-semibold text-gray-800">
+                Section 3: Team Members
+              </h2>
+              <p className="text-sm text-gray-600">
+                Manage individual team members with detailed profiles
+              </p>
             </div>
           </div>
         </div>
@@ -406,8 +473,12 @@ const TeamThirdSection = () => {
       <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Section 3: Team Members</h2>
-            <p className="text-sm text-gray-600">Manage individual team members with detailed profiles</p>
+            <h2 className="text-xl font-semibold text-gray-800">
+              Section 3: Team Members
+            </h2>
+            <p className="text-sm text-gray-600">
+              Manage individual team members with detailed profiles
+            </p>
           </div>
           {!showForm && (
             <button
@@ -423,17 +494,19 @@ const TeamThirdSection = () => {
 
       <div className="p-6">
         {message.text && (
-          <div className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
-            message.type === 'success'
-              ? 'bg-green-50 text-green-800 border border-green-200'
-              : message.type === 'info'
-              ? 'bg-blue-50 text-blue-800 border border-blue-200'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}>
+          <div
+            className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
+              message.type === "success"
+                ? "bg-green-50 text-green-800 border border-green-200"
+                : message.type === "info"
+                  ? "bg-blue-50 text-blue-800 border border-blue-200"
+                  : "bg-red-50 text-red-800 border border-red-200"
+            }`}
+          >
             <span className="flex-1">{message.text}</span>
             <button
               type="button"
-              onClick={() => setMessage({ type: '', text: '' })}
+              onClick={() => setMessage({ type: "", text: "" })}
               className="text-gray-400 hover:text-gray-600"
             >
               <X className="w-4 h-4" />
@@ -563,18 +636,23 @@ const TeamThirdSection = () => {
               </div>
 
               {/* Long Description */}
+              {/* Long Description */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Long Description
                 </label>
-                <textarea
-                  name="long_desc"
+
+                <CustomTextEditor
                   value={formData.long_desc}
-                  onChange={handleChange}
-                  placeholder="Detailed description of the team member"
-                  rows="4"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Detailed description of the team member..."
+                  height={400}
                   disabled={saving}
+                  onChange={(content) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      long_desc: content,
+                    }))
+                  }
                 />
               </div>
 
@@ -607,12 +685,7 @@ const TeamThirdSection = () => {
                     placeholder="Add expertise (e.g., Business Immigration)"
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     disabled={saving}
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleAddExpertise();
-                      }
-                    }}
+                    onKeyPress={handleExpertiseKeyPress}
                   />
                   <button
                     type="button"
@@ -643,6 +716,12 @@ const TeamThirdSection = () => {
                     ))}
                   </div>
                 )}
+                <p className="text-xs text-gray-500 mt-2">
+                  Expertise will be saved as:{" "}
+                  <span className="font-medium">
+                    {formData.expertise.join(", ")}
+                  </span>
+                </p>
               </div>
 
               {/* Image Alt */}
@@ -663,7 +742,9 @@ const TeamThirdSection = () => {
 
               {/* Images Section */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Images</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Images
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Web Image */}
                   <div>
@@ -673,12 +754,14 @@ const TeamThirdSection = () => {
                     <input
                       type="file"
                       name="web_image"
-                      onChange={(e) => handleImageChange(e, 'web')}
+                      onChange={(e) => handleImageChange(e, "web")}
                       accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                       disabled={saving}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Recommended: 800x800px. Max: 2MB</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Recommended: 800x800px. Max: 2MB
+                    </p>
 
                     {webImagePreview && (
                       <div className="mt-3">
@@ -689,12 +772,13 @@ const TeamThirdSection = () => {
                             className="w-32 h-32 object-cover border border-gray-300 rounded"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23f0f0f0"/%3E%3Ctext x="100" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                              e.target.src =
+                                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23f0f0f0"/%3E%3Ctext x="100" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                             }}
                           />
                           <button
                             type="button"
-                            onClick={() => removeImage('web')}
+                            onClick={() => removeImage("web")}
                             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                             disabled={saving}
                           >
@@ -713,12 +797,14 @@ const TeamThirdSection = () => {
                     <input
                       type="file"
                       name="mobile_image"
-                      onChange={(e) => handleImageChange(e, 'mobile')}
+                      onChange={(e) => handleImageChange(e, "mobile")}
                       accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                       disabled={saving}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Recommended: 400x400px. Max: 2MB</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Recommended: 400x400px. Max: 2MB
+                    </p>
 
                     {mobileImagePreview && (
                       <div className="mt-3">
@@ -729,12 +815,13 @@ const TeamThirdSection = () => {
                             className="w-32 h-32 object-cover border border-gray-300 rounded"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23f0f0f0"/%3E%3Ctext x="100" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                              e.target.src =
+                                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23f0f0f0"/%3E%3Ctext x="100" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                             }}
                           />
                           <button
                             type="button"
-                            onClick={() => removeImage('mobile')}
+                            onClick={() => removeImage("mobile")}
                             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                             disabled={saving}
                           >
@@ -749,7 +836,9 @@ const TeamThirdSection = () => {
 
               {/* Buttons Section */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Action Buttons</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Action Buttons
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -853,9 +942,14 @@ const TeamThirdSection = () => {
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     disabled={saving}
                   />
-                  <span className="text-sm font-medium text-gray-700">Active</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Active
+                  </span>
                 </label>
-                <p className="text-xs text-gray-500 mt-1">When inactive, this team member won't be displayed on the website</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  When inactive, this team member won't be displayed on the
+                  website
+                </p>
               </div>
             </div>
 
@@ -874,7 +968,7 @@ const TeamThirdSection = () => {
                 ) : (
                   <>
                     <Save className="w-4 h-4" />
-                    {editingMember ? 'Update Member' : 'Add Member'}
+                    {editingMember ? "Update Member" : "Add Member"}
                   </>
                 )}
               </button>
@@ -914,12 +1008,12 @@ const TeamThirdSection = () => {
                       <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
                         {member.web_image ? (
                           <img
-                            src={`${import.meta.env.VITE_STORAGE_BASE_URL || ''}${member.web_image}`}
+                            src={`${import.meta.env.VITE_STORAGE_BASE_URL || ""}${member.web_image}`}
                             alt={member.name}
                             className="w-12 h-12 rounded-full object-cover"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = '';
+                              e.target.src = "";
                             }}
                           />
                         ) : (
@@ -927,8 +1021,12 @@ const TeamThirdSection = () => {
                         )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-800">{member.name}</h3>
-                        <p className="text-sm text-gray-500">{member.designation}</p>
+                        <h3 className="font-medium text-gray-800">
+                          {member.name}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {member.designation}
+                        </p>
                         <div className="flex items-center gap-3 mt-1">
                           {member.email && (
                             <span className="text-xs text-gray-400 flex items-center gap-1">
@@ -969,12 +1067,14 @@ const TeamThirdSection = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                        member.status === 1
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}>
-                        {member.status === 1 ? 'Active' : 'Inactive'}
+                      <span
+                        className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          member.status === 1
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {member.status === 1 ? "Active" : "Inactive"}
                       </span>
                       <button
                         onClick={() => handleEdit(member)}
@@ -983,13 +1083,13 @@ const TeamThirdSection = () => {
                       >
                         <Edit className="w-4 h-4" />
                       </button>
-                      {/* <button
+                      <button
                         onClick={() => handleDelete(member.id)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
                         title="Delete"
                       >
                         <Trash2 className="w-4 h-4" />
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 ))}

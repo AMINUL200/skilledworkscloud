@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { api } from '../../../utils/app';
-import { Save, X, TrendingUp, Image, Youtube } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { api } from "../../../utils/app";
+import { Save, X, TrendingUp, Image, Youtube } from "lucide-react";
+import CustomTextEditor from "../../../component/common/CustomTextEditor";
 
 const AboutThirdSection = () => {
   const [formData, setFormData] = useState({
-    batch: '',
-    title: '',
-    highlighted_title: '',
-    description: '',
-    meta_title: '',
-    meta_desc: '',
-    button1_name: '',
-    button1_url: '',
-    button2_name: '',
-    button2_url: '',
-    youtube_url: '',
-    image_alt: '',
-    card1_tit: '',
-    card1_det: '',
-    card2_tit: '',
-    card2_det: '',
-    card3_tit: '',
-    card3_det: '',
-    status: 1
+    batch: "",
+    title: "",
+    highlighted_title: "",
+    description: "",
+    meta_title: "",
+    meta_desc: "",
+    button1_name: "",
+    button1_url: "",
+    button2_name: "",
+    button2_url: "",
+    youtube_url: "",
+    image_alt: "",
+    card1_tit: "",
+    card1_det: "",
+    card2_tit: "",
+    card2_det: "",
+    card3_tit: "",
+    card3_det: "",
+    status: 1,
   });
 
   const [webImage, setWebImage] = useState(null);
@@ -32,7 +33,7 @@ const AboutThirdSection = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [isEditing, setIsEditing] = useState(false);
 
   // Fetch section data on component mount
@@ -43,10 +44,10 @@ const AboutThirdSection = () => {
   // Cleanup preview URLs
   useEffect(() => {
     return () => {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
     };
@@ -55,62 +56,62 @@ const AboutThirdSection = () => {
   const fetchSectionData = async () => {
     try {
       setFetching(true);
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
 
-      const response = await api.get('/admin/about-third-section');
+      const response = await api.get("/admin/about-third-section");
 
       if (response.data.status && response.data.data) {
         const data = response.data.data;
         setFormData({
-          batch: data.batch || '',
-          title: data.title || '',
-          highlighted_title: data.highlighted_title || '',
-          description: data.description || '',
-          meta_title: data.meta_title || '',
-          meta_desc: data.meta_desc || '',
-          button1_name: data.button1_name || '',
-          button1_url: data.button1_url || '',
-          button2_name: data.button2_name || '',
-          button2_url: data.button2_url || '',
-          youtube_url: data.youtube_url || '',
-          image_alt: data.image_alt || '',
-          card1_tit: data.card1_tit || '',
-          card1_det: data.card1_det || '',
-          card2_tit: data.card2_tit || '',
-          card2_det: data.card2_det || '',
-          card3_tit: data.card3_tit || '',
-          card3_det: data.card3_det || '',
-          status: data.status !== undefined ? data.status : 1
+          batch: data.batch || "",
+          title: data.title || "",
+          highlighted_title: data.highlighted_title || "",
+          description: data.description || "",
+          meta_title: data.meta_title || "",
+          meta_desc: data.meta_desc || "",
+          button1_name: data.button1_name || "",
+          button1_url: data.button1_url || "",
+          button2_name: data.button2_name || "",
+          button2_url: data.button2_url || "",
+          youtube_url: data.youtube_url || "",
+          image_alt: data.image_alt || "",
+          card1_tit: data.card1_tit || "",
+          card1_det: data.card1_det || "",
+          card2_tit: data.card2_tit || "",
+          card2_det: data.card2_det || "",
+          card3_tit: data.card3_tit || "",
+          card3_det: data.card3_det || "",
+          status: data.status !== undefined ? data.status : 1,
         });
 
         // Set image previews
         if (data.web_image) {
-          const url = data.web_image.startsWith('http')
+          const url = data.web_image.startsWith("http")
             ? data.web_image
-            : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${data.web_image}`;
+            : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${data.web_image}`;
           setWebImagePreview(url);
         }
         if (data.mobile_image) {
-          const url = data.mobile_image.startsWith('http')
+          const url = data.mobile_image.startsWith("http")
             ? data.mobile_image
-            : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${data.mobile_image}`;
+            : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${data.mobile_image}`;
           setMobileImagePreview(url);
         }
 
         setIsEditing(true);
       }
     } catch (error) {
-      console.error('Error fetching about third section:', error);
+      console.error("Error fetching about third section:", error);
       if (error.status === 404 || error.response?.status === 404) {
         setIsEditing(false);
         setMessage({
-          type: 'info',
-          text: 'No data found. Create new about section.'
+          type: "info",
+          text: "No data found. Create new about section.",
         });
       } else {
         setMessage({
-          type: 'error',
-          text: error.message || 'Failed to fetch data'
+          type: "error",
+          text: error.message || "Failed to fetch data",
         });
       }
     } finally {
@@ -120,13 +121,13 @@ const AboutThirdSection = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     }));
 
     if (message.text) {
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
@@ -134,28 +135,34 @@ const AboutThirdSection = () => {
     const file = e.target.files[0];
 
     if (file) {
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/svg+xml'];
+      const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/webp",
+        "image/svg+xml",
+      ];
       if (!validTypes.includes(file.type)) {
         setMessage({
-          type: 'error',
-          text: 'Please upload a valid image file (JPEG, PNG, WEBP, or SVG)'
+          type: "error",
+          text: "Please upload a valid image file (JPEG, PNG, WEBP, or SVG)",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       if (file.size > 2 * 1024 * 1024) {
         setMessage({
-          type: 'error',
-          text: 'Image size should be less than 2MB'
+          type: "error",
+          text: "Image size should be less than 2MB",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       const previewUrl = URL.createObjectURL(file);
 
-      if (type === 'web') {
+      if (type === "web") {
         setWebImage(file);
         setWebImagePreview(previewUrl);
       } else {
@@ -163,54 +170,54 @@ const AboutThirdSection = () => {
         setMobileImagePreview(previewUrl);
       }
 
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
   const removeImage = (type) => {
-    if (type === 'web') {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+    if (type === "web") {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
       setWebImage(null);
       setWebImagePreview(null);
       const input = document.querySelector('input[name="web_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     } else {
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
       setMobileImage(null);
       setMobileImagePreview(null);
       const input = document.querySelector('input[name="mobile_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     }
   };
 
   const validateForm = () => {
     if (!formData.title) {
-      setMessage({ type: 'error', text: 'Title is required!' });
+      setMessage({ type: "error", text: "Title is required!" });
       return false;
     }
 
     if (!formData.description) {
-      setMessage({ type: 'error', text: 'Description is required!' });
+      setMessage({ type: "error", text: "Description is required!" });
       return false;
     }
 
     // Validate YouTube URL if provided
     if (formData.youtube_url) {
-      const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+      const youtubeRegex =
+        /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
       if (!youtubeRegex.test(formData.youtube_url)) {
         setMessage({
-          type: 'error',
-          text: 'Please enter a valid YouTube URL'
+          type: "error",
+          text: "Please enter a valid YouTube URL",
         });
         return false;
       }
     }
 
-    
     return true;
   };
 
@@ -222,36 +229,41 @@ const AboutThirdSection = () => {
     }
 
     setSaving(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
 
     try {
       const submitData = new FormData();
 
       // Append all form data
-      Object.keys(formData).forEach(key => {
-        if (formData[key] !== null && formData[key] !== '') {
+      Object.keys(formData).forEach((key) => {
+        if (formData[key] !== null && formData[key] !== "") {
           submitData.append(key, formData[key]);
         }
       });
 
       // Append images if exist
       if (webImage) {
-        submitData.append('web_image', webImage);
+        submitData.append("web_image", webImage);
       }
       if (mobileImage) {
-        submitData.append('mobile_image', mobileImage);
+        submitData.append("mobile_image", mobileImage);
       }
 
-      const response = await api.post('/admin/about-third-section/save', submitData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await api.post(
+        "/admin/about-third-section/save",
+        submitData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
 
       if (response.data.status) {
         setMessage({
-          type: 'success',
-          text: response.data.message || 'About third section saved successfully!'
+          type: "success",
+          text:
+            response.data.message || "About third section saved successfully!",
         });
 
         // Refetch to get updated data
@@ -259,28 +271,28 @@ const AboutThirdSection = () => {
 
         // Clear success message after 5 seconds
         setTimeout(() => {
-          setMessage({ type: '', text: '' });
+          setMessage({ type: "", text: "" });
         }, 5000);
       } else {
         setMessage({
-          type: 'error',
-          text: response.data.message || 'Failed to save data'
+          type: "error",
+          text: response.data.message || "Failed to save data",
         });
       }
     } catch (error) {
-      console.error('Error saving about third section:', error);
+      console.error("Error saving about third section:", error);
 
       if (error.response?.data?.errors) {
         const errors = error.response.data.errors;
-        const errorMessages = Object.values(errors).flat().join(', ');
+        const errorMessages = Object.values(errors).flat().join(", ");
         setMessage({
-          type: 'error',
-          text: `Validation Error: ${errorMessages}`
+          type: "error",
+          text: `Validation Error: ${errorMessages}`,
         });
       } else {
         setMessage({
-          type: 'error',
-          text: error.message || 'Failed to save. Please try again.'
+          type: "error",
+          text: error.message || "Failed to save. Please try again.",
         });
       }
     } finally {
@@ -298,7 +310,9 @@ const AboutThirdSection = () => {
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 About Third Section
               </h2>
-              <p className="text-sm text-gray-600">Manage the about page impact and innovation section</p>
+              <p className="text-sm text-gray-600">
+                Manage the about page impact and innovation section
+              </p>
             </div>
           </div>
         </div>
@@ -321,29 +335,37 @@ const AboutThirdSection = () => {
               <TrendingUp className="w-5 h-5 text-blue-600" />
               About Third Section
             </h2>
-            <p className="text-sm text-gray-600">Manage the about page impact and innovation section</p>
+            <p className="text-sm text-gray-600">
+              Manage the about page impact and innovation section
+            </p>
           </div>
-          <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-            isEditing ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-          }`}>
-            {isEditing ? 'Configured' : 'New'}
+          <span
+            className={`px-3 py-1 text-xs font-medium rounded-full ${
+              isEditing
+                ? "bg-green-100 text-green-800"
+                : "bg-yellow-100 text-yellow-800"
+            }`}
+          >
+            {isEditing ? "Configured" : "New"}
           </span>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="p-6">
         {message.text && (
-          <div className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
-            message.type === 'success'
-              ? 'bg-green-50 text-green-800 border border-green-200'
-              : message.type === 'info'
-              ? 'bg-blue-50 text-blue-800 border border-blue-200'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}>
+          <div
+            className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
+              message.type === "success"
+                ? "bg-green-50 text-green-800 border border-green-200"
+                : message.type === "info"
+                  ? "bg-blue-50 text-blue-800 border border-blue-200"
+                  : "bg-red-50 text-red-800 border border-red-200"
+            }`}
+          >
             <span className="flex-1">{message.text}</span>
             <button
               type="button"
-              onClick={() => setMessage({ type: '', text: '' })}
+              onClick={() => setMessage({ type: "", text: "" })}
               className="text-gray-400 hover:text-gray-600"
             >
               <X className="w-4 h-4" />
@@ -366,7 +388,9 @@ const AboutThirdSection = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               disabled={saving}
             />
-            <p className="text-xs text-gray-500 mt-1">Small text above the main title</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Small text above the main title
+            </p>
           </div>
 
           {/* Title */}
@@ -403,7 +427,9 @@ const AboutThirdSection = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               disabled={saving}
             />
-            <p className="text-xs text-gray-500 mt-1">Text that will be highlighted in the title</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Text that will be highlighted in the title
+            </p>
           </div>
 
           {/* Meta Title */}
@@ -427,18 +453,22 @@ const AboutThirdSection = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Description *
             </label>
-            <textarea
-              name="description"
+
+            <CustomTextEditor
               value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter section description"
-              rows="4"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
+              placeholder="Enter section description..."
+              height={350}
               disabled={saving}
+              onChange={(content) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  description: content,
+                }))
+              }
             />
-            <p className="text-xs text-gray-500 mt-1">
-              Characters: {formData.description.length}
+
+            <p className="text-xs text-gray-500 mt-2">
+              Rich text editor enabled
             </p>
           </div>
 
@@ -472,7 +502,9 @@ const AboutThirdSection = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               disabled={saving}
             />
-            <p className="text-xs text-gray-500 mt-1">Helps with SEO and accessibility</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Helps with SEO and accessibility
+            </p>
           </div>
 
           {/* YouTube URL */}
@@ -492,7 +524,9 @@ const AboutThirdSection = () => {
               />
               <Youtube className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
             </div>
-            <p className="text-xs text-gray-500 mt-1">YouTube video URL for this section</p>
+            <p className="text-xs text-gray-500 mt-1">
+              YouTube video URL for this section
+            </p>
           </div>
 
           {/* Images Section */}
@@ -507,12 +541,14 @@ const AboutThirdSection = () => {
                 <input
                   type="file"
                   name="web_image"
-                  onChange={(e) => handleImageChange(e, 'web')}
+                  onChange={(e) => handleImageChange(e, "web")}
                   accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   disabled={saving}
                 />
-                <p className="text-xs text-gray-500 mt-1">Recommended: 800x600px. Max: 2MB</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Recommended: 800x600px. Max: 2MB
+                </p>
 
                 {webImagePreview && (
                   <div className="mt-3">
@@ -523,12 +559,13 @@ const AboutThirdSection = () => {
                         className="max-w-full h-32 object-cover border border-gray-300 rounded"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                          e.target.src =
+                            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                         }}
                       />
                       <button
                         type="button"
-                        onClick={() => removeImage('web')}
+                        onClick={() => removeImage("web")}
                         className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                         disabled={saving}
                       >
@@ -547,12 +584,14 @@ const AboutThirdSection = () => {
                 <input
                   type="file"
                   name="mobile_image"
-                  onChange={(e) => handleImageChange(e, 'mobile')}
+                  onChange={(e) => handleImageChange(e, "mobile")}
                   accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   disabled={saving}
                 />
-                <p className="text-xs text-gray-500 mt-1">Recommended: 400x400px. Max: 2MB</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Recommended: 400x400px. Max: 2MB
+                </p>
 
                 {mobileImagePreview && (
                   <div className="mt-3">
@@ -563,12 +602,13 @@ const AboutThirdSection = () => {
                         className="max-w-full h-32 object-cover border border-gray-300 rounded"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                          e.target.src =
+                            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                         }}
                       />
                       <button
                         type="button"
-                        onClick={() => removeImage('mobile')}
+                        onClick={() => removeImage("mobile")}
                         className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                         disabled={saving}
                       >
@@ -583,7 +623,9 @@ const AboutThirdSection = () => {
 
           {/* Buttons Section */}
           <div className="md:col-span-2 border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-4">Call-to-Action Buttons</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-4">
+              Call-to-Action Buttons
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -646,11 +688,15 @@ const AboutThirdSection = () => {
 
           {/* Cards Section */}
           <div className="md:col-span-2 border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-4">Feature Cards</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-4">
+              Feature Cards
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Card 1 */}
               <div className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Card 1</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3">
+                  Card 1
+                </h4>
                 <div className="space-y-3">
                   <input
                     type="text"
@@ -675,7 +721,9 @@ const AboutThirdSection = () => {
 
               {/* Card 2 */}
               <div className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Card 2</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3">
+                  Card 2
+                </h4>
                 <div className="space-y-3">
                   <input
                     type="text"
@@ -700,7 +748,9 @@ const AboutThirdSection = () => {
 
               {/* Card 3 */}
               <div className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Card 3</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3">
+                  Card 3
+                </h4>
                 <div className="space-y-3">
                   <input
                     type="text"
@@ -736,9 +786,13 @@ const AboutThirdSection = () => {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 disabled={saving}
               />
-              <span className="text-sm font-medium text-gray-700">Enable this section</span>
+              <span className="text-sm font-medium text-gray-700">
+                Enable this section
+              </span>
             </label>
-            <p className="text-xs text-gray-500 mt-1">When disabled, this section won't be displayed on the website</p>
+            <p className="text-xs text-gray-500 mt-1">
+              When disabled, this section won't be displayed on the website
+            </p>
           </div>
         </div>
 
@@ -757,7 +811,7 @@ const AboutThirdSection = () => {
             ) : (
               <>
                 <Save className="w-4 h-4" />
-                {isEditing ? 'Update Section' : 'Save Section'}
+                {isEditing ? "Update Section" : "Save Section"}
               </>
             )}
           </button>
