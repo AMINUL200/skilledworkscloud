@@ -1,32 +1,53 @@
-import React, { useEffect, useState } from 'react'
-import TeamBanner from '../../component/team/TeamBanner'
-import TeamSection from '../../component/team/TeamSection'
+import React, { useEffect, useState } from 'react';
+import TeamBanner from '../../component/team/TeamBanner';
+import TeamSection from '../../component/team/TeamSection';
 import PageLoader from '../../component/common/PageLoader';
+import { api } from '../../utils/app';
 
 const OurTeamPage = () => {
-  
   const [loading, setLoading] = useState(true);
+  const [teamData, setTeamData] = useState({
+    firstSection: null,
+    members: [],
+    secondSection: null,
+  });
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Adjust the duration as needed
-    return () => clearTimeout(timer);
-  } , []);
+    const fetchTeamData = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get('/team');
+        
+        if (response.data.status && response.data.data) {
+          setTeamData({
+            firstSection: response.data.data.first_section || null,
+            members: response.data.data.team_members || [],
+            secondSection: response.data.data.second_section || null,
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching team data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
 
   if (loading) {
     return <PageLoader />;
   }
+
   return (
     <div className="bg-[#EEF5FD] overflow-hidden">
-        {/* Team Banner */}
-        <TeamBanner />
-        {/* Team Section */}
-        <TeamSection />
+      {/* Team Banner */}
+      <TeamBanner data={teamData.firstSection} />
       
+      {/* Team Section */}
+      <TeamSection members={teamData.members} sectionInfo={teamData.secondSection} />
     </div>
-  )
-}
+  );
+};
 
-export default OurTeamPage
+export default OurTeamPage;

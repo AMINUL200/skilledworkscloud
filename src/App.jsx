@@ -81,7 +81,7 @@ const App = () => {
           {/* About Us page route */}
           <Route path="/team" element={<OurTeamPage />} />{" "}
           {/* Our Team page route */}
-          <Route path="/team/:id" element={<TeamDetailsPage />} />{" "}
+          <Route path="/team/:slug" element={<TeamDetailsPage />} />{" "}
           {/* Team member detail route */}
           <Route
             path="/corporate-social-responsibility"

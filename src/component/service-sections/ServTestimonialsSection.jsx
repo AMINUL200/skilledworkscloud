@@ -246,7 +246,7 @@ const ServTestimonialsSection = () => {
         </div>
 
         {/* Statistics */}
-        <div className="grid md:grid-cols-4 gap-8 mt-20">
+        {/* <div className="grid md:grid-cols-4 gap-8 mt-20">
           {[
             {
               value: "150+",
@@ -297,7 +297,7 @@ const ServTestimonialsSection = () => {
               </p>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* Navigation Arrows */}
         <div
@@ -343,50 +343,7 @@ const ServTestimonialsSection = () => {
           </button>
         </div>
 
-        {/* Bottom CTA */}
-        <div
-          className="
-            mt-20
-            rounded-[36px]
-            bg-gradient-to-r
-            from-primary
-            via-primary-dark
-            to-primary
-            p-10
-            lg:p-14
-            text-center
-            text-white
-            shadow-button
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              lg:text-4xl
-              font-black
-            "
-          >
-            Join Hundreds Of Satisfied Clients
-          </h3>
-
-          <p
-            className="
-              mt-4
-              max-w-3xl
-              mx-auto
-              text-lg
-              text-white/80
-            "
-          >
-            Let us help you achieve your business goals with
-            innovative solutions, expert guidance, and
-            exceptional support.
-          </p>
-
-          <button className="btn btn-glass mt-8">
-            Schedule A Consultation
-          </button>
-        </div>
+       
       </div>
     </section>
   );
