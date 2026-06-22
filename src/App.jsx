@@ -40,6 +40,7 @@ import { useAuth } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import ManageAbout from "./pages/admin/about/ManageAbout";
 import ManageSocialResponsibilities from "./pages/admin/social_responsibilits/ManageSocialResponsibilities";
+import MangeServiceCategory from "./pages/admin/service_page/MangeServiceCategory";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -112,6 +113,8 @@ const App = () => {
             <Route path="manage-blogs" element={<ManageBlogs />} />
             <Route path="manage-about" element={<ManageAbout />} />
             <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
+
+            <Route path="service-categories" element={<MangeServiceCategory />} />
 
 
 

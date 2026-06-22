@@ -20,6 +20,8 @@ import ServTeamSection from "../../component/service-sections/ServTeamSection";
 import { useParams } from "react-router-dom";
 import { services } from "../../utils/services";
 import PageLoader from "../../component/common/PageLoader";
+import ServWhyChooseUsSection from "../../component/service-sections/ServWhyChooseUsSection";
+import ServRequiredDocumentsSection from "../../component/service-sections/ServRequiredDocumentsSection";
 
 const sectionMapper = {
   hero: ServHeroSection,
@@ -40,6 +42,8 @@ const sectionMapper = {
   faq: ServFAQSection,
   cta: ServCTASection,
   contact: ServContactSection,
+  why_choose: ServWhyChooseUsSection,
+  req_doc: ServRequiredDocumentsSection,
 };
 
 const ServiceDetailsPage = () => {

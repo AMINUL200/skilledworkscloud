@@ -74,6 +74,19 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
     icon: <Users className="w-5 h-5" />,
     path: "/admin/manage-teams",
    },
+   {
+    id: "service",
+    label: "Service",
+    icon: <Package className="w-5 h-5" />,
+      children: [
+        {
+          id: "manage-service-category",
+          label: " Service Category",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-categories",  
+        }
+      ]
+   },
     {
       id: "settings",
       label: "Settings",
