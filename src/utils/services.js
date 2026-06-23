@@ -5,26 +5,29 @@ const fullServiceSections = [
   { type: "features", order: 4 },
   { type: "benefits", order: 5 },
   { type: "services", order: 6 },
-  {
-    type: "why_choose",
-    order: 7,
-  },
-  {
-    type: "req_doc",
-    order: 8,
-  },
+
   // { type: "gallery", order: 7 },
   // { type: "team", order: 8 },
   { type: "process", order: 9 },
   { type: "timeline", order: 10 },
+  
   // { type: "technologies", order: 11 },
   { type: "pricing", order: 12 },
   // { type: "portfolio", order: 13 },
   { type: "case-study", order: 14 },
-  { type: "testimonials", order: 15 },
-  { type: "faq", order: 16 },
-  { type: "cta", order: 17 },
-  { type: "contact", order: 18 },
+   {
+    type: "why_choose",
+    order: 15,
+  },
+  {
+    type: "req_doc",
+    order: 16,
+  },
+  { type: "testimonials", order: 17 },
+ 
+  { type: "faq", order: 18 },
+  { type: "cta", order: 19 },
+  { type: "contact", order: 20 },
 ];
 const defaultVisaSections = [
   { type: "hero", order: 1 },

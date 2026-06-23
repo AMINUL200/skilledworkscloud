@@ -41,6 +41,11 @@ import { ToastContainer } from "react-toastify";
 import ManageAbout from "./pages/admin/about/ManageAbout";
 import ManageSocialResponsibilities from "./pages/admin/social_responsibilits/ManageSocialResponsibilities";
 import MangeServiceCategory from "./pages/admin/service_page/MangeServiceCategory";
+import ServiceDetailsFirstSection from "./pages/admin/service_details/ServiceDetailsFirstSection";
+import ServiceDetailsSecondSection from "./pages/admin/service_details/ServiceDetailsSecondSection";
+import ServiceDetailsThirdSection from "./pages/admin/service_details/ServiceDetailsThirdSection";
+import ServiceDetailsFourthSection from "./pages/admin/service_details/ServiceDetailsFourthSection";
+import ServiceDetailsFifthSection from "./pages/admin/service_details/ServiceDetailsFifthSection";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -115,6 +120,11 @@ const App = () => {
             <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
 
             <Route path="service-categories" element={<MangeServiceCategory />} />
+            <Route path="service-details-first" element={<ServiceDetailsFirstSection/>}/>
+            <Route path="service-details-second" element={<ServiceDetailsSecondSection/>}/>
+            <Route path="service-details-third" element={<ServiceDetailsThirdSection/>}/>
+            <Route path="service-details-fourth" element={<ServiceDetailsFourthSection/>}/>
+            <Route path="service-details-fifth" element={<ServiceDetailsFifthSection/>}/>
 
 
 

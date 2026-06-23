@@ -25,6 +25,7 @@ import {
   User2,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { label, path } from "framer-motion/client";
 
 const AdminSidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
@@ -44,49 +45,79 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
     //   icon: <User2 className="w-5 h-5" />,
     //   path: "/admin/profile",
     // },
-   {
-    id: "banners",
-    label: "Banners",
-    icon: <LayoutDashboard className="w-5 h-5" />,
-    path: "/admin/manage-banners",
-   },
-   {
-    id: "blogs",
-    label: "Blogs",
-    icon: <FileText className="w-5 h-5" />,
-    path: "/admin/manage-blogs",
-   },
-   {
-    id: "about",
-    label: "About",
-    icon: <UserCog className="w-5 h-5" />,
-    path: "/admin/manage-about",
-   },
-   {
-    id: "social-responsibilities",
-    label: "Social Responsibilities",
-    icon: <Globe className="w-5 h-5" />,
-    path: "/admin/manage-social-responsibilities",
-   },
-   {
-    id: "teams",
-    label: "Teams",
-    icon: <Users className="w-5 h-5" />,
-    path: "/admin/manage-teams",
-   },
-   {
-    id: "service",
-    label: "Service",
-    icon: <Package className="w-5 h-5" />,
+    {
+      id: "banners",
+      label: "Banners",
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: "/admin/manage-banners",
+    },
+    {
+      id: "blogs",
+      label: "Blogs",
+      icon: <FileText className="w-5 h-5" />,
+      path: "/admin/manage-blogs",
+    },
+    {
+      id: "about",
+      label: "About",
+      icon: <UserCog className="w-5 h-5" />,
+      path: "/admin/manage-about",
+    },
+    {
+      id: "social-responsibilities",
+      label: "Social Responsibilities",
+      icon: <Globe className="w-5 h-5" />,
+      path: "/admin/manage-social-responsibilities",
+    },
+    {
+      id: "teams",
+      label: "Teams",
+      icon: <Users className="w-5 h-5" />,
+      path: "/admin/manage-teams",
+    },
+    {
+      id: "service",
+      label: "Service",
+      icon: <Package className="w-5 h-5" />,
       children: [
         {
           id: "manage-service-category",
           label: " Service Category",
           icon: <Tag className="w-4 h-4" />,
-          path: "/admin/service-categories",  
-        }
-      ]
-   },
+          path: "/admin/service-categories",
+        },
+        {
+          id: "service-details-first-section",
+          label: "Service Details First",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-first",
+        },
+        {
+          id: "service-details-second-section",
+          label: "Service Details Second",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-second",
+        },
+        {
+          id: "service-details-third-section",
+          label: "Service Details Third",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-third",
+        },
+        {
+          id: "service-details-fourth-section",
+          label: "Service Details Fourth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-fourth",
+        },
+        {
+          id: "service-details-fifth-section",
+          label: "Service Details Fifth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-fifth",
+        },
+      ],
+    },
     {
       id: "settings",
       label: "Settings",
@@ -110,7 +141,6 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           icon: <TrendingUp className="w-4 h-4" />,
           path: "/admin/seo-settings",
         },
-       
       ],
     },
   ];
