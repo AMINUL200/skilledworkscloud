@@ -196,50 +196,7 @@ const ServServicesSection = () => {
           })}
         </div>
 
-        {/* Bottom Banner */}
-        <div
-          className="
-            mt-16
-            rounded-[36px]
-            bg-gradient-to-r
-            from-primary
-            via-primary-dark
-            to-primary
-            p-10
-            lg:p-14
-            text-center
-            text-white
-            shadow-button
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              lg:text-4xl
-              font-black
-            "
-          >
-            Need A Custom Solution?
-          </h3>
-
-          <p
-            className="
-              mt-4
-              text-white/80
-              text-lg
-              max-w-3xl
-              mx-auto
-            "
-          >
-            Every business is unique. Our team can design
-            and develop tailored solutions that perfectly
-            match your requirements and future goals.
-          </p>
-
-          <button className="btn btn-glass mt-8">
-            Discuss Your Project
-          </button>
-        </div>
+        
       </div>
     </section>
   );

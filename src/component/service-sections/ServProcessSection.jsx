@@ -224,50 +224,7 @@ const ServProcessSection = () => {
           </div>
         </div>
 
-        {/* Bottom CTA Banner */}
-        <div
-          className="
-            mt-20
-            rounded-[36px]
-            bg-gradient-to-r
-            from-primary
-            via-primary-dark
-            to-primary
-            p-10
-            lg:p-14
-            text-center
-            text-white
-            shadow-button
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              lg:text-4xl
-              font-black
-            "
-          >
-            A Proven Workflow That Delivers Results
-          </h3>
-
-          <p
-            className="
-              mt-4
-              text-lg
-              text-white/80
-              max-w-3xl
-              mx-auto
-            "
-          >
-            From consultation to launch, every step is carefully
-            planned to maximize efficiency, transparency, and
-            long-term success.
-          </p>
-
-          <button className="btn btn-glass mt-8">
-            Start Your Project
-          </button>
-        </div>
+      
       </div>
     </section>
   );

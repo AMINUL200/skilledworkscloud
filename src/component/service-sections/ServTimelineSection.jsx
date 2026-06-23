@@ -256,47 +256,7 @@ const ServTimelineSection = () => {
           </div>
         </div>
 
-        {/* Bottom Card */}
-        <div
-          className="
-            mt-20
-            rounded-[36px]
-            bg-white
-            border
-            border-border
-            shadow-card
-            p-10
-            text-center
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              font-black
-              text-text
-            "
-          >
-            Transparent Progress At Every Stage
-          </h3>
-
-          <p
-            className="
-              mt-4
-              max-w-3xl
-              mx-auto
-              text-lg
-              text-text-light
-            "
-          >
-            You'll always know what stage your project is in,
-            what has been completed, and what's coming next.
-            No surprises, just clear communication and results.
-          </p>
-
-          <button className="btn btn-primary mt-8">
-            Schedule Consultation
-          </button>
-        </div>
+       
       </div>
     </section>
   );

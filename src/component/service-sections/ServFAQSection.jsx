@@ -221,68 +221,7 @@ const ServFAQSection = () => {
         </div>
 
         {/* Help Box */}
-        <div
-          className="
-            mt-20
-            bg-white
-            border
-            border-border
-            rounded-[36px]
-            p-10
-            shadow-card
-            text-center
-          "
-        >
-          <div
-            className="
-              w-20
-              h-20
-              mx-auto
-              rounded-full
-              bg-primary-light
-              flex
-              items-center
-              justify-center
-            "
-          >
-            <MessageCircle
-              className="
-                w-10
-                h-10
-                text-primary
-              "
-            />
-          </div>
-
-          <h3
-            className="
-              mt-6
-              text-3xl
-              font-black
-              text-text
-            "
-          >
-            Still Have Questions?
-          </h3>
-
-          <p
-            className="
-              mt-4
-              max-w-2xl
-              mx-auto
-              text-lg
-              text-text-light
-            "
-          >
-            Our experts are ready to answer your questions
-            and help you choose the best solution for your
-            business.
-          </p>
-
-          <button className="btn btn-primary mt-8">
-            Contact Our Team
-          </button>
-        </div>
+       
       </div>
     </section>
   );

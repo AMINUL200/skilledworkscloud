@@ -206,49 +206,7 @@ const ServTechnologiesSection = () => {
         </div>
 
         {/* Bottom Banner */}
-        <div
-          className="
-            mt-20
-            rounded-[36px]
-            bg-gradient-to-r
-            from-primary
-            via-primary-dark
-            to-primary
-            p-10
-            lg:p-14
-            text-center
-            text-white
-            shadow-button
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              lg:text-4xl
-              font-black
-            "
-          >
-            Future-Proof Technology Stack
-          </h3>
-
-          <p
-            className="
-              mt-4
-              max-w-3xl
-              mx-auto
-              text-lg
-              text-white/80
-            "
-          >
-            We continuously adopt modern technologies to ensure
-            performance, security, scalability, and long-term
-            maintainability for every solution we build.
-          </p>
-
-          <button className="btn btn-glass mt-8">
-            Discuss Your Project
-          </button>
-        </div>
+        
       </div>
     </section>
   );

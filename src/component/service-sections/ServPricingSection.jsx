@@ -260,50 +260,7 @@ const ServPricingSection = () => {
           })}
         </div>
 
-        {/* Bottom Banner */}
-        <div
-          className="
-            mt-20
-            rounded-[36px]
-            bg-gradient-to-r
-            from-primary
-            via-primary-dark
-            to-primary
-            p-10
-            lg:p-14
-            text-center
-            text-white
-            shadow-button
-          "
-        >
-          <h3
-            className="
-              text-3xl
-              lg:text-4xl
-              font-black
-            "
-          >
-            Need Something Custom?
-          </h3>
-
-          <p
-            className="
-              mt-4
-              text-lg
-              text-white/80
-              max-w-3xl
-              mx-auto
-            "
-          >
-            Every business is different. Let's discuss your
-            requirements and create a custom solution tailored
-            to your goals and budget.
-          </p>
-
-          <button className="btn btn-glass mt-8">
-            Request Custom Quote
-          </button>
-        </div>
+       
       </div>
     </section>
   );
