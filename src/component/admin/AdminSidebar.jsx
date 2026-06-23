@@ -116,6 +116,12 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           icon: <Tag className="w-4 h-4" />,
           path: "/admin/service-details-fifth",
         },
+        {
+          id: "service-details-sixth-section",
+          label: "Service Details Sixth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-sixth",
+        },
       ],
     },
     {

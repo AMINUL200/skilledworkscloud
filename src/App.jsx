@@ -46,6 +46,7 @@ import ServiceDetailsSecondSection from "./pages/admin/service_details/ServiceDe
 import ServiceDetailsThirdSection from "./pages/admin/service_details/ServiceDetailsThirdSection";
 import ServiceDetailsFourthSection from "./pages/admin/service_details/ServiceDetailsFourthSection";
 import ServiceDetailsFifthSection from "./pages/admin/service_details/ServiceDetailsFifthSection";
+import ServiceDetailsSixthSection from "./pages/admin/service_details/ServiceDetailsSixthSection";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -125,6 +126,7 @@ const App = () => {
             <Route path="service-details-third" element={<ServiceDetailsThirdSection/>}/>
             <Route path="service-details-fourth" element={<ServiceDetailsFourthSection/>}/>
             <Route path="service-details-fifth" element={<ServiceDetailsFifthSection/>}/>
+            <Route path="service-details-sixth" element={<ServiceDetailsSixthSection/>}/>
 
 
 
