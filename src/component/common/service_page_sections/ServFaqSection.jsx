@@ -14,58 +14,37 @@ import {
   ChevronDown,
 } from 'lucide-react';
 
-const ServFaqSection = () => {
+const ServFaqSection = ({ faqs }) => {
+  console.log("FAQs:", faqs);
   const [activeIndex, setActiveIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // FAQ Data
-  const faqData = [
-    {
-      id: 1,
-      question: 'What services do you offer?',
-      answer: 'We provide comprehensive immigration services including Sponsor Licence applications, Skilled Worker Visa assistance, HR Compliance consulting, and full legal support for businesses and individuals. Our team of experts guides you through every step of the process.',
-    },
-    {
-      id: 2,
-      question: 'How long does the Sponsor Licence application take?',
-      answer: 'The Sponsor Licence application typically takes 4-8 weeks for a standard application. However, with our priority service, we can expedite this process. We\'ll guide you through the entire process and help you prepare all necessary documentation to ensure a smooth application.',
-    },
-    {
-      id: 3,
-      question: 'What are the requirements for a Skilled Worker Visa?',
-      answer: 'The Skilled Worker Visa requires a valid job offer from a licensed sponsor, a salary of at least £26,200 per year (or the going rate for the job), and English language proficiency. You\'ll also need to meet the points-based system requirements and have a certificate of sponsorship.',
-    },
-    {
-      id: 4,
-      question: 'How do you ensure HR compliance?',
-      answer: 'Our HR compliance services include conducting right-to-work checks, maintaining accurate employee records, ensuring compliance with UK immigration laws, and providing ongoing support and audits. We help you avoid penalties and maintain a compliant workforce.',
-    },
-    {
-      id: 5,
-      question: 'What is the cost of your services?',
-      answer: 'Our services are competitively priced with transparent fees. Costs vary depending on the specific service required. We offer free initial consultations to assess your needs and provide a detailed quote. Contact us for a personalized quote tailored to your requirements.',
-    },
-    {
-      id: 6,
-      question: 'Can you help with visa extensions?',
-      answer: 'Yes, we provide comprehensive support for visa extensions. Our team will assess your situation, gather necessary documentation, and submit your application. We keep you informed throughout the process and ensure all deadlines are met.',
-    },
-    {
-      id: 7,
-      question: 'What are the penalties for non-compliance?',
-      answer: 'Non-compliance with UK immigration laws can result in severe penalties including fines of up to £20,000 per illegal worker, revocation of your Sponsor Licence, and even imprisonment for serious offenses. Our compliance services help you avoid these risks.',
-    },
-    {
-      id: 8,
-      question: 'How do I become a licensed sponsor?',
-      answer: 'To become a licensed sponsor, you need to apply to the UK Home Office. This involves demonstrating that your business is legitimate, you can meet your sponsor duties, and you have appropriate HR systems in place. We can help you prepare and submit your application.',
-    },
-  ];
+  // If no FAQs, return null or show fallback
+  if (!faqs || faqs.length === 0) {
+    return (
+      <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white via-blue-50/30 to-white">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+            <HelpCircle size={16} className="text-primary" />
+            <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+              FAQ
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-text leading-tight">
+            Frequently Asked <span className="text-primary">Questions</span>
+          </h2>
+          <p className="mt-4 text-sm sm:text-base text-text-light leading-relaxed">
+            No FAQs available at the moment. Please check back later.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   // Filter FAQs based on search
-  const filteredFaqs = faqData.filter((faq) => {
-    return faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredFaqs = faqs.filter((faq) => {
+    return faq.question?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           faq.answer?.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const toggleFAQ = (index) => {
@@ -126,7 +105,7 @@ const ServFaqSection = () => {
                 const isActive = activeIndex === index;
                 return (
                   <div
-                    key={faq.id}
+                    key={faq.id || index}
                     className={`group bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${
                       isActive
                         ? 'border-primary shadow-lg shadow-primary/10'
@@ -174,8 +153,6 @@ const ServFaqSection = () => {
             </div>
           )}
         </div>
-
-       
       </div>
     </section>
   );

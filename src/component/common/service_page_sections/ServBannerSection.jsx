@@ -1,34 +1,58 @@
 import React from 'react'
 import { ArrowRight, Shield, FileText, Users, Globe } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { getImageUrl } from '../../../utils/getImageUrl'
 
-const ServBannerSection = () => {
+const ServBannerSection = ({ data }) => {
+  // console.log("service banner", data)
+
+  // If no data, return null or show fallback
+  if (!data) {
+    return null;
+  }
+
+  // Get image URL with base URL
+
+
   return (
     <section
       className="
         relative
         h-[55vh]
-        min-h-[500px]
+        min-h-[550px]
         flex
         items-center
         justify-center
         overflow-hidden
       "
     >
-      {/* BACKGROUND IMAGE */}
-      <img
-        src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"
-        alt="Services Hero"
-        className="
-          absolute
-          inset-0
-          w-full
-          h-full
-          object-cover
-        "
-        style={{
-          animation: 'slowZoom 20s ease-in-out infinite'
-        }}
-      />
+      {/* BACKGROUND IMAGE - Responsive with picture element */}
+      <picture className="absolute inset-0 w-full h-full">
+        {/* Mobile image */}
+        <source
+          media="(max-width: 768px)"
+          srcSet={getImageUrl(data.mobile_bg_image) || getImageUrl(data.web_bg_image) || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"}
+        />
+        {/* Desktop image */}
+        <source
+          media="(min-width: 769px)"
+          srcSet={getImageUrl(data.web_bg_image) || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"}
+        />
+        <img
+          src={getImageUrl(data.web_bg_image) || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"}
+          alt={data.image_alt || "Services Hero"}
+          className="
+            absolute
+            inset-0
+            w-full
+            h-full
+            object-cover
+          "
+          style={{
+            animation: 'slowZoom 20s ease-in-out infinite'
+          }}
+        />
+      </picture>
 
       {/* OVERLAY WITH GRADIENT */}
       <div
@@ -82,7 +106,7 @@ const ServBannerSection = () => {
           z-10
         "
       >
-        {/* BADGE */}
+        {/* BADGE - Dynamic */}
         <div
           className="
             inline-flex
@@ -101,11 +125,11 @@ const ServBannerSection = () => {
         >
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
           <span className="text-xs font-semibold uppercase tracking-wider text-white/90">
-            Comprehensive Immigration Solutions
+            {data.title_meta || "Comprehensive Immigration Solutions"}
           </span>
         </div>
 
-        {/* MAIN HEADING */}
+        {/* MAIN HEADING - Dynamic */}
         <h1
           className="
             mt-4
@@ -120,13 +144,13 @@ const ServBannerSection = () => {
           "
           style={{ animation: 'fadeInUp 0.8s ease-out 0.1s forwards', opacity: 0 }}
         >
-          Expert Immigration &
+          {data.title || "Expert Immigration &"}
           <span className="block mt-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-            Business Services
+            {data.highlighted_title || "Business Services"}
           </span>
         </h1>
 
-        {/* DESCRIPTION */}
+        {/* DESCRIPTION - Dynamic */}
         <p
           className="
             mt-6
@@ -140,12 +164,10 @@ const ServBannerSection = () => {
           "
           style={{ animation: 'fadeInUp 0.8s ease-out 0.2s forwards', opacity: 0 }}
         >
-          From sponsor licence applications to visa processing and HR compliance,
-          we provide end-to-end immigration solutions for businesses and individuals
-          in the UK.
+          {data.description || "From sponsor licence applications to visa processing and HR compliance, we provide end-to-end immigration solutions for businesses and individuals in the UK."}
         </p>
 
-        {/* CTA BUTTONS */}
+        {/* CTA BUTTONS - Dynamic */}
         <div
           className="
             mt-8
@@ -157,57 +179,61 @@ const ServBannerSection = () => {
           "
           style={{ animation: 'fadeInUp 0.8s ease-out 0.3s forwards', opacity: 0 }}
         >
-          <button
-            className="
-              group
-              relative
-              overflow-hidden
-              px-8
-              py-3.5
-              rounded-full
-              bg-white
-              text-primary
-              font-semibold
-              shadow-lg
-              hover:shadow-2xl
-              transition-all
-              duration-300
-              hover:scale-105
-            "
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Explore Our Services
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </button>
+          {data.button1_name && (
+            <Link
+              to={data.button1_url || "#"}
+              className="
+                group
+                relative
+                overflow-hidden
+                px-8
+                py-3.5
+                rounded-full
+                bg-white
+                text-primary
+                font-semibold
+                shadow-lg
+                hover:shadow-2xl
+                transition-all
+                duration-300
+                hover:scale-105
+              "
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                {data.button1_name}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
+          )}
 
-          <button
-            className="
-              px-8
-              py-3.5
-              rounded-full
-              bg-transparent
-              border-2
-              border-white/30
-              text-white
-              font-semibold
-              hover:bg-white/10
-              hover:border-white/50
-              transition-all
-              duration-300
-              backdrop-blur-sm
-            "
-          >
-            Free Consultation
-          </button>
+          {data.button2_name && (
+            <Link
+              to={data.button2_url || "#"}
+              className="
+                px-8
+                py-3.5
+                rounded-full
+                bg-transparent
+                border-2
+                border-white/30
+                text-white
+                font-semibold
+                hover:bg-white/10
+                hover:border-white/50
+                transition-all
+                duration-300
+                backdrop-blur-sm
+              "
+            >
+              {data.button2_name}
+            </Link>
+          )}
         </div>
-
-      
       </div>
 
       {/* SCROLL INDICATOR */}
-      <div
+      {/* <div
         className="
           absolute
           bottom-8
@@ -221,7 +247,7 @@ const ServBannerSection = () => {
         <div className="w-6 h-10 rounded-full border-2 border-white/40 flex justify-center">
           <div className="w-1 h-2 bg-white/60 rounded-full mt-2 animate-pulse" />
         </div>
-      </div>
+      </div> */}
 
       {/* ANIMATION STYLES */}
       <style>{`

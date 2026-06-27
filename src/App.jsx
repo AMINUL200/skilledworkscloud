@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Outlet,
+  Navigate,
 } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -47,6 +48,15 @@ import ServiceDetailsThirdSection from "./pages/admin/service_details/ServiceDet
 import ServiceDetailsFourthSection from "./pages/admin/service_details/ServiceDetailsFourthSection";
 import ServiceDetailsFifthSection from "./pages/admin/service_details/ServiceDetailsFifthSection";
 import ServiceDetailsSixthSection from "./pages/admin/service_details/ServiceDetailsSixthSection";
+import MangeFAQ from "./pages/admin/faq/MangeFAQ";
+import ServiceDetailsSevenSection from "./pages/admin/service_details/ServiceDetailsSevenSection";
+import ServiceDetailsEightsSection from "./pages/admin/service_details/ServiceDetailsEightsSection";
+import ServiceDetailsNinthSection from "./pages/admin/service_details/ServiceDetailsNinthSection";
+import ServiceDetailsTenthSection from "./pages/admin/service_details/ServiceDetailsTenthSection";
+import ServiceDetailsEleventhSection from "./pages/admin/service_details/ServiceDetailsEleventhSection";
+import ServiceDetailsTwelvethSection from "./pages/admin/service_details/ServiceDetailsTwelvethSection";
+import ServiceDetailsTestimonial from "./pages/admin/service_details/ServiceDetailsTestimonial";
+import MangeServiceHeroSection from "./pages/admin/service_page/MangeServiceHeroSection";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -118,15 +128,27 @@ const App = () => {
             <Route path="manage-teams" element={<ManageTeam />} />
             <Route path="manage-blogs" element={<ManageBlogs />} />
             <Route path="manage-about" element={<ManageAbout />} />
+            <Route path="manage-faq" element={<MangeFAQ/>}/>
             <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
 
             <Route path="service-categories" element={<MangeServiceCategory />} />
+            <Route path="service-hero" element={<MangeServiceHeroSection/>}/>
+
+
+
             <Route path="service-details-first" element={<ServiceDetailsFirstSection/>}/>
             <Route path="service-details-second" element={<ServiceDetailsSecondSection/>}/>
             <Route path="service-details-third" element={<ServiceDetailsThirdSection/>}/>
             <Route path="service-details-fourth" element={<ServiceDetailsFourthSection/>}/>
             <Route path="service-details-fifth" element={<ServiceDetailsFifthSection/>}/>
             <Route path="service-details-sixth" element={<ServiceDetailsSixthSection/>}/>
+            <Route path="service-details-seventh" element={<ServiceDetailsSevenSection/>}/>
+            <Route path="service-details-eighth" element={<ServiceDetailsEightsSection/>}/>
+            <Route path="service-details-ninth" element={<ServiceDetailsNinthSection/>}/>
+            <Route path="service-details-tenth" element={<ServiceDetailsTenthSection/>}/>
+            <Route path="service-details-eleventh" element={<ServiceDetailsEleventhSection/>}/>
+            <Route path="service-details-twelveth" element={<ServiceDetailsTwelvethSection/>}/>
+            <Route path="service-details-testimonial" element={<ServiceDetailsTestimonial/>}/>
 
 
 

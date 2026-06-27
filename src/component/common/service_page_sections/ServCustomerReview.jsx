@@ -10,129 +10,97 @@ import {
   Clock,
 } from "lucide-react";
 
-const testimonials = [
-  {
-    name: "Sarah Johnson",
-    date: "15/03/2025",
-    initial: "S",
-    color: "#2563EB",
-    review:
-      "WorkPermitCloud made our sponsor licence application seamless. Their team was incredibly knowledgeable and guided us through every step. We received our licence within 8 weeks!",
-    service: "Sponsor Licence",
-    rating: 5,
-  },
-  {
-    name: "Michael Chen",
-    date: "10/02/2025",
-    initial: "M",
-    color: "#10B981",
-    review:
-      "The team helped me with my Skilled Worker Visa application. They were professional, responsive, and ensured all documents were perfect. Highly recommend their services!",
-    service: "Skilled Worker Visa",
-    rating: 5,
-  },
-  {
-    name: "Priya Patel",
-    date: "05/01/2025",
-    initial: "P",
-    color: "#8B5CF6",
-    review:
-      "Outstanding service from start to finish. They handled my spouse visa application with great care and attention to detail. The process was smooth and stress-free.",
-    service: "Spouse Visa",
-    rating: 5,
-  },
-  {
-    name: "David O'Brien",
-    date: "20/12/2024",
-    initial: "D",
-    color: "#F59E0B",
-    review:
-      "Their HR compliance team saved us from a potential civil penalty. They conducted a thorough audit and fixed all issues before the Home Office visit. Absolutely life-saving!",
-    service: "HR Compliance",
-    rating: 5,
-  },
-  {
-    name: "Emma Watson",
-    date: "18/11/2024",
-    initial: "E",
-    color: "#EC4899",
-    review:
-      "The self-sponsorship guidance was exceptional. They helped me set up my business and navigate the complex visa requirements. I couldn't have done it without them.",
-    service: "Self-Sponsorship",
-    rating: 5,
-  },
-  {
-    name: "James Wilson",
-    date: "25/10/2024",
-    initial: "J",
-    color: "#06B6D4",
-    review:
-      "Excellent service for our company's global mobility needs. The team processed multiple visas efficiently and kept us updated throughout. Very professional organization.",
-    service: "Global Business Mobility",
-    rating: 5,
-  },
-];
+// Helper function to get initials
+const getInitials = (name) => {
+  if (!name) return "?";
+  const parts = name.split(" ");
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+};
 
-const TestimonialCard = ({ t }) => (
-  <div
-    className="flex flex-col gap-3 p-5 rounded-2xl transition-all duration-300 cursor-default shrink-0 hover:scale-105"
-    style={{
-      width: "320px",
-      background: "white",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-      border: "1px solid #E2E8F0",
-    }}
-  >
-    {/* Quote icon */}
-    <Quote className="w-8 h-8 text-primary/20" />
+// Helper function to get color based on name
+const getColorFromName = (name) => {
+  const colors = [
+    "#2563EB", "#10B981", "#8B5CF6", "#F59E0B", "#EC4899", 
+    "#06B6D4", "#F97316", "#6366F1", "#14B8A6", "#8B5CF6"
+  ];
+  let hash = 0;
+  if (name) {
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+  }
+  return colors[Math.abs(hash) % colors.length];
+};
 
-    {/* Review text */}
-    <p
-      className="text-gray-700 text-sm leading-relaxed"
+const TestimonialCard = ({ testimonial }) => {
+  const t = testimonial;
+  const initial = getInitials(t.name);
+  const color = getColorFromName(t.name);
+
+  return (
+    <div
+      className="flex flex-col gap-3 p-5 rounded-2xl transition-all duration-300 cursor-default shrink-0 hover:scale-105"
       style={{
-        display: "-webkit-box",
-        WebkitLineClamp: 4,
-        WebkitBoxOrient: "vertical",
-        overflow: "hidden",
+        width: "320px",
+        background: "white",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+        border: "1px solid #E2E8F0",
       }}
     >
-      "{t.review}"
-    </p>
+      {/* Quote icon */}
+      <Quote className="w-8 h-8 text-primary/20" />
 
-    {/* Rating stars */}
-    <div className="flex gap-0.5">
-      {[...Array(t.rating)].map((_, i) => (
-        <Star key={i} size={14} fill="#FCD34D" style={{ color: "#FCD34D" }} />
-      ))}
-    </div>
-
-    {/* Divider */}
-    <div className="h-px bg-gray-100" />
-
-    {/* Avatar + name row */}
-    <div className="flex items-center gap-3">
-      <div
-        className="flex items-center justify-center rounded-full text-white font-bold text-sm shrink-0"
+      {/* Review text */}
+      <p
+        className="text-gray-700 text-sm leading-relaxed"
         style={{
-          width: "40px",
-          height: "40px",
-          background: t.color,
+          display: "-webkit-box",
+          WebkitLineClamp: 4,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
         }}
       >
-        {t.initial}
+        "{t.description || t.review}"
+      </p>
+
+      {/* Rating stars */}
+      <div className="flex gap-0.5">
+        {[...Array(t.rating || 5)].map((_, i) => (
+          <Star key={i} size={14} fill="#FCD34D" style={{ color: "#FCD34D" }} />
+        ))}
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-bold text-gray-900 text-sm truncate">
-            {t.name}
-          </span>
-          <span className="text-gray-400 text-xs shrink-0">{t.date}</span>
+
+      {/* Divider */}
+      <div className="h-px bg-gray-100" />
+
+      {/* Avatar + name row */}
+      <div className="flex items-center gap-3">
+        <div
+          className="flex items-center justify-center rounded-full text-white font-bold text-sm shrink-0"
+          style={{
+            width: "40px",
+            height: "40px",
+            background: color,
+          }}
+        >
+          {initial}
         </div>
-        <span className="text-xs text-primary font-medium">{t.service}</span>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-bold text-gray-900 text-sm truncate">
+              {t.name}
+            </span>
+            <span className="text-gray-400 text-xs shrink-0">
+              {t.date || new Date(t.created_at).toLocaleDateString()}
+            </span>
+          </div>
+          <span className="text-xs text-primary font-medium">{t.designation || t.service}</span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const MarqueeRow = ({ items, direction = "left", speed = 0.55 }) => {
   const trackRef = useRef(null);
@@ -192,14 +160,14 @@ const MarqueeRow = ({ items, direction = "left", speed = 0.55 }) => {
         style={{ gap: "16px", willChange: "transform" }}
       >
         {tripled.map((t, i) => (
-          <TestimonialCard key={i} t={t} />
+          <TestimonialCard key={i} testimonial={t} />
         ))}
       </div>
     </div>
   );
 };
 
-const MobileSlider = () => {
+const MobileSlider = ({ testimonials }) => {
   const containerRef = useRef(null);
   const [current, setCurrent] = useState(0);
   const autoRef = useRef(null);
@@ -240,7 +208,7 @@ const MobileSlider = () => {
       >
         {testimonials.map((t, i) => (
           <div key={i} style={{ minWidth: "100%", scrollSnapAlign: "start" }}>
-            <TestimonialCard t={t} />
+            <TestimonialCard testimonial={t} />
           </div>
         ))}
       </div>
@@ -289,12 +257,39 @@ const MobileSlider = () => {
   );
 };
 
-const ServCustomerReview = () => {
+const ServCustomerReview = ({ testimonials }) => {
+  console.log("Testimonials:", testimonials);
+
+  // If no testimonials, return null or show fallback
+  if (!testimonials || testimonials.length === 0) {
+    return (
+      <section
+        className="relative overflow-hidden py-20 lg:py-28"
+        style={{
+          background: "linear-gradient(135deg, #0B4EA2 0%, #1C75FF 50%, #0F5CC0 100%)",
+        }}
+      >
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 text-white">
+            What Our Clients Say
+          </h2>
+          <p className="text-blue-100 text-base max-w-2xl mx-auto">
+            No testimonials available at the moment. Please check back later.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   const row2 = [...testimonials].reverse();
+  
+  // Calculate stats from testimonials data
+  const totalReviews = testimonials.length;
+  const averageRating = testimonials.reduce((acc, t) => acc + (t.rating || 5), 0) / totalReviews;
   const stats = [
-    { icon: Users, value: "1000+", label: "Happy Clients" },
-    { icon: ThumbsUp, value: "98%", label: "Success Rate" },
-    { icon: Award, value: "50+", label: "Expert Team" },
+    { icon: Users, value: `${totalReviews}+`, label: "Reviews" },
+    { icon: ThumbsUp, value: `${Math.round(averageRating * 20)}%`, label: "Success Rate" },
+    { icon: Award, value: "Expert", label: "Team" },
     { icon: Clock, value: "24/7", label: "Support" },
   ];
 
@@ -305,13 +300,13 @@ const ServCustomerReview = () => {
         background: "linear-gradient(135deg, #0B4EA2 0%, #1C75FF 50%, #0F5CC0 100%)",
       }}
     >
-      {/* Decorative elements - adjusted for new gradient */}
+      {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header - updated colors for dark gradient background */}
+        {/* Section Header */}
         <div className="text-center mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-5">
             <Star className="w-4 h-4 text-white" fill="currentColor" />
@@ -332,22 +327,24 @@ const ServCustomerReview = () => {
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-10 xl:gap-14 items-start">
-          {/* Left Side - Stats & Ratings - updated with glass morphism */}
+          {/* Left Side - Stats & Ratings */}
           <div className="space-y-8">
             {/* Rating Card */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg border border-white/20">
-              <div className="text-5xl font-black text-white mb-2">4.9</div>
+              <div className="text-5xl font-black text-white mb-2">
+                {averageRating.toFixed(1)}
+              </div>
               <div className="flex justify-center gap-1 mb-2">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star
                     key={s}
                     size={20}
-                    fill="#FCD34D"
-                    style={{ color: "#FCD34D" }}
+                    fill={s <= Math.round(averageRating) ? "#FCD34D" : "none"}
+                    style={{ color: s <= Math.round(averageRating) ? "#FCD34D" : "rgba(255,255,255,0.3)" }}
                   />
                 ))}
               </div>
-              <p className="text-blue-100 text-sm">Based on 1,200+ reviews</p>
+              <p className="text-blue-100 text-sm">Based on {totalReviews}+ reviews</p>
             </div>
 
             {/* Stats Grid */}
@@ -368,9 +365,6 @@ const ServCustomerReview = () => {
                 );
               })}
             </div>
-
-            
-           
           </div>
 
           {/* Right Side - Testimonial Cards */}
@@ -383,12 +377,10 @@ const ServCustomerReview = () => {
 
             {/* Mobile Slider */}
             <div className="xl:hidden">
-              <MobileSlider />
+              <MobileSlider testimonials={testimonials} />
             </div>
           </div>
         </div>
-
-       
       </div>
 
       <style>{`

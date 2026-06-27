@@ -23,6 +23,7 @@ import {
   Clock,
   Star,
   User2,
+  FileQuestion,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { label, path } from "framer-motion/client";
@@ -39,12 +40,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       icon: <LayoutDashboard className="w-5 h-5" />,
       path: "/admin",
     },
-    // {
-    //   id: "profile",
-    //   label: "Profile",
-    //   icon: <User2 className="w-5 h-5" />,
-    //   path: "/admin/profile",
-    // },
+
     {
       id: "banners",
       label: "Banners",
@@ -87,6 +83,26 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           path: "/admin/service-categories",
         },
         {
+          id: "manage-service-Hero",
+          label: " Service Hero",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-hero",
+        },
+        {
+          id: "service-testimonial-section",
+          label: "Service  Testimonial",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-testimonial",
+        },
+        
+      ],
+    },
+    {
+      id: "service-details",
+      label: "Service Details",
+      icon: <Package className="w-5 h-5" />,
+      children: [
+        {
           id: "service-details-first-section",
           label: "Service Details First",
           icon: <Tag className="w-4 h-4" />,
@@ -122,7 +138,49 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           icon: <Tag className="w-4 h-4" />,
           path: "/admin/service-details-sixth",
         },
+        {
+          id: "service-details-seventh-section",
+          label: "Service Details Seventh",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-seventh",
+        },
+        {
+          id: "service-details-eighth-section",
+          label: "Service Details Eights",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-eighth",
+        },
+        {
+          id: "service-details-ninth-section",
+          label: "Service Details Ninth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-ninth",
+        },
+        {
+          id: "service-details-tenth-section",
+          label: "Service Details Tenth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-tenth",
+        },
+        {
+          id: "service-details-eleventh-section",
+          label: "Service Details Eleventh",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-eleventh",
+        },
+        {
+          id: "service-details-twelveth-section",
+          label: "Service Details Twelveth",
+          icon: <Tag className="w-4 h-4" />,
+          path: "/admin/service-details-twelveth",
+        },
       ],
+    },
+    {
+      id: "faq",
+      label: "FAQ",
+      icon: <FileQuestion className="w-5 h-5" />,
+      path: "/admin/manage-faq",
     },
     {
       id: "settings",
@@ -266,7 +324,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
                 <div
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
                     openDropdowns[item.id]
-                      ? "max-h-96 opacity-100 mt-1"
+                      ? " opacity-100 mt-1"
                       : "max-h-0 opacity-0"
                   }`}
                 >
