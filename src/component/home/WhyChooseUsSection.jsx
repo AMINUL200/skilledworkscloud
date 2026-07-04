@@ -43,7 +43,7 @@ const WhyChooseUsSection = () => {
 
   return (
     <section
-      className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
+      className="relative overflow-hidden py-16 sm:py-20 lg:py-20"
       style={{ background: "#EEF5FD" }}
     >
       {/* Background decorations */}

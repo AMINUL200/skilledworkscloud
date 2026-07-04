@@ -57,6 +57,7 @@ import ServiceDetailsEleventhSection from "./pages/admin/service_details/Service
 import ServiceDetailsTwelvethSection from "./pages/admin/service_details/ServiceDetailsTwelvethSection";
 import ServiceDetailsTestimonial from "./pages/admin/service_details/ServiceDetailsTestimonial";
 import MangeServiceHeroSection from "./pages/admin/service_page/MangeServiceHeroSection";
+import ManageHRCompliance from "./pages/admin/hr_compliance/ManageHRCompliance";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -130,6 +131,7 @@ const App = () => {
             <Route path="manage-about" element={<ManageAbout />} />
             <Route path="manage-faq" element={<MangeFAQ/>}/>
             <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
+            <Route path="manage-hr-compliance" element={<ManageHRCompliance />} />
 
             <Route path="service-categories" element={<MangeServiceCategory />} />
             <Route path="service-hero" element={<MangeServiceHeroSection/>}/>

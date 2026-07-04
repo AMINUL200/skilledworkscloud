@@ -54,7 +54,7 @@ const MediaInsightsSection = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-[#EEF5FD]">
+    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-20 bg-[#EEF5FD]">
       {/* Background pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-blue-500/5 blur-3xl" />

@@ -94,7 +94,6 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
           icon: <Tag className="w-4 h-4" />,
           path: "/admin/service-details-testimonial",
         },
-        
       ],
     },
     {
@@ -181,6 +180,13 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       label: "FAQ",
       icon: <FileQuestion className="w-5 h-5" />,
       path: "/admin/manage-faq",
+    },
+    {
+      id: "hr-compliance",
+      label: "HR Compliance",
+      icon: <Shield className="w-5 h-5" />,
+      path: "/admin/manage-hr-compliance",
+      
     },
     {
       id: "settings",

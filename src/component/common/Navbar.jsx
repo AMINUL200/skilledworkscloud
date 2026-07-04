@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Menu, ChevronDown } from "lucide-react";
+import { useApp } from "../../context/AppContext";
 
 const Navbar = ({ toggleMenu }) => {
+  const { services, loading } = useApp();
+
+  console.log("services info :: ", services);
+
   const [scrolled, setScrolled] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const dropdownRefs = useRef({});
@@ -36,6 +41,20 @@ const Navbar = ({ toggleMenu }) => {
     }, delay);
   };
 
+  /* ---------------- DYNAMIC SERVICES SECTIONS ---------------- */
+  const getServiceSections = () => {
+    if (!services || services.length === 0) return [];
+
+    return services.map((service) => ({
+      title: service.name,
+      links:
+        service.subcategories?.map((sub) => ({
+          label: sub.name,
+          path: `/services/${sub.slug}`,
+        })) || [],
+    }));
+  };
+
   /* ---------------- NAVIGATION LINKS ---------------- */
   const navLinks = [
     {
@@ -56,145 +75,7 @@ const Navbar = ({ toggleMenu }) => {
       label: "Services",
       path: "/services",
       megaMenu: true,
-      sections: [
-        {
-          title: "Sponsorship Licence",
-          links: [
-            {
-              label: "Sponsor Licence Renewal",
-              path: "/services/sponsor-licence-renewal",
-            },
-            {
-              label: "Sponsor Licence Suspension",
-              path: "/services/sponsor-licence-suspension",
-            },
-            {
-              label: "Sponsor Licence Application",
-              path: "/services/sponsor-licence-application",
-            },
-          ],
-        },
-        {
-          title: "Immigration Compliance",
-          links: [
-            { label: "Civil Penalty", path: "/services/civil-penalty" },
-            {
-              label: "HO Compliance Visit",
-              path: "/services/ho-compliance-visit",
-            },
-            {
-              label: "Right to Work Check",
-              path: "/services/right-to-work-check",
-            },
-          ],
-        },
-        {
-          title: "Skilled Worker Visas",
-          links: [
-            {
-              label: "Skilled Worker Visa",
-              path: "/services/skilled-worker-visa",
-            },
-            {
-              label: "Minister of Religion Visa",
-              path: "/services/minister-of-religion-visa",
-            },
-            { label: "Health Care Visa", path: "/services/health-care-visa" },
-          ],
-        },
-        {
-          title: "Temporary (Tier 5) Visas",
-          links: [
-            {
-              label: "Religious Worker Visa",
-              path: "/services/religious-worker-visa",
-            },
-            {
-              label: "Creative Worker Visa",
-              path: "/services/creative-worker-visa",
-            },
-            {
-              label: "Charity Worker Visa",
-              path: "/services/charity-worker-visa",
-            },
-          ],
-        },
-        {
-          title: "Partner and Family Visas",
-          links: [
-            { label: "Spouse Visa", path: "/services/spouse-visa" },
-            { label: "Dependent Visa", path: "/services/dependent-visa" },
-            {
-              label: "Unmarried Partner Visa",
-              path: "/services/unmarried-partner-visa",
-            },
-          ],
-        },
-        {
-          title: "Global Business Mobility",
-          links: [
-            {
-              label: "Graduate Trainee Visa",
-              path: "/services/graduate-trainee-visa",
-            },
-            {
-              label: "UK Expansion Worker Visa",
-              path: "/services/uk-expansion-worker-visa",
-            },
-            {
-              label: "Specialist Worker Visa",
-              path: "/services/specialist-worker-visa",
-            },
-          ],
-        },
-        {
-          title: "Standard Visitor Visa",
-          links: [
-            { label: "Tourist Visa", path: "/services/tourist-visa" },
-            { label: "Business Visit", path: "/services/business-visit" },
-            { label: "UK Fiancé Visa", path: "/services/uk-fiance-visa" },
-          ],
-        },
-        {
-          title: "Study Visas",
-          links: [
-            { label: "Student Visa", path: "/services/student-visa" },
-            {
-              label: "Child Student Visa",
-              path: "/services/child-student-visa",
-            },
-            { label: "Graduate Visa", path: "/services/graduate-visa" },
-          ],
-        },
-        {
-          title: "Business Visas",
-          links: [
-            {
-              label: "Self-Sponsorship In UK",
-              path: "/services/self-sponsorship",
-            },
-            {
-              label: "Innovator Founder Visa",
-              path: "/services/innovator-founder-visa",
-            },
-            {
-              label: "Turkish Businessperson Visa",
-              path: "/services/turkish-businessperson-visa",
-            },
-          ],
-        },
-        {
-          title: "Scale Up Visa",
-          links: [
-            { label: "Scale-up Visa", path: "/services/scale-up-visa" },
-            {
-              label: "Scale-up Sponsor Licence",
-              path: "/services/scale-up-sponsor-licence",
-            },
-            { label: "Scale up Business", path: "/services/scale-up-business" },
-          ],
-        },
-      ],
+      sections: getServiceSections(),
     },
     {
       id: "sponsor",
@@ -281,6 +162,12 @@ const Navbar = ({ toggleMenu }) => {
     { id: "contact", label: "Contact", path: "/contact" },
   ];
 
+  // Update services sections when services data changes
+  const servicesNavItem = navLinks.find((item) => item.id === "services");
+  if (servicesNavItem) {
+    servicesNavItem.sections = getServiceSections();
+  }
+
   /* ---------------- CLOSE DROPDOWN ON OUTSIDE CLICK ---------------- */
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -307,6 +194,36 @@ const Navbar = ({ toggleMenu }) => {
     const hasDropdown =
       (item.dropdown && item.dropdown.length > 0) || item.megaMenu;
     const isOpen = !!openDropdowns[item.id];
+
+    // Check if it's a services mega menu and has no sections yet
+    if (
+      item.id === "services" &&
+      (!item.sections || item.sections.length === 0)
+    ) {
+      return (
+        <div
+          key={item.id}
+          className="relative"
+          ref={(el) => (dropdownRefs.current[item.id] = el)}
+          onMouseEnter={() => openMenu(item.id)}
+          onMouseLeave={() => closeMenu(item.id)}
+        >
+          <button
+            onClick={() => {
+              if (item.path) {
+                handleNavigate(item.path);
+              }
+            }}
+            className="flex items-center gap-1 text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
+          >
+            <span>{item.label}</span>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-primary" : ""}`}
+            />
+          </button>
+        </div>
+      );
+    }
 
     return (
       <div
@@ -363,28 +280,40 @@ const Navbar = ({ toggleMenu }) => {
                     </RouterLink>
                   </div>
 
-                  {/* Responsive Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
-                    {item.sections?.map((section, index) => (
-                      <div key={index} className="min-w-0">
-                        <h3 className="text-[12px] lg:text-[13px] font-bold uppercase tracking-wider text-primary mb-3 pb-2 border-b-2 border-primary/20">
-                          {section.title}
-                        </h3>
-                        <div className="space-y-2">
-                          {section.links.map((link, i) => (
-                            <RouterLink
-                              key={i}
-                              to={link.path}
-                              onClick={() => setOpenDropdowns({})}
-                              className="block text-[13px] lg:text-[14px] text-gray-600 hover:text-primary hover:translate-x-1 transition-all duration-200 leading-snug"
-                            >
-                              {link.label}
-                            </RouterLink>
-                          ))}
+                  {/* Dynamic Responsive Grid */}
+                  {item.sections && item.sections.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
+                      {item.sections.map((section, index) => (
+                        <div key={index} className="min-w-0">
+                          <h3 className="text-[12px] lg:text-[13px] font-bold uppercase tracking-wider text-primary mb-3 pb-2 border-b-2 border-primary/20">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.links.length > 0 ? (
+                              section.links.map((link, i) => (
+                                <RouterLink
+                                  key={i}
+                                  to={link.path}
+                                  onClick={() => setOpenDropdowns({})}
+                                  className="block text-[13px] lg:text-[14px] text-gray-600 hover:text-primary hover:translate-x-1 transition-all duration-200 leading-snug"
+                                >
+                                  {link.label}
+                                </RouterLink>
+                              ))
+                            ) : (
+                              <p className="text-[13px] text-gray-400 italic">
+                                No subcategories yet
+                              </p>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500">Loading services...</p>
+                    </div>
+                  )}
                 </div>
                 <div className="h-1 w-full bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
               </div>
@@ -420,7 +349,7 @@ const Navbar = ({ toggleMenu }) => {
                           </div>
                         );
                       }
-                      
+
                       return (
                         <RouterLink
                           key={subItem.id}
@@ -478,8 +407,17 @@ const Navbar = ({ toggleMenu }) => {
             {navLinks.map((item) => renderNavItem(item))}
           </nav>
 
-          <button className="px-3 py-2 min-[1286px]:px-7 min-[1286px]:py-3 rounded-2xl bg-primary text-white font-semibold hover:scale-105 transition-all duration-300 text-sm min-[1286px]:text-base">
-            Get Started
+          <button
+            onClick={() =>
+              window.open(
+                "https://skilledworkerscloud.co.uk/hrms-v2/register",
+                "_blank",
+                "noopener,noreferrer",
+              )
+            }
+            className="px-3 py-2 min-[1286px]:px-7 min-[1286px]:py-3 rounded-2xl bg-primary text-white font-semibold hover:scale-105 transition-all duration-300 text-sm min-[1286px]:text-base"
+          >
+            SponicHr Login
           </button>
         </div>
 
