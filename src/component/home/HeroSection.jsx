@@ -16,31 +16,31 @@ const HeroSection = () => {
   const tools = [
     {
       id: 1,
-      title: "Get Your Sponsor Licence Today",
+      title: "Get Your SPL Today",
       description: "Check if your business is eligible",
       icon: <BadgeCheck className="w-4 h-4" />,
     },
     {
       id: 2,
-      title: "IHS & Visa Fee Calculator",
+      title: "2.	SPL Status Check",
       description: "Calculate your total visa application cost",
       icon: <Calculator className="w-4 h-4" />,
     },
     {
       id: 3,
-      title: "Sponsor Licence Status Check",
+      title: "Right to Work Check (RTW)",
       description: "Check your current licence status",
       icon: <Search className="w-4 h-4" />,
     },
     {
       id: 4,
-      title: "Can I Take Additional Work?",
+      title: "Get Free HR Compliance Audit",
       description: "Check if supplementary employment is allowed",
       icon: <BriefcaseBusiness className="w-4 h-4" />,
     },
     {
       id: 5,
-      title: "Free HR Compliance Audit",
+      title: "Get Free HR Compliance Audit",
       description: "Find hidden compliance risks",
       icon: <ClipboardCheck className="w-4 h-4" />,
     },

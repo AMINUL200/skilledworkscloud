@@ -63,11 +63,11 @@ const Navbar = ({ toggleMenu }) => {
       dropdown: [
         { id: "about-us", label: "About Us", path: "/about-us" },
         { id: "team", label: "Our Team", path: "/team" },
-        {
-          id: "csr",
-          label: "Corporate Social Responsibility",
-          path: "/corporate-social-responsibility",
-        },
+        // {
+        //   id: "csr",
+        //   label: "Corporate Social Responsibility",
+        //   path: "/corporate-social-responsibility",
+        // },
       ],
     },
     {
@@ -77,12 +77,13 @@ const Navbar = ({ toggleMenu }) => {
       megaMenu: true,
       sections: getServiceSections(),
     },
+    { id: "hr", label: "HR Compliance", path: "/hr-compliance" },
+    { id: "self", label: "Self-Sponsorship", path: "/self-sponsorship" },
     {
       id: "sponsor",
       label: "Sponsor Licence Checker",
       path: "/sponsor-checker",
     },
-    { id: "self", label: "Self-Sponsorship", path: "/self-sponsorship" },
     {
       id: "tools",
       label: "Tools",
@@ -157,7 +158,7 @@ const Navbar = ({ toggleMenu }) => {
         },
       ],
     },
-    { id: "hr", label: "HR Compliance", path: "/hr-compliance" },
+
     { id: "blogs", label: "Blogs", path: "/blogs" },
     { id: "contact", label: "Contact", path: "/contact" },
   ];
