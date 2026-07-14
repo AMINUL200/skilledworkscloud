@@ -383,8 +383,8 @@ const Navbar = ({ toggleMenu }) => {
     <header
       className={`
         fixed top-0 left-0 w-full z-50
-        transition-all duration-300
-        ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "bg-transparent"}
+        transition-all duration-300 bg-white
+        ${scrolled ? "bg-white backdrop-blur-xl shadow-sm" : "bg-transparent"}
       `}
     >
       <div className="max-w-[1450px] mx-auto px-5 lg:px-8 flex items-center justify-between">
@@ -395,7 +395,7 @@ const Navbar = ({ toggleMenu }) => {
         >
           <div className="w-28 h-24 rounded-2xl flex items-center justify-center">
             <img
-              src="/image/swc_logo.png"
+              src="/image/swc_logo_2.png"
               alt="logo"
               className="w-full h-full object-contain"
             />
@@ -404,7 +404,7 @@ const Navbar = ({ toggleMenu }) => {
 
         {/* DESKTOP NAV */}
         <div className="hidden lg:flex items-center gap-5">
-          <nav className="flex items-center gap-6 xl:gap-8 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 xl:px-8 py-3 xl:py-4 shadow-[0_8px_30px_rgba(15,23,42,0.08)]">
+          <nav className="flex items-center gap-6 xl:gap-8 bg-white backdrop-blur-xl  px-6 xl:px-8 py-3 xl:py-4 ">
             {navLinks.map((item) => renderNavItem(item))}
           </nav>
 
