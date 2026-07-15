@@ -258,10 +258,10 @@ const Navbar = ({ toggleMenu }) => {
                 onMouseLeave={() => closeMenu(item.id)}
                 className={`
                   fixed left-0 right-0
-                  bg-white
+                  bg-surface
                   rounded-none lg:rounded-[32px]
-                  border-t lg:border-t-0 border-gray-100
-                  shadow-[0_20px_60px_rgba(0,0,0,0.10)]
+                  border-t lg:border-t-0 border-border
+                  shadow-card
                   z-[999]
                   transition-all duration-300 ease-out
                   ${isOpen ? "opacity-100 visible translate-y-0 pointer-events-auto" : "opacity-0 invisible -translate-y-2 pointer-events-none"}
@@ -270,7 +270,7 @@ const Navbar = ({ toggleMenu }) => {
               >
                 <div className="w-full px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
                   {/* View All Services Link */}
-                  <div className="mb-6 pb-4 border-b border-gray-100">
+                  <div className="mb-6 pb-4 border-b border-border">
                     <RouterLink
                       to="/services"
                       onClick={() => setOpenDropdowns({})}
@@ -296,13 +296,13 @@ const Navbar = ({ toggleMenu }) => {
                                   key={i}
                                   to={link.path}
                                   onClick={() => setOpenDropdowns({})}
-                                  className="block text-[13px] lg:text-[14px] text-gray-600 hover:text-primary hover:translate-x-1 transition-all duration-200 leading-snug"
+                                  className="block text-[13px] lg:text-[14px] text-text-light hover:text-primary hover:translate-x-1 transition-all duration-200 leading-snug"
                                 >
                                   {link.label}
                                 </RouterLink>
                               ))
                             ) : (
-                              <p className="text-[13px] text-gray-400 italic">
+                              <p className="text-[13px] text-text-muted italic">
                                 No subcategories yet
                               </p>
                             )}
@@ -312,7 +312,7 @@ const Navbar = ({ toggleMenu }) => {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-500">Loading services...</p>
+                      <p className="text-text-light">Loading services...</p>
                     </div>
                   )}
                 </div>
@@ -324,10 +324,10 @@ const Navbar = ({ toggleMenu }) => {
                 className={`
                   absolute top-full left-0 mt-5
                   w-64 sm:w-72
-                  bg-white/95 backdrop-blur-xl
-                  border border-white/50
+                  bg-surface/95 backdrop-blur-xl
+                  border border-border/50
                   rounded-2xl sm:rounded-3xl
-                  shadow-[0_20px_60px_rgba(15,23,42,0.12)]
+                  shadow-card
                   p-2 sm:p-3 z-50
                   transition-all duration-300
                   ${isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-3"}
@@ -342,9 +342,9 @@ const Navbar = ({ toggleMenu }) => {
                         return (
                           <div
                             key={subItem.id}
-                            className="px-3 sm:px-4 py-2 mt-2 border-t border-gray-200"
+                            className="px-3 sm:px-4 py-2 mt-2 border-t border-border"
                           >
-                            <span className="text-[11px] uppercase font-bold text-gray-400 tracking-wider">
+                            <span className="text-[11px] uppercase font-bold text-text-muted tracking-wider">
                               {subItem.label}
                             </span>
                           </div>
@@ -356,7 +356,7 @@ const Navbar = ({ toggleMenu }) => {
                           key={subItem.id}
                           to={subItem.path}
                           onClick={() => setOpenDropdowns({})}
-                          className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[14px] sm:text-[15px] font-medium text-text-light hover:bg-primary-light hover:text-primary transition-all duration-300"
+                          className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[14px] sm:text-[15px] font-medium text-text-light hover:text-white hover:bg-primary transition-all duration-300"
                         >
                           {subItem.label}
                         </RouterLink>
@@ -383,8 +383,8 @@ const Navbar = ({ toggleMenu }) => {
     <header
       className={`
         fixed top-0 left-0 w-full z-50
-        transition-all duration-300 bg-white
-        ${scrolled ? "bg-white backdrop-blur-xl shadow-sm" : "bg-transparent"}
+        transition-all duration-300 bg-surface
+        ${scrolled ? "bg-surface backdrop-blur-xl shadow-card" : "bg-transparent"}
       `}
     >
       <div className="max-w-[1450px] mx-auto px-5 lg:px-8 flex items-center justify-between">
@@ -404,7 +404,7 @@ const Navbar = ({ toggleMenu }) => {
 
         {/* DESKTOP NAV */}
         <div className="hidden lg:flex items-center gap-5">
-          <nav className="flex items-center gap-6 xl:gap-8 bg-white backdrop-blur-xl  px-6 xl:px-8 py-3 xl:py-4 ">
+          <nav className="flex items-center gap-6 xl:gap-8 bg-surface backdrop-blur-xl px-6 xl:px-8 py-3 xl:py-4 rounded-2xl shadow-card">
             {navLinks.map((item) => renderNavItem(item))}
           </nav>
 
@@ -416,7 +416,7 @@ const Navbar = ({ toggleMenu }) => {
                 "noopener,noreferrer",
               )
             }
-            className="px-3 py-2 min-[1286px]:px-7 min-[1286px]:py-3 rounded-2xl bg-primary text-white font-semibold hover:scale-105 transition-all duration-300 text-sm min-[1286px]:text-base"
+            className="btn btn-primary px-3 py-2 min-[1286px]:px-7 min-[1286px]:py-3 text-sm min-[1286px]:text-base"
           >
             SponicHr Login
           </button>
@@ -426,7 +426,7 @@ const Navbar = ({ toggleMenu }) => {
         <div className="lg:hidden">
           <button
             onClick={toggleMenu}
-            className="w-11 h-11 rounded-xl bg-white border border-border flex items-center justify-center shadow-sm"
+            className="w-11 h-11 rounded-xl bg-surface border border-border flex items-center justify-center shadow-sm"
           >
             <Menu className="w-6 h-6 text-text" />
           </button>
@@ -439,15 +439,15 @@ const Navbar = ({ toggleMenu }) => {
           width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: var(--color-muted);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #d1d5db;
+          background: var(--color-border);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #9ca3af;
+          background: var(--color-text-muted);
         }
       `}</style>
     </header>

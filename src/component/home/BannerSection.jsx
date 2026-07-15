@@ -38,11 +38,11 @@ const BannerSection = () => {
         className="
           absolute
           inset-0
-          bg-black/50
+          bg-black/20
         "
       />
 
-      {/* ================= BLUE GRADIENT OVERLAY ================= */}
+      {/* ================= NAVY GRADIENT OVERLAY ================= */}
 
       <div
         className="
@@ -51,7 +51,7 @@ const BannerSection = () => {
           bg-gradient-to-r
           from-[#020617]/80
           via-[#0F172A]/60
-          to-[#2563EB]/30
+          to-primary/30
         "
       />
 
@@ -129,7 +129,8 @@ const BannerSection = () => {
             "
           >
             Transform Your Workforce Management with
-            <span className="text-blue-400">
+            {/* <span className="text-primary-bright"> */}
+            <span className="text-primary">
               {" "}
               Smart HR Automation
             </span>
@@ -172,57 +173,33 @@ const BannerSection = () => {
 
             <button
               className="
+                btn
+                btn-primary
+
                 px-8
                 py-4
 
-                rounded-2xl
-
-                bg-[#2563EB]
-
-                text-white
-                font-semibold
                 text-lg
-
-                shadow-[0_10px_40px_rgba(37,99,235,0.45)]
-
-                hover:bg-blue-700
-                hover:scale-105
-
-                transition-all
-                duration-300
               "
             >
               Get Started Today
             </button>
 
-            {/* SECOND BUTTON */}
+            {/* SECOND BUTTON - Glass Style */}
 
-            {/* <button
+            <button
               className="
+                btn
+                btn-glass
+
                 px-8
                 py-4
 
-                rounded-2xl
-
-                border
-                border-white/20
-
-                bg-white/10
-                backdrop-blur-md
-
-                text-white
-                font-semibold
                 text-lg
-
-                hover:bg-white
-                hover:text-black
-
-                transition-all
-                duration-300
               "
             >
               Explore Features
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

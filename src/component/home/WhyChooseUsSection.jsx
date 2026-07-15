@@ -44,13 +44,13 @@ const WhyChooseUsSection = () => {
   return (
     <section
       className="relative overflow-hidden py-16 sm:py-20 lg:py-20"
-      style={{ background: "#EEF5FD" }}
+      style={{ background: "var(--color-muted)" }}
     >
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-cyan-500/5 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-500/3 blur-3xl" />
+        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-primary-bright/5 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/3 blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,11 +67,10 @@ const WhyChooseUsSection = () => {
                 return (
                   <div
                     key={index}
-                    className="relative group rounded-2xl p-5 transition-all duration-300 cursor-pointer"
+                    className="relative group rounded-2xl p-5 transition-all duration-300 cursor-pointer bg-surface"
                     style={{
-                      background: "white",
                       boxShadow: isHovered
-                        ? "0 20px 30px -12px rgba(0, 0, 0, 0.1)"
+                        ? "var(--shadow-card)"
                         : "0 1px 3px rgba(0, 0, 0, 0.05)",
                       transform: isHovered ? "translateY(-4px)" : "translateY(0)",
                     }}
@@ -90,7 +89,7 @@ const WhyChooseUsSection = () => {
                     {/* Icon */}
                     <div
                       className="flex items-center justify-center w-12 h-12 rounded-xl mb-3 transition-all duration-300 group-hover:scale-110"
-                      style={{ background: "#EFF6FF" }}
+                      style={{ background: "var(--color-muted)" }}
                     >
                       <Icon size={22} style={{ color: "var(--color-primary)" }} strokeWidth={1.8} />
                     </div>
@@ -98,7 +97,7 @@ const WhyChooseUsSection = () => {
                     {/* Stat Badge */}
                     <div
                       className="inline-block text-xs font-bold px-2 py-0.5 rounded mb-2"
-                      style={{ background: "#EFF6FF", color: "var(--color-primary)" }}
+                      style={{ background: "var(--color-muted)", color: "var(--color-primary)" }}
                     >
                       {card.stat}
                     </div>
@@ -107,7 +106,7 @@ const WhyChooseUsSection = () => {
                       className="font-bold mb-1"
                       style={{
                         fontSize: "1rem",
-                        color: "var(--color-text-primary)",
+                        color: "var(--color-text)",
                       }}
                     >
                       {card.title}
@@ -115,7 +114,7 @@ const WhyChooseUsSection = () => {
                     
                     <p
                       className="text-sm leading-relaxed"
-                      style={{ color: "var(--color-text-secondary)" }}
+                      style={{ color: "var(--color-text-light)" }}
                     >
                       {card.description}
                     </p>
@@ -126,10 +125,9 @@ const WhyChooseUsSection = () => {
 
             {/* Bottom Info Card */}
             <div
-              className="rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-lg"
+              className="rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-card bg-surface"
               style={{
-                background: "white",
-                border: "1px solid #E2E8F0",
+                border: "1px solid var(--color-border)",
               }}
             >
               <div className="flex items-center justify-center gap-2 mb-3">
@@ -138,7 +136,7 @@ const WhyChooseUsSection = () => {
                   className="font-bold"
                   style={{
                     fontSize: "1.1rem",
-                    color: "var(--color-text-primary)",
+                    color: "var(--color-text)",
                   }}
                 >
                   IAA Regulated Experts
@@ -147,22 +145,22 @@ const WhyChooseUsSection = () => {
               
               <p
                 className="text-sm leading-relaxed"
-                style={{ color: "var(--color-text-secondary)" }}
+                style={{ color: "var(--color-text-light)" }}
               >
                 Our team of experienced immigration professionals is well-versed in 
                 assisting clients from initial consultation to full visa approval — 
                 locally and internationally.
               </p>
               
-              <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t" style={{ borderColor: "#E2E8F0" }}>
+              <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t" style={{ borderColor: "var(--color-border)" }}>
                 <div className="flex items-center gap-1">
                   <Headphones size={12} style={{ color: "var(--color-primary)" }} />
-                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>24/7 Support</span>
+                  <span className="text-xs" style={{ color: "var(--color-text-light)" }}>24/7 Support</span>
                 </div>
-                <div className="w-1 h-1 rounded-full" style={{ background: "#CBD5E1" }} />
+                <div className="w-1 h-1 rounded-full" style={{ background: "var(--color-border)" }} />
                 <div className="flex items-center gap-1">
                   <Building2 size={12} style={{ color: "var(--color-primary)" }} />
-                  <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>50+ Experts</span>
+                  <span className="text-xs" style={{ color: "var(--color-text-light)" }}>50+ Experts</span>
                 </div>
               </div>
             </div>
@@ -173,7 +171,7 @@ const WhyChooseUsSection = () => {
             {/* Badge */}
             <div
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4"
-              style={{ background: "#DBEAFE" }}
+              style={{ background: "var(--color-muted)" }}
             >
               <span
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -187,7 +185,7 @@ const WhyChooseUsSection = () => {
             <h2
               className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4"
               style={{
-                color: "var(--color-text-primary)",
+                color: "var(--color-text)",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -197,7 +195,7 @@ const WhyChooseUsSection = () => {
             {/* Description */}
             <p
               className="text-base leading-relaxed mb-6"
-              style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}
+              style={{ color: "var(--color-text-light)", lineHeight: 1.7 }}
             >
               Skilled Works Cloud specializes in connecting businesses and individuals with the right
               immigration solutions quickly and efficiently. Our platform is built for
@@ -216,13 +214,13 @@ const WhyChooseUsSection = () => {
                 >
                   <div
                     className="flex items-center justify-center rounded-full shrink-0 mt-0.5"
-                    style={{ width: "20px", height: "20px", background: "#DCFCE7" }}
+                    style={{ width: "20px", height: "20px", background: "var(--color-muted)" }}
                   >
-                    <Check size={11} style={{ color: "#16A34A" }} strokeWidth={2.5} />
+                    <Check size={11} style={{ color: "var(--color-success)" }} strokeWidth={2.5} />
                   </div>
                   <span
                     className="text-sm"
-                    style={{ color: "var(--color-text-primary)", lineHeight: 1.5 }}
+                    style={{ color: "var(--color-text)", lineHeight: 1.5 }}
                   >
                     {feature}
                   </span>
@@ -241,10 +239,9 @@ const WhyChooseUsSection = () => {
 
             {/* Bottom Description */}
             <p
-              className="text-sm leading-relaxed mb-6 p-4 rounded-xl"
+              className="text-sm leading-relaxed mb-6 p-4 rounded-xl bg-surface"
               style={{
-                color: "var(--color-text-secondary)",
-                background: "white",
+                color: "var(--color-text-light)",
                 borderLeft: `3px solid var(--color-primary)`,
               }}
             >
@@ -261,7 +258,15 @@ const WhyChooseUsSection = () => {
                 style={{
                   background: "var(--color-primary)",
                   fontSize: "0.875rem",
-                  boxShadow: "0 4px 12px rgba(37,99,235,0.3)",
+                  boxShadow: "var(--shadow-button)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--color-primary-dark)";
+                  e.currentTarget.style.boxShadow = "var(--shadow-button-hover)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "var(--color-primary)";
+                  e.currentTarget.style.boxShadow = "var(--shadow-button)";
                 }}
               >
                 <Phone size={16} />
@@ -270,12 +275,21 @@ const WhyChooseUsSection = () => {
               </button>
 
               <button
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                className="group flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 w-full sm:w-auto bg-transparent"
                 style={{
-                  background: "white",
                   color: "var(--color-primary)",
-                  border: `1.5px solid var(--color-primary)`,
+                  border: `2px solid var(--color-primary)`,
                   fontSize: "0.875rem",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--color-primary)";
+                  e.currentTarget.style.color = "white";
+                  e.currentTarget.style.boxShadow = "var(--shadow-navy)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.color = "var(--color-primary)";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 <Calendar size={16} />
@@ -284,20 +298,20 @@ const WhyChooseUsSection = () => {
             </div>
 
             {/* Trust Badge */}
-            <div className="flex items-center gap-4 mt-6 pt-4 border-t" style={{ borderColor: "#E2E8F0" }}>
+            <div className="flex items-center gap-4 mt-6 pt-4 border-t" style={{ borderColor: "var(--color-border)" }}>
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-bold"
-                      style={{ background: "#EFF6FF", color: "var(--color-primary)" }}
+                      className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-bold bg-muted"
+                      style={{ color: "var(--color-primary)" }}
                     >
                       ✓
                     </div>
                   ))}
                 </div>
-                <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                <span className="text-xs font-medium" style={{ color: "var(--color-text-light)" }}>
                   Trusted by 1000+ businesses
                 </span>
               </div>

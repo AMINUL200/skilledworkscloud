@@ -16,17 +16,17 @@ const OfficeLocationsSection = () => {
 
   const inputClass = `
     mt-2 w-full h-12 sm:h-14 rounded-xl sm:rounded-2xl
-    border border-border bg-slate-50 px-4 sm:px-5
+    border border-border bg-muted px-4 sm:px-5
     text-sm sm:text-base text-text outline-none
-    focus:border-primary focus:bg-white transition-all duration-300
+    focus:border-primary focus:bg-surface transition-all duration-300
   `;
 
   const labelClass = "text-xs sm:text-sm font-semibold text-text";
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24 bg-[#EEF5FD] w-full">
+    <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24 bg-muted w-full">
       {/* BG GLOW */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[500px] lg:w-[700px] h-[300px] sm:h-[500px] lg:h-[700px] bg-blue-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[500px] lg:w-[700px] h-[300px] sm:h-[500px] lg:h-[700px] bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative w-full max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_460px] 2xl:grid-cols-[1fr_500px] gap-10 lg:gap-12 xl:gap-16 items-start">
@@ -44,7 +44,7 @@ const OfficeLocationsSection = () => {
             </p>
 
             {/* CONTACT INFO CARD */}
-            <div className="mt-6 sm:mt-8 bg-white rounded-2xl sm:rounded-[24px] border border-border p-5 sm:p-6 shadow-[0_6px_30px_rgba(15,23,42,0.05)]">
+            <div className="mt-6 sm:mt-8 bg-surface rounded-2xl sm:rounded-[24px] border border-border p-5 sm:p-6 shadow-card">
               
               {/* Office Address */}
               <div className="flex items-start gap-3 pb-4 border-b border-border">
@@ -107,7 +107,7 @@ const OfficeLocationsSection = () => {
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                 Call Now
               </a>
-              <button className="bg-white border border-primary text-primary px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-[16px] sm:rounded-[20px] text-sm sm:text-base font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+              <button className="btn btn-outline px-5 sm:px-7 py-2.5 sm:py-3.5 text-sm sm:text-base font-semibold">
                 Book Appointment
               </button>
             </div>
@@ -115,10 +115,10 @@ const OfficeLocationsSection = () => {
           </div>
 
           {/* ── RIGHT SIDE — FORM ── */}
-          <div className="w-full min-w-0 xl:sticky xl:top-24 bg-white rounded-2xl sm:rounded-[28px] lg:rounded-[32px] border border-border p-5 sm:p-6 lg:p-8 shadow-[0_15px_60px_rgba(15,23,42,0.08)]">
+          <div className="w-full min-w-0 xl:sticky xl:top-24 bg-surface rounded-2xl sm:rounded-[28px] lg:rounded-[32px] border border-border p-5 sm:p-6 lg:p-8 shadow-card">
 
             {/* LOGO */}
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary-light flex items-center justify-center text-primary font-black text-sm shadow-sm">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-muted flex items-center justify-center text-primary font-black text-sm shadow-sm">
               SWC
             </div>
 
@@ -160,7 +160,7 @@ const OfficeLocationsSection = () => {
                 <textarea
                   rows={4}
                   placeholder="Write your message..."
-                  className="mt-2 w-full rounded-xl sm:rounded-2xl border border-border bg-slate-50 p-4 text-sm sm:text-base text-text outline-none resize-none focus:border-primary focus:bg-white transition-all duration-300"
+                  className="mt-2 w-full rounded-xl sm:rounded-2xl border border-border bg-muted p-4 text-sm sm:text-base text-text outline-none resize-none focus:border-primary focus:bg-surface transition-all duration-300"
                 />
               </div>
 
@@ -175,7 +175,7 @@ const OfficeLocationsSection = () => {
               </div>
 
               {/* CAPTCHA */}
-              <div className="h-16 sm:h-20 rounded-xl sm:rounded-2xl border border-border bg-slate-50 flex items-center justify-center text-text-light text-sm">
+              <div className="h-16 sm:h-20 rounded-xl sm:rounded-2xl border border-border bg-muted flex items-center justify-center text-text-light text-sm">
                 reCAPTCHA Placeholder
               </div>
 
