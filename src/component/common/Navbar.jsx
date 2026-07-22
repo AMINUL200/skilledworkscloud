@@ -91,7 +91,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "sponsor-licence",
           label: "Get Your Sponsor Licence Today",
-          path: "/tools/get-your-sponsor-licence",
+          path: "/tool/sponsor-license-eligibility",
         },
         {
           id: "sponsor-status",
@@ -111,7 +111,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "right-to-work",
           label: "Right To Work Check",
-          path: "/tools/right-to-work-check",
+          path: "/tool/right-to-work",
         },
         {
           id: "additional-work",

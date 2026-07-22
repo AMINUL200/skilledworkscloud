@@ -58,6 +58,8 @@ import ServiceDetailsTwelvethSection from "./pages/admin/service_details/Service
 import ServiceDetailsTestimonial from "./pages/admin/service_details/ServiceDetailsTestimonial";
 import MangeServiceHeroSection from "./pages/admin/service_page/MangeServiceHeroSection";
 import ManageHRCompliance from "./pages/admin/hr_compliance/ManageHRCompliance";
+import RightToWorkPage from "./pages/tools/RightToWorkPage";
+import SponSorLicensePage from "./pages/tools/SponSorLicensePage";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -113,6 +115,12 @@ const App = () => {
           {/* Service details route */}
           <Route path="/tools/:slug" element={<ToolDetailsPage />} />{" "}
           {/* Tool details route */}
+
+          <Route path="/tool/right-to-work" element={<RightToWorkPage />} />{" "}
+          <Route path="/tool/sponsor-license-eligibility" element={<SponSorLicensePage />} />{" "}
+
+
+
         </Route>
 
         {/* Admin Layout */}
