@@ -60,6 +60,7 @@ import MangeServiceHeroSection from "./pages/admin/service_page/MangeServiceHero
 import ManageHRCompliance from "./pages/admin/hr_compliance/ManageHRCompliance";
 import RightToWorkPage from "./pages/tools/RightToWorkPage";
 import SponSorLicensePage from "./pages/tools/SponSorLicensePage";
+import HRComplianceAuditPage from "./pages/tools/HRComplianceAuditPage";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -118,6 +119,7 @@ const App = () => {
 
           <Route path="/tool/right-to-work" element={<RightToWorkPage />} />{" "}
           <Route path="/tool/sponsor-license-eligibility" element={<SponSorLicensePage />} />{" "}
+          <Route path="/tool/free-hr-compliance-audit" element={<HRComplianceAuditPage />} />{" "}
 
 
 

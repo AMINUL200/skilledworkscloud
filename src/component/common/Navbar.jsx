@@ -126,7 +126,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "hr-audit",
           label: "Get Free HR Compliance Audit",
-          path: "/tools/free-hr-compliance-audit",
+          path: "/tool/free-hr-compliance-audit",
         },
 
         // Divider Title
