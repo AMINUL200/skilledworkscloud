@@ -26,87 +26,87 @@ import {
   Phone,
 } from "lucide-react";
 
- const questions = [
-    {
-      id: 1,
-      title: "How many employees does your business have?",
-      description: "Full-time, part-time, and agency workers combined.",
-      field: "employees",
-      options: ["Under 10", "10 – 49", "50 – 249", "250+"],
-    },
-    {
-      id: 2,
-      title: "Roughly how many of those are non-UK/Irish nationals?",
-      description:
-        "Including EU workers, Skilled Worker visa holders, dependants with work rights, students.",
-      field: "nonUkEmployees",
-      options: ["None", "1 – 5", "6 – 20", "20+"],
-    },
-    {
-      id: 3,
-      title: "Who does your Right to Work checks?",
-      description:
-        "Think about the person who actually verifies documents and records the checks.",
-      field: "rtwChecker",
-      options: [
-        "A certified IDSP / IDVT tool",
-        "Internal HR team (manual checks)",
-        "Line manager or admin staff",
-        "The owner/director handles it informally",
-        "We don't currently do RTW checks",
-      ],
-    },
-    {
-      id: 4,
-      title:
-        "Do you keep copies of RTW documents for 2 years after employment ends?",
-      description:
-        "This is a legal requirement — missing records is one of the top reasons for civil penalties.",
-      field: "documentStorage",
-      options: [
-        "Yes - stored digitally with audit trail",
-        "Yes - paper copies in a file",
-        "I'm not sure",
-        "No / inconsistently",
-      ],
-    },
-    {
-      id: 5,
-      title:
-        "Do you do follow-up checks on time-limited visa holders before they expire?",
-      description:
-        "If a worker's visa expires and you haven't re-checked, you lose your 'statutory excuse' instantly.",
-      field: "followUpChecks",
-      options: [
-        "Yes - automated alerts track expiry dates",
-        "Yes - we track it manually on a spreadsheet",
-        "Sometimes / only when we remember",
-        "No / we don't have time-limited workers",
-      ],
-    },
-    {
-      id: 6,
-      title: "When was your last RTW compliance audit?",
-      description:
-        "A Home Office inspection can arrive with as little as 48 hours' notice.",
-      field: "lastAudit",
-      options: [
-        "Within the last 12 months",
-        "1-3 years ago",
-        "Never / I don't know",
-        "We had a Home Office visit and need to fix things",
-      ],
-    },
-    {
-      id: 7,
-      title: "Fill the info to download the Free report",
-      description: "Check if someone can legally work in the UK",
-      field: "contact",
-      isContactStep: true,
-    },
-  ];
+const questions = [
+  {
+    id: 1,
+    title: "How many employees does your business have?",
+    description: "Full-time, part-time, and agency workers combined.",
+    field: "employees",
+    options: ["Under 10", "10 – 49", "50 – 249", "250+"],
+  },
+  {
+    id: 2,
+    title: "Roughly how many of those are non-UK/Irish nationals?",
+    description:
+      "Including EU workers, Skilled Worker visa holders, dependants with work rights, students.",
+    field: "nonUkEmployees",
+    options: ["None", "1 – 5", "6 – 20", "20+"],
+  },
+  {
+    id: 3,
+    title: "Who does your Right to Work checks?",
+    description:
+      "Think about the person who actually verifies documents and records the checks.",
+    field: "rtwChecker",
+    options: [
+      "A certified IDSP / IDVT tool",
+      "Internal HR team (manual checks)",
+      "Line manager or admin staff",
+      "The owner/director handles it informally",
+      "We don't currently do RTW checks",
+    ],
+  },
+  {
+    id: 4,
+    title:
+      "Do you keep copies of RTW documents for 2 years after employment ends?",
+    description:
+      "This is a legal requirement — missing records is one of the top reasons for civil penalties.",
+    field: "documentStorage",
+    options: [
+      "Yes - stored digitally with audit trail",
+      "Yes - paper copies in a file",
+      "I'm not sure",
+      "No / inconsistently",
+    ],
+  },
+  {
+    id: 5,
+    title:
+      "Do you do follow-up checks on time-limited visa holders before they expire?",
+    description:
+      "If a worker's visa expires and you haven't re-checked, you lose your 'statutory excuse' instantly.",
+    field: "followUpChecks",
+    options: [
+      "Yes - automated alerts track expiry dates",
+      "Yes - we track it manually on a spreadsheet",
+      "Sometimes / only when we remember",
+      "No / we don't have time-limited workers",
+    ],
+  },
+  {
+    id: 6,
+    title: "When was your last RTW compliance audit?",
+    description:
+      "A Home Office inspection can arrive with as little as 48 hours' notice.",
+    field: "lastAudit",
+    options: [
+      "Within the last 12 months",
+      "1-3 years ago",
+      "Never / I don't know",
+      "We had a Home Office visit and need to fix things",
+    ],
+  },
+  {
+    id: 7,
+    title: "Fill the info to download the Free report",
+    description: "Check if someone can legally work in the UK",
+    field: "contact",
+    isContactStep: true,
+  },
+];
 
-const RTWHeroSection = () => {
+const RTWHeroSection = ({ sectionInfo }) => {
   const [openFaq, setOpenFaq] = useState(null);
   const [isStepFormActive, setIsStepFormActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -188,8 +188,6 @@ const RTWHeroSection = () => {
     setShowResults(false);
   };
 
- 
-
   // Human-readable labels for the audit summary on the results screen
   const summaryLabels = {
     employees: "Employees",
@@ -249,13 +247,29 @@ const RTWHeroSection = () => {
     },
   ];
 
+  // Get feature icons based on index
+  const getFeatureIcon = (index) => {
+    const icons = [
+      <ShieldCheck className="w-4 h-4 text-primary" />,
+      <Clock className="w-4 h-4 text-primary" />,
+      <FileText className="w-4 h-4 text-primary" />,
+    ];
+    return icons[index] || <ShieldCheck className="w-4 h-4 text-primary" />;
+  };
+
+  // Get feature colors based on index
+  const getFeatureColor = (index) => {
+    const colors = ["success", "primary", "primary-bright"];
+    return colors[index] || "primary";
+  };
+
   const renderRightContent = () => {
     // Default view - initial card
     if (!isStepFormActive) {
       return (
         <div className="bg-surface rounded-[32px] p-8 shadow-card border border-border">
           <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2">
-          Skilled Works Cloud · COMPLIANCE TOOL
+            Skilled Works Cloud · COMPLIANCE TOOL
           </div>
 
           <h3 className="text-xl font-bold text-text mb-3">
@@ -595,6 +609,20 @@ const RTWHeroSection = () => {
     );
   };
 
+  // Destructure sectionInfo for left content
+  const {
+    batch = "Free RTW Compliance Check",
+    title = "Is Your Business Exposed to a Right to Work Penalty?",
+    description = "UK employers paid £8.1 million in Right to Work civil penalties in Q1 2024 alone. Our free 60-second compliance check asks you 6 questions and returns your RTW Compliance Score.",
+    features = [
+      { title: "IAA Regulated" },
+      { title: "60 Seconds" },
+      { title: "Free PDF Report" }
+    ],
+    button_name = "Talk to an Expert",
+    button_url = "/contact"
+  } = sectionInfo || {};
+
   return (
     <>
       {/* Hero Section */}
@@ -604,52 +632,61 @@ const RTWHeroSection = () => {
 
         <div className="relative max-w-[1400px] mx-auto px-5 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
-            {/* Left Content - Sticky */}
+            {/* Left Content - Dynamic */}
             <div className="lg:sticky lg:top-24">
               <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-                Free RTW Compliance Check
+                {batch}
               </span>
 
               <h1 className="mt-6 text-2xl md:text-3xl lg:text-4xl font-black leading-tight text-text">
-                Is Your Business Exposed to a <br />
-                <span className="text-primary">Right to Work Penalty?</span>
+                {title.includes('Right to Work Penalty') ? (
+                  <>
+                    Is Your Business Exposed to a <br />
+                    <span className="text-primary">Right to Work Penalty?</span>
+                  </>
+                ) : (
+                  title
+                )}
               </h1>
 
               <p className="mt-6 text-base text-text-light leading-relaxed max-w-2xl">
-                UK employers paid{" "}
-                <span className="font-bold text-primary">£8.1 million</span> in
-                Right to Work civil penalties in Q1 2024 alone. A single
-                undetected illegal worker can cost your business up to
-                <span className="font-bold text-primary"> £60,000</span> - and
-                if your records are incomplete, you lose your statutory excuse
-                instantly. Our free 60-second compliance check asks you 6
-                questions and returns your RTW Compliance Score, your penalty
-                exposure estimate, and a prioritised action plan.
+                {description}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4 items-center">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
-                  <ShieldCheck className="w-4 h-4 text-success" />
-                  <span className="text-sm font-medium text-text">
-                    IAA Regulated
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-                  <Clock className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-text">
-                    60 seconds
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-bright/10 border border-primary-bright/20">
-                  <FileText className="w-4 h-4 text-primary-bright" />
-                  <span className="text-sm font-medium text-text">
-                    Free PDF report
-                  </span>
-                </div>
+                {features.map((feature, index) => {
+                  const colorMap = {
+                    0: 'success',
+                    1: 'primary',
+                    2: 'primary-bright'
+                  };
+                  const color = colorMap[index] || 'primary';
+                  const iconMap = {
+                    0: <ShieldCheck className="w-4 h-4" />,
+                    1: <Clock className="w-4 h-4" />,
+                    2: <FileText className="w-4 h-4" />
+                  };
+                  const Icon = iconMap[index] || <ShieldCheck className="w-4 h-4" />;
+                  
+                  return (
+                    <div
+                      key={index}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-${color}/10 border border-${color}/20`}
+                    >
+                      {Icon}
+                      <span className={`text-sm font-medium text-text`}>
+                        {feature.title}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
-              <button className="mt-8 btn btn-primary px-8 py-3.5 text-base">
-                Talk to an expert
+              <button 
+                onClick={() => window.location.href = button_url}
+                className="mt-8 btn btn-primary px-8 py-3.5 text-base"
+              >
+                {button_name}
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>

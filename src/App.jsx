@@ -36,7 +36,6 @@ import ManageBanner from "./pages/admin/banner/MangeBanner";
 import ManageTeam from "./pages/admin/team/MangeTeam";
 import ManageBlogs from "./pages/admin/blog/ManageBlog";
 
-
 import { useAuth } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import ManageAbout from "./pages/admin/about/ManageAbout";
@@ -61,6 +60,8 @@ import ManageHRCompliance from "./pages/admin/hr_compliance/ManageHRCompliance";
 import RightToWorkPage from "./pages/tools/RightToWorkPage";
 import SponSorLicensePage from "./pages/tools/SponSorLicensePage";
 import HRComplianceAuditPage from "./pages/tools/HRComplianceAuditPage";
+import ManageRTWFirstSection from "./pages/admin/manage_tools/rtw_mange/ManageRTWFirstSection";
+import ManageToolsType from "./pages/admin/manage_tools/tool_master/ManageToolsType";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -116,13 +117,18 @@ const App = () => {
           {/* Service details route */}
           <Route path="/tools/:slug" element={<ToolDetailsPage />} />{" "}
           {/* Tool details route */}
-
-          <Route path="/tool/right-to-work" element={<RightToWorkPage />} />{" "}
-          <Route path="/tool/sponsor-license-eligibility" element={<SponSorLicensePage />} />{" "}
-          <Route path="/tool/free-hr-compliance-audit" element={<HRComplianceAuditPage />} />{" "}
-
-
-
+          <Route
+            path="/tool/right-to-work"
+            element={<RightToWorkPage />}
+          />{" "}
+          <Route
+            path="/tool/sponsor-license-eligibility"
+            element={<SponSorLicensePage />}
+          />{" "}
+          <Route
+            path="/tool/free-hr-compliance-audit"
+            element={<HRComplianceAuditPage />}
+          />{" "}
         </Route>
 
         {/* Admin Layout */}
@@ -139,33 +145,83 @@ const App = () => {
             <Route path="manage-teams" element={<ManageTeam />} />
             <Route path="manage-blogs" element={<ManageBlogs />} />
             <Route path="manage-about" element={<ManageAbout />} />
-            <Route path="manage-faq" element={<MangeFAQ/>}/>
-            <Route path="manage-social-responsibilities" element={<ManageSocialResponsibilities />} />
-            <Route path="manage-hr-compliance" element={<ManageHRCompliance />} />
+            <Route path="manage-faq" element={<MangeFAQ />} />
+            <Route
+              path="manage-social-responsibilities"
+              element={<ManageSocialResponsibilities />}
+            />
+            <Route
+              path="manage-hr-compliance"
+              element={<ManageHRCompliance />}
+            />
 
-            <Route path="service-categories" element={<MangeServiceCategory />} />
-            <Route path="service-hero" element={<MangeServiceHeroSection/>}/>
+            <Route
+              path="service-categories"
+              element={<MangeServiceCategory />}
+            />
+            <Route path="service-hero" element={<MangeServiceHeroSection />} />
 
+            <Route
+              path="service-details-first"
+              element={<ServiceDetailsFirstSection />}
+            />
+            <Route
+              path="service-details-second"
+              element={<ServiceDetailsSecondSection />}
+            />
+            <Route
+              path="service-details-third"
+              element={<ServiceDetailsThirdSection />}
+            />
+            <Route
+              path="service-details-fourth"
+              element={<ServiceDetailsFourthSection />}
+            />
+            <Route
+              path="service-details-fifth"
+              element={<ServiceDetailsFifthSection />}
+            />
+            <Route
+              path="service-details-sixth"
+              element={<ServiceDetailsSixthSection />}
+            />
+            <Route
+              path="service-details-seventh"
+              element={<ServiceDetailsSevenSection />}
+            />
+            <Route
+              path="service-details-eighth"
+              element={<ServiceDetailsEightsSection />}
+            />
+            <Route
+              path="service-details-ninth"
+              element={<ServiceDetailsNinthSection />}
+            />
+            <Route
+              path="service-details-tenth"
+              element={<ServiceDetailsTenthSection />}
+            />
+            <Route
+              path="service-details-eleventh"
+              element={<ServiceDetailsEleventhSection />}
+            />
+            <Route
+              path="service-details-twelveth"
+              element={<ServiceDetailsTwelvethSection />}
+            />
+            <Route
+              path="service-details-testimonial"
+              element={<ServiceDetailsTestimonial />}
+            />
 
-
-            <Route path="service-details-first" element={<ServiceDetailsFirstSection/>}/>
-            <Route path="service-details-second" element={<ServiceDetailsSecondSection/>}/>
-            <Route path="service-details-third" element={<ServiceDetailsThirdSection/>}/>
-            <Route path="service-details-fourth" element={<ServiceDetailsFourthSection/>}/>
-            <Route path="service-details-fifth" element={<ServiceDetailsFifthSection/>}/>
-            <Route path="service-details-sixth" element={<ServiceDetailsSixthSection/>}/>
-            <Route path="service-details-seventh" element={<ServiceDetailsSevenSection/>}/>
-            <Route path="service-details-eighth" element={<ServiceDetailsEightsSection/>}/>
-            <Route path="service-details-ninth" element={<ServiceDetailsNinthSection/>}/>
-            <Route path="service-details-tenth" element={<ServiceDetailsTenthSection/>}/>
-            <Route path="service-details-eleventh" element={<ServiceDetailsEleventhSection/>}/>
-            <Route path="service-details-twelveth" element={<ServiceDetailsTwelvethSection/>}/>
-            <Route path="service-details-testimonial" element={<ServiceDetailsTestimonial/>}/>
-
-
-
-
-
+            <Route
+              path="tools/master-type"
+              element={<ManageToolsType />}
+            />
+            <Route
+              path="tools/rtw/first-section"
+              element={<ManageRTWFirstSection />}
+            />
           </Route>
         </Route>
       </Routes>

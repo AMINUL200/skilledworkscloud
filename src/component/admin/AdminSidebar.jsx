@@ -24,6 +24,9 @@ import {
   Star,
   User2,
   FileQuestion,
+  icons,
+  ToolCaseIcon,
+  ToolCase,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { label, path } from "framer-motion/client";
@@ -187,6 +190,26 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       icon: <Shield className="w-5 h-5" />,
       path: "/admin/manage-hr-compliance",
       
+    },
+    {
+      id: "tools-master-type",
+      label: "Tools Type",
+      icon: <Shield className="w-5 h-5" />,
+      path: "/admin/tools/master-type",
+      
+    },
+    {
+      id: "tools-rtw",
+      label:"Tools RTW",
+      icon: <ToolCase className="w-5 h-5" />,
+      children:[
+        {
+          id: "rtw-first-section",
+          label: "First Section",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/tools/rtw/first-section",
+        },
+      ]
     },
     {
       id: "settings",
