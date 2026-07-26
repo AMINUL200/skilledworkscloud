@@ -199,6 +199,13 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       
     },
     {
+      id: "tools-question-and-options",
+      label: "Question & Options",
+      icon: <Shield className="w-5 h-5" />,
+      path: "/admin/tools/question-and-options",
+      
+    },
+    {
       id: "tools-rtw",
       label:"Tools RTW",
       icon: <ToolCase className="w-5 h-5" />,

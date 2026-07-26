@@ -101,7 +101,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "ilr-eligibility",
           label: "ILR Eligibility - Free Assessment",
-          path: "/tools/ilr-eligibility",
+          path: "/tool/ilr-eligibility-calculator",
         },
         {
           id: "ihs",
@@ -121,7 +121,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "sponsored-job",
           label: "Looking for a Sponsored Job?",
-          path: "/tools/looking-for-sponsored-job",
+          path: "/tool/sponsored-job-eligibility",
         },
         {
           id: "hr-audit",

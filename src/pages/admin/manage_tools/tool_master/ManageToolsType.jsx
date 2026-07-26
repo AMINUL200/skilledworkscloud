@@ -441,7 +441,7 @@ const ManageToolsType = () => {
                           Updated: {new Date(form.updated_at).toLocaleDateString()}
                         </p>
                       </div>
-                      {/* <div className="flex items-center gap-2 ml-4">
+                      <div className="flex items-center gap-2 ml-4">
                         <button
                           onClick={() => handleEdit(form)}
                           className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -449,14 +449,14 @@ const ManageToolsType = () => {
                         >
                           <Edit className="w-4 h-4" />
                         </button>
-                        <button
+                        {/* <button
                           onClick={() => handleDelete(form.id)}
                           className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
                           title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div> */}
+                        </button> */}
+                      </div>
                     </div>
                   </div>
                 ))}

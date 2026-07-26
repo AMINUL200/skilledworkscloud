@@ -62,6 +62,9 @@ import SponSorLicensePage from "./pages/tools/SponSorLicensePage";
 import HRComplianceAuditPage from "./pages/tools/HRComplianceAuditPage";
 import ManageRTWFirstSection from "./pages/admin/manage_tools/rtw_mange/ManageRTWFirstSection";
 import ManageToolsType from "./pages/admin/manage_tools/tool_master/ManageToolsType";
+import ManageToolsQuestionAnswer from "./pages/admin/manage_tools/tool_master/ManageToolsQuestionAnswer";
+import ILREligibilityPage from "./pages/tools/ILREligibilityPage";
+import SponsoredJobPage from "./pages/tools/SponsoredJobPage";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -120,15 +123,23 @@ const App = () => {
           <Route
             path="/tool/right-to-work"
             element={<RightToWorkPage />}
-          />{" "}
+          />
           <Route
             path="/tool/sponsor-license-eligibility"
             element={<SponSorLicensePage />}
-          />{" "}
+          />
           <Route
             path="/tool/free-hr-compliance-audit"
             element={<HRComplianceAuditPage />}
-          />{" "}
+          />
+          <Route
+            path="/tool/ilr-eligibility-calculator"
+            element={<ILREligibilityPage />}
+          />
+          <Route
+            path="/tool/sponsored-job-eligibility"
+            element={<SponsoredJobPage />}
+          />
         </Route>
 
         {/* Admin Layout */}
@@ -217,6 +228,10 @@ const App = () => {
             <Route
               path="tools/master-type"
               element={<ManageToolsType />}
+            />
+            <Route
+              path="tools/question-and-options"
+              element={<ManageToolsQuestionAnswer />}
             />
             <Route
               path="tools/rtw/first-section"
