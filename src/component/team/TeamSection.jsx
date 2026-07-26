@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ArrowRight,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { ArrowRight, Linkedin, Mail } from "lucide-react";
 import Marquee from "react-fast-marquee";
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +16,8 @@ const TeamSection = ({ members, sectionInfo }) => {
   // Get image URL with base URL
   const getImageUrl = (path) => {
     if (!path) return null;
-    if (path.startsWith('http')) return path;
-    return `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${path}`;
+    if (path.startsWith("http")) return path;
+    return `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${path}`;
   };
 
   return (
@@ -72,20 +68,7 @@ const TeamSection = ({ members, sectionInfo }) => {
       >
         {/* HEADER - Dynamic from API */}
         <div className="text-center mb-16">
-          <div
-            className="
-              inline-flex
-              items-center
-              px-5
-              py-2
-              rounded-full
-              bg-blue-100
-              text-primary
-              text-sm
-              font-semibold
-              mb-5
-            "
-          >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-white text-xs sm:text-sm font-semibold mb-4">
             {sectionInfo?.batch || "Our Experts Team"}
           </div>
 
@@ -111,16 +94,13 @@ const TeamSection = ({ members, sectionInfo }) => {
               text-slate-600
             "
           >
-            {sectionInfo?.description || "Our experienced immigration advisers, legal specialists, and HR consultants work together to deliver world-class support for businesses and individuals."}
+            {sectionInfo?.description ||
+              "Our experienced immigration advisers, legal specialists, and HR consultants work together to deliver world-class support for businesses and individuals."}
           </p>
         </div>
 
         {/* TEAM SLIDER */}
-        <Marquee
-          speed={45}
-          pauseOnHover={true}
-          gradient={false}
-        >
+        <Marquee speed={45} pauseOnHover={true} gradient={false}>
           <div
             className="
               flex
@@ -132,9 +112,7 @@ const TeamSection = ({ members, sectionInfo }) => {
             {members.map((member) => (
               <div
                 key={member.id}
-                onClick={() =>
-                  navigate(`/team/${member.slug || member.id}`)
-                }
+                onClick={() => navigate(`/team/${member.slug || member.id}`)}
                 className="
                   group
                   relative
@@ -161,7 +139,10 @@ const TeamSection = ({ members, sectionInfo }) => {
                   "
                 >
                   <img
-                    src={getImageUrl(member.web_image) || "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=900&auto=format&fit=crop"}
+                    src={
+                      getImageUrl(member.web_image) ||
+                      "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=900&auto=format&fit=crop"
+                    }
                     alt={member.image_alt || member.name}
                     className="
                       w-full

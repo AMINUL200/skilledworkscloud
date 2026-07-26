@@ -69,7 +69,7 @@ const ServRequiredDocumentsSection = () => {
                 py-2
                 rounded-full
                 bg-primary-light
-                text-primary
+                text-white
                 font-semibold
                 text-sm
                 mb-6
@@ -118,9 +118,9 @@ const ServRequiredDocumentsSection = () => {
               "
             >
               <div className="flex gap-4">
-                <AlertCircle className="w-6 h-6 text-primary flex-shrink-0" />
+                <AlertCircle className="w-6 h-6 text-white flex-shrink-0" />
 
-                <p className="text-sm text-text-light leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Required documents may vary depending on
                   your visa route, nationality, and personal
                   circumstances.
@@ -162,7 +162,7 @@ const ServRequiredDocumentsSection = () => {
                       mb-5
                     "
                   >
-                    <Icon className="w-7 h-7 text-primary" />
+                    <Icon className="w-7 h-7 text-white" />
                   </div>
 
                   <h3

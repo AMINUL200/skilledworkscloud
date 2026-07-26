@@ -24,7 +24,7 @@ const ServContactSection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -117,7 +117,7 @@ const ServContactSection = () => {
                       justify-center
                     "
                   >
-                    <Phone className="w-6 h-6 text-primary" />
+                    <Phone className="w-6 h-6 text-white" />
                   </div>
 
                   <div>
@@ -149,7 +149,7 @@ const ServContactSection = () => {
                       justify-center
                     "
                   >
-                    <Mail className="w-6 h-6 text-primary" />
+                    <Mail className="w-6 h-6 text-white" />
                   </div>
 
                   <div>
@@ -181,7 +181,7 @@ const ServContactSection = () => {
                       justify-center
                     "
                   >
-                    <MapPin className="w-6 h-6 text-primary" />
+                    <MapPin className="w-6 h-6 text-white" />
                   </div>
 
                   <div>
@@ -213,7 +213,7 @@ const ServContactSection = () => {
                       justify-center
                     "
                   >
-                    <Clock className="w-6 h-6 text-primary" />
+                    <Clock className="w-6 h-6 text-white" />
                   </div>
 
                   <div>
@@ -241,7 +241,7 @@ const ServContactSection = () => {
                   className="
                     text-xl
                     font-bold
-                    text-text
+                    text-white
                   "
                 >
                   Free Consultation
@@ -250,7 +250,7 @@ const ServContactSection = () => {
                 <p
                   className="
                     mt-2
-                    text-text-light
+                    text-white
                   "
                 >
                   Schedule a free consultation and get

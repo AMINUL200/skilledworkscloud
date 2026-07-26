@@ -35,10 +35,11 @@ const ServHeroSection = () => {
                 rounded-full
                 bg-primary-light
                 border border-primary/10
+
               "
             >
-              <Star className="w-4 h-4 text-primary fill-primary" />
-              <span className="text-primary font-semibold text-sm">
+              <Star className="w-4 h-4 text-white fill-primary" />
+              <span className="text-white font-semibold text-sm">
                 Professional Digital Services
               </span>
             </div>

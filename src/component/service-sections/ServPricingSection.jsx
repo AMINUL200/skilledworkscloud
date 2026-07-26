@@ -74,7 +74,7 @@ const ServPricingSection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -172,7 +172,7 @@ const ServPricingSection = () => {
                     justify-center
                   "
                 >
-                  <Icon className="w-8 h-8 text-primary" />
+                  <Icon className="w-8 h-8 text-white" />
                 </div>
 
                 <h3

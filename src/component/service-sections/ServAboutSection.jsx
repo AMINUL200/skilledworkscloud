@@ -9,19 +9,19 @@ import {
 const ServAboutSection = () => {
   const features = [
     {
-      icon: <Award className="w-6 h-6 text-primary" />,
+      icon: <Award className="w-6 h-6 text-white" />,
       title: "Experienced Team",
     },
     {
-      icon: <Rocket className="w-6 h-6 text-primary" />,
+      icon: <Rocket className="w-6 h-6 text-white" />,
       title: "Innovative Solutions",
     },
     {
-      icon: <ShieldCheck className="w-6 h-6 text-primary" />,
+      icon: <ShieldCheck className="w-6 h-6 text-white" />,
       title: "Trusted Support",
     },
     {
-      icon: <CheckCircle2 className="w-6 h-6 text-primary" />,
+      icon: <CheckCircle2 className="w-6 h-6 text-white" />,
       title: "Proven Results",
     },
   ];
@@ -91,7 +91,7 @@ const ServAboutSection = () => {
                 px-5 py-2
                 rounded-full
                 bg-primary-light
-                text-primary
+                text-white
                 font-semibold
                 text-sm
                 mb-6
@@ -166,6 +166,7 @@ const ServAboutSection = () => {
                       w-12 h-12
                       rounded-2xl
                       bg-primary-light
+                      text-white
                       flex items-center justify-center
                     "
                   >

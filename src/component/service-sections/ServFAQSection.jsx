@@ -58,7 +58,7 @@ const ServFAQSection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -181,9 +181,9 @@ const ServFAQSection = () => {
                     "
                   >
                     {isOpen ? (
-                      <Minus className="w-5 h-5 text-primary" />
+                      <Minus className="w-5 h-5 text-white" />
                     ) : (
-                      <Plus className="w-5 h-5 text-primary" />
+                      <Plus className="w-5 h-5 text-white" />
                     )}
                   </div>
                 </button>

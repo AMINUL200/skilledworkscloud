@@ -71,7 +71,7 @@ const ServWhyChooseUsSection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -157,7 +157,7 @@ const ServWhyChooseUsSection = () => {
                       justify-center
                     "
                   >
-                    <Icon className="w-6 h-6 text-primary" />
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
                   <p
                     className="text-[13px] font-bold text-text tracking-tight whitespace-nowrap select-none"
@@ -212,7 +212,7 @@ const ServWhyChooseUsSection = () => {
               items-center
               gap-2
               bg-primary-light
-              text-primary
+              text-white
               text-sm
               font-medium
               px-4 py-2

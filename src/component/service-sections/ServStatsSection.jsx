@@ -67,7 +67,7 @@ const ServStatsSection = () => {
                 py-2
                 rounded-full
                 bg-primary-light
-                text-primary
+                text-white
                 font-semibold
                 text-sm
               "
@@ -145,13 +145,14 @@ const ServStatsSection = () => {
                       flex
                       items-center
                       justify-center
+                      text-white
                     "
                   >
                     <Icon
                       className="
                         w-8
                         h-8
-                        text-primary
+                        text-white
                       "
                     />
                   </div>

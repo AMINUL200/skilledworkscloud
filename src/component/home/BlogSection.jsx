@@ -53,7 +53,7 @@ const BlogSection = () => {
 
           <p className="mt-5 sm:mt-6 text-sm sm:text-base md:text-lg leading-6 sm:leading-8 text-text-light">
             Stay updated with expert insights on UK immigration, visa compliance, and client success
-            stories. Explore news, tips, and legal updates from trusted specialists at WorkPermitCloud.
+            stories. Explore news, tips, and legal updates from trusted specialists at Skilled Works Cloud.
           </p>
         </div>
 

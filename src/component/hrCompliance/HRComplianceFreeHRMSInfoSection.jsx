@@ -99,7 +99,7 @@ const HRComplianceHRMSInfoSection = () => (
             </p>
 
             <p>
-              WorkPermitCloud's software meets the requirements of companies of all sizes. Reach out
+              Skilled Works Cloud software meets the requirements of companies of all sizes. Reach out
               to our team to discuss your particular requirements and find out more about our services.
             </p>
           </div>
@@ -149,7 +149,7 @@ const HRComplianceHRMSInfoSection = () => (
               <div className="mt-5 space-y-3">
                 {[
                   { icon: <Phone className="w-4 h-4 text-primary shrink-0" />, text: "+44 0208 087 2343" },
-                  { icon: <Mail className="w-4 h-4 text-primary shrink-0" />, text: "info@workpermitcloud.com" },
+                  { icon: <Mail className="w-4 h-4 text-primary shrink-0" />, text: "info@skilledworkerscloud.com" },
                   { icon: <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />, text: "London, United Kingdom" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">

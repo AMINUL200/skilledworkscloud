@@ -56,7 +56,7 @@ const ServTestimonialsSection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -159,7 +159,7 @@ const ServTestimonialsSection = () => {
                   mb-6
                 "
               >
-                <Quote className="w-7 h-7 text-primary" />
+                <Quote className="w-7 h-7 text-white" />
               </div>
 
               {/* Stars */}

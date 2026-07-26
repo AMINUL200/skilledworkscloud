@@ -34,7 +34,7 @@ const AboutStorySection = ({ data }) => {
           {/* ── LEFT ── */}
           <div className="w-full min-w-0">
             {/* BADGE */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-primary text-xs sm:text-sm font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-white text-xs sm:text-sm font-semibold mb-4">
               {data.batch || "Our Story"}
             </div>
 

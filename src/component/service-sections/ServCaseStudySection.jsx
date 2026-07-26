@@ -21,7 +21,7 @@ const ServCaseStudySection = () => {
               px-5 py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
               mb-6
@@ -79,7 +79,7 @@ const ServCaseStudySection = () => {
               py-2
               rounded-full
               bg-primary-light
-              text-primary
+              text-white
               font-semibold
               text-sm
             "
@@ -169,7 +169,7 @@ const ServCaseStudySection = () => {
                     py-2
                     rounded-full
                     bg-primary-light
-                    text-primary
+                    text-white
                     font-medium
                   "
                 >
@@ -230,14 +230,14 @@ const ServCaseStudySection = () => {
               border border-primary/10
             "
           >
-            <h4 className="text-2xl font-bold text-text mb-4">
+            <h4 className="text-2xl font-bold text-white mb-4">
               Client Testimonial
             </h4>
 
             <p
               className="
                 text-lg
-                text-text-light
+                text-white
                 italic
                 leading-relaxed
               "

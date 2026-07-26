@@ -26,8 +26,10 @@ const PrincipleCard = ({ item, centered }) => {
       <div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: "100px", height: "100px",
-          top: "-30px", right: "-30px",
+          width: "100px",
+          height: "100px",
+          top: "-30px",
+          right: "-30px",
           background: "rgba(255,255,255,0.08)",
           filter: "blur(20px)",
         }}
@@ -50,7 +52,12 @@ const PrincipleCard = ({ item, centered }) => {
           <div key={i} className="flex items-start gap-2">
             <div
               className="flex items-center justify-center rounded-full shrink-0 mt-0.5"
-              style={{ width: "16px", height: "16px", background: "rgba(255,255,255,0.2)", minWidth: "16px" }}
+              style={{
+                width: "16px",
+                height: "16px",
+                background: "rgba(255,255,255,0.2)",
+                minWidth: "16px",
+              }}
             >
               <Check size={9} color="white" strokeWidth={3} />
             </div>
@@ -85,7 +92,7 @@ const AboutPrinciplesSection = ({ data }) => {
       points: data.card1_desc || [
         "Dedicated time to organise patient needs",
         "Take away the health burden to make life easy",
-        "Offer customised healthcare solutions"
+        "Offer customised healthcare solutions",
       ],
     },
     {
@@ -94,7 +101,7 @@ const AboutPrinciplesSection = ({ data }) => {
       points: data.card2_desc || [
         "Get the right result first time",
         "Streamline your health process",
-        "Save time with instant booking"
+        "Save time with instant booking",
       ],
     },
     {
@@ -103,7 +110,7 @@ const AboutPrinciplesSection = ({ data }) => {
       points: data.card3_desc || [
         "Ministry of Health latest policy & guidelines",
         "Automated check of health records",
-        "Insights — implementation — right results"
+        "Insights — implementation — right results",
       ],
       centered: true,
     },
@@ -113,7 +120,7 @@ const AboutPrinciplesSection = ({ data }) => {
       points: data.card4_desc || [
         "Do the right thing first time",
         "No more, no less! Ensuring patients are compliant",
-        "Get it right first time"
+        "Get it right first time",
       ],
     },
     {
@@ -122,7 +129,7 @@ const AboutPrinciplesSection = ({ data }) => {
       points: data.card5_desc || [
         "Choose the right specialist",
         "Guiding patients down the right path",
-        "Better results, better health"
+        "Better results, better health",
       ],
     },
   ];
@@ -136,48 +143,75 @@ const AboutPrinciplesSection = ({ data }) => {
       <div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: "500px", height: "500px",
-          top: "50%", left: "50%",
+          width: "500px",
+          height: "500px",
+          top: "50%",
+          left: "50%",
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)",
           filter: "blur(40px)",
         }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-14 items-start">
-
           {/* ── LEFT: Two images ── */}
           <div className="flex flex-col gap-4">
             {/* Top image */}
-            <div className="relative rounded-2xl overflow-hidden group" style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}>
+            <div
+              className="relative rounded-2xl overflow-hidden group"
+              style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}
+            >
               <picture>
                 <source
                   media="(max-width: 768px)"
-                  srcSet={getImageUrl(data.mobile_image1) || getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                  srcSet={
+                    getImageUrl(data.mobile_image1) ||
+                    getImageUrl(data.web_image1) ||
+                    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"
+                  }
                 />
                 <source
                   media="(min-width: 769px)"
-                  srcSet={getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                  srcSet={
+                    getImageUrl(data.web_image1) ||
+                    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"
+                  }
                 />
                 <img
-                  src={getImageUrl(data.web_image1) || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"}
+                  src={
+                    getImageUrl(data.web_image1) ||
+                    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1400&auto=format&fit=crop"
+                  }
                   alt={data.image1_alt || "Knowledge and Expertise"}
                   className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
                   style={{ height: "clamp(300px, 22vh, 280px)" }}
                 />
               </picture>
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), transparent)" }} />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.55), transparent)",
+                }}
+              />
               <div className="absolute bottom-0 left-0 p-4">
                 <h3
                   className="font-black text-white leading-tight"
-                  style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)", fontFamily: "'DM Sans', sans-serif" }}
+                  style={{
+                    fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)",
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}
                 >
                   {data.image1_alt || "Knowledge & Expertise"}
                 </h3>
                 <p
                   className="mt-0.5"
-                  style={{ fontSize: "clamp(0.68rem, 0.85vw, 0.75rem)", color: "rgba(191,219,254,0.9)" }}
+                  style={{
+                    fontSize: "clamp(0.68rem, 0.85vw, 0.75rem)",
+                    color: "rgba(191,219,254,0.9)",
+                  }}
                 >
                   Professional healthcare guidance backed by experience.
                 </p>
@@ -185,34 +219,59 @@ const AboutPrinciplesSection = ({ data }) => {
             </div>
 
             {/* Bottom image */}
-            <div className="relative rounded-2xl overflow-hidden group" style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}>
+            <div
+              className="relative rounded-2xl overflow-hidden group"
+              style={{ boxShadow: "0 12px 40px rgba(15,23,42,0.10)" }}
+            >
               <picture>
                 <source
                   media="(max-width: 768px)"
-                  srcSet={getImageUrl(data.mobile_image2) || getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                  srcSet={
+                    getImageUrl(data.mobile_image2) ||
+                    getImageUrl(data.web_image2) ||
+                    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"
+                  }
                 />
                 <source
                   media="(min-width: 769px)"
-                  srcSet={getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                  srcSet={
+                    getImageUrl(data.web_image2) ||
+                    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"
+                  }
                 />
                 <img
-                  src={getImageUrl(data.web_image2) || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"}
+                  src={
+                    getImageUrl(data.web_image2) ||
+                    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop"
+                  }
                   alt={data.image2_alt || "Team Collaboration"}
                   className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
                   style={{ height: "clamp(300px, 22vh, 280px)" }}
                 />
               </picture>
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), transparent)" }} />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.55), transparent)",
+                }}
+              />
               <div className="absolute bottom-0 left-0 p-4">
                 <h3
                   className="font-black text-white leading-tight"
-                  style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)", fontFamily: "'DM Sans', sans-serif" }}
+                  style={{
+                    fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)",
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}
                 >
                   {data.image2_alt || "Team Collaboration"}
                 </h3>
                 <p
                   className="mt-0.5"
-                  style={{ fontSize: "clamp(0.68rem, 0.85vw, 0.75rem)", color: "rgba(191,219,254,0.9)" }}
+                  style={{
+                    fontSize: "clamp(0.68rem, 0.85vw, 0.75rem)",
+                    color: "rgba(191,219,254,0.9)",
+                  }}
                 >
                   Working together to achieve the best results.
                 </p>
@@ -223,17 +282,7 @@ const AboutPrinciplesSection = ({ data }) => {
           {/* ── RIGHT: Principles ── */}
           <div>
             {/* Badge */}
-            <span
-              className="inline-block font-semibold rounded-full mb-3"
-              style={{
-                background: "#DBEAFE",
-                color: "var(--color-primary)",
-                border: "1px solid #BFDBFE",
-                fontSize: "clamp(0.62rem, 0.8vw, 0.7rem)",
-                padding: "4px 12px",
-                letterSpacing: "0.05em",
-              }}
-            >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-white text-xs sm:text-sm font-semibold mb-4">
               {data.batch || "Our Principles"}
             </span>
 
@@ -261,7 +310,8 @@ const AboutPrinciplesSection = ({ data }) => {
                 maxWidth: "480px",
               }}
             >
-              {data.description || "We strive to become an effective Healthcare & Patient Management partner for our client's day-to-day wellbeing."}
+              {data.description ||
+                "We strive to become an effective Healthcare & Patient Management partner for our client's day-to-day wellbeing."}
             </p>
 
             {/* 
@@ -271,7 +321,6 @@ const AboutPrinciplesSection = ({ data }) => {
               Row 3: card[3] | card[4]   (both left-aligned)
             */}
             <div className="flex flex-col gap-3">
-
               {/* Row 1: col-0 and col-1 side by side */}
               <div className="grid grid-cols-2 gap-3">
                 <PrincipleCard item={principles[0]} />
@@ -290,7 +339,6 @@ const AboutPrinciplesSection = ({ data }) => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 

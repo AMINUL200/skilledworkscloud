@@ -93,7 +93,7 @@ const InsideWPCSection = () => {
           </div>
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4" style={{ color: "var(--color-text-primary)", letterSpacing: "-0.02em" }}>
-            Inside WorkPermitCloud
+            Inside Skilled Works Cloud
           </h2>
           
           <p className="text-base sm:text-lg" style={{ color: "var(--color-text-secondary)", lineHeight: 1.6 }}>
