@@ -3,10 +3,10 @@ import { ArrowRight, Phone, Calendar, Shield, CheckCircle, Sparkles, MessageCirc
 
 const ServCTASection = () => {
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 lg:py-20 bg-gradient-to-br from-muted to-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* CTA Card */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0B4EA2] via-[#1C75FF] to-[#0F5CC0] shadow-2xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary-dark via-primary to-primary-light shadow-2xl">
           
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
@@ -37,15 +37,15 @@ const ServCTASection = () => {
                 {/* Trust Indicators */}
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-success" />
                     <span className="text-sm text-white">Expert Guidance</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-green-400" />
+                    <Shield className="w-5 h-5 text-success" />
                     <span className="text-sm text-white">IAA Regulated</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MessageCircle className="w-5 h-5 text-green-400" />
+                    <MessageCircle className="w-5 h-5 text-success" />
                     <span className="text-sm text-white">24/7 Support</span>
                   </div>
                 </div>

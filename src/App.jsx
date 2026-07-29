@@ -65,6 +65,8 @@ import ManageToolsType from "./pages/admin/manage_tools/tool_master/ManageToolsT
 import ManageToolsQuestionAnswer from "./pages/admin/manage_tools/tool_master/ManageToolsQuestionAnswer";
 import ILREligibilityPage from "./pages/tools/ILREligibilityPage";
 import SponsoredJobPage from "./pages/tools/SponsoredJobPage";
+import ScrollToTop from "./component/common/ScrollToTop";
+import SalaryTaxCalculate from "./pages/taxs/SalaryTaxCalculate";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -79,6 +81,7 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <ToastContainer zIndex={9999} />
       <Routes>
         {/* <Route path="/auth" element={<AuthPage />} /> */}
@@ -139,6 +142,10 @@ const App = () => {
           <Route
             path="/tool/sponsored-job-eligibility"
             element={<SponsoredJobPage />}
+          />
+          <Route
+            path="/tax-calculator"
+            element={<SalaryTaxCalculate />}
           />
         </Route>
 

@@ -18,11 +18,11 @@ const getInitials = (name) => {
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 };
 
-// Helper function to get color based on name
+// Helper function to get color based on name - Updated with SWC colors
 const getColorFromName = (name) => {
   const colors = [
-    "#2563EB", "#10B981", "#8B5CF6", "#F59E0B", "#EC4899", 
-    "#06B6D4", "#F97316", "#6366F1", "#14B8A6", "#8B5CF6"
+    "#182e72", "#127afe", "#234a89", "#16a34a", "#f59e0b",
+    "#dc2626", "#16256b", "#52698f", "#4a90d9", "#2d6fb0"
   ];
   let hash = 0;
   if (name) {
@@ -43,18 +43,19 @@ const TestimonialCard = ({ testimonial }) => {
       className="flex flex-col gap-3 p-5 rounded-2xl transition-all duration-300 cursor-default shrink-0 hover:scale-105"
       style={{
         width: "320px",
-        background: "white",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-        border: "1px solid #E2E8F0",
+        background: "var(--color-surface)",
+        boxShadow: "var(--shadow-card)",
+        border: "1px solid var(--color-border)",
       }}
     >
       {/* Quote icon */}
-      <Quote className="w-8 h-8 text-primary/20" />
+      <Quote className="w-8 h-8" style={{ color: "var(--color-primary)" }} opacity={0.2} />
 
       {/* Review text */}
       <p
-        className="text-gray-700 text-sm leading-relaxed"
+        className="text-sm leading-relaxed"
         style={{
+          color: "var(--color-text)",
           display: "-webkit-box",
           WebkitLineClamp: 4,
           WebkitBoxOrient: "vertical",
@@ -72,7 +73,7 @@ const TestimonialCard = ({ testimonial }) => {
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-gray-100" />
+      <div className="h-px" style={{ background: "var(--color-border)" }} />
 
       {/* Avatar + name row */}
       <div className="flex items-center gap-3">
@@ -88,14 +89,16 @@ const TestimonialCard = ({ testimonial }) => {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <span className="font-bold text-gray-900 text-sm truncate">
+            <span className="font-bold text-sm truncate" style={{ color: "var(--color-text)" }}>
               {t.name}
             </span>
-            <span className="text-gray-400 text-xs shrink-0">
+            <span className="text-xs shrink-0" style={{ color: "var(--color-text-muted)" }}>
               {t.date || new Date(t.created_at).toLocaleDateString()}
             </span>
           </div>
-          <span className="text-xs text-primary font-medium">{t.designation || t.service}</span>
+          <span className="text-xs font-medium" style={{ color: "var(--color-primary)" }}>
+            {t.designation || t.service}
+          </span>
         </div>
       </div>
     </div>
@@ -266,7 +269,7 @@ const ServCustomerReview = ({ testimonials }) => {
       <section
         className="relative overflow-hidden py-20 lg:py-28"
         style={{
-          background: "linear-gradient(135deg, #0B4EA2 0%, #1C75FF 50%, #0F5CC0 100%)",
+          background: "var(--gradient-navy)",
         }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -297,7 +300,7 @@ const ServCustomerReview = ({ testimonials }) => {
     <section
       className="relative overflow-hidden py-20 lg:py-28"
       style={{
-        background: "linear-gradient(135deg, #0B4EA2 0%, #1C75FF 50%, #0F5CC0 100%)",
+        background: "var(--gradient-navy)",
       }}
     >
       {/* Decorative elements */}

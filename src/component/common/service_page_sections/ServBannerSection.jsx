@@ -13,7 +13,6 @@ const ServBannerSection = ({ data }) => {
 
   // Get image URL with base URL
 
-
   return (
     <section
       className="
@@ -54,15 +53,15 @@ const ServBannerSection = ({ data }) => {
         />
       </picture>
 
-      {/* OVERLAY WITH GRADIENT */}
+      {/* OVERLAY WITH GRADIENT - Updated to SWC brand colors */}
       <div
         className="
           absolute
           inset-0
           bg-gradient-to-r
-          from-[#0B4EA2]/95
-          via-[#0F5CC0]/85
-          to-[#1C75FF]/70
+          from-primary-dark/95
+          via-primary/85
+          to-primary-light/70
         "
       />
 
@@ -80,7 +79,7 @@ const ServBannerSection = ({ data }) => {
         }}
       />
 
-      {/* FLOATING ELEMENTS */}
+      {/* FLOATING ELEMENTS - Updated colors */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10" style={{ animation: 'float 6s ease-in-out infinite' }}>
           <Shield className="w-12 h-12 text-white/20" />
@@ -123,7 +122,7 @@ const ServBannerSection = ({ data }) => {
           "
           style={{ animation: 'fadeInUp 0.8s ease-out forwards', opacity: 0 }}
         >
-          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-primary-bright animate-pulse" />
           <span className="text-xs font-semibold uppercase tracking-wider text-white/90">
             {data.title_meta || "Comprehensive Immigration Solutions"}
           </span>
@@ -145,7 +144,7 @@ const ServBannerSection = ({ data }) => {
           style={{ animation: 'fadeInUp 0.8s ease-out 0.1s forwards', opacity: 0 }}
         >
           {data.title || "Expert Immigration &"}
-          <span className="block mt-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+          <span className="block mt-2 bg-gradient-to-r from-primary-bright to-white/90 bg-clip-text text-transparent">
             {data.highlighted_title || "Business Services"}
           </span>
         </h1>
@@ -203,7 +202,7 @@ const ServBannerSection = ({ data }) => {
                 {data.button1_name}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-muted to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
           )}
 
@@ -231,23 +230,6 @@ const ServBannerSection = ({ data }) => {
           )}
         </div>
       </div>
-
-      {/* SCROLL INDICATOR */}
-      {/* <div
-        className="
-          absolute
-          bottom-8
-          left-1/2
-          -translate-x-1/2
-          cursor-pointer
-          z-10
-        "
-        style={{ animation: 'bounce 2s ease-in-out infinite' }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-white/40 flex justify-center">
-          <div className="w-1 h-2 bg-white/60 rounded-full mt-2 animate-pulse" />
-        </div>
-      </div> */}
 
       {/* ANIMATION STYLES */}
       <style>{`
@@ -292,4 +274,4 @@ const ServBannerSection = ({ data }) => {
   )
 }
 
-export default ServBannerSection
+export default ServBannerSection;

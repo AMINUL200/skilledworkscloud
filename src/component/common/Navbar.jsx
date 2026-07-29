@@ -159,6 +159,7 @@ const Navbar = ({ toggleMenu }) => {
       ],
     },
 
+    { id: "tax-calculator", label: "Tax Calculator", path: "/tax-calculator" },
     { id: "blogs", label: "Blogs", path: "/blogs" },
     { id: "contact", label: "Contact", path: "/contact" },
   ];
@@ -215,7 +216,7 @@ const Navbar = ({ toggleMenu }) => {
                 handleNavigate(item.path);
               }
             }}
-            className="flex items-center gap-1 text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
+            className="flex items-center gap-1 text-[11px] min-[1286px]:text-[12px] font-medium text-text-light hover:text-primary transition-all duration-300"
           >
             <span>{item.label}</span>
             <ChevronDown
@@ -242,7 +243,7 @@ const Navbar = ({ toggleMenu }) => {
                   handleNavigate(item.path);
                 }
               }}
-              className="flex items-center gap-1 text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
+              className="flex items-center gap-1 text-[11px] min-[1286px]:text-[14px] font-medium text-text-light hover:text-primary transition-all duration-300"
             >
               <span>{item.label}</span>
               <ChevronDown
@@ -370,7 +371,7 @@ const Navbar = ({ toggleMenu }) => {
         ) : (
           <button
             onClick={() => handleNavigate(item.path)}
-            className="text-[11px] min-[1286px]:text-[15px] font-medium text-text-light hover:text-primary transition-all duration-300"
+            className="text-[11px] min-[1286px]:text-[14px] font-medium text-text-light hover:text-primary transition-all duration-300"
           >
             {item.label}
           </button>

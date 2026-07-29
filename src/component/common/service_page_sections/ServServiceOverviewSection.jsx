@@ -36,73 +36,73 @@ const ServServiceOverviewSection = ({ categories }) => {
     return iconMap[iconName?.toLowerCase()] || Briefcase;
   };
 
-  // Map category names to colors and gradients
+  // Map category names to colors and gradients - Updated with SWC brand colors
   const getCategoryStyle = (name) => {
     const styleMap = {
       "sponsorship licencee": {
-        color: "#2563EB",
-        gradient: "from-blue-500 to-blue-700",
+        color: "#182e72",
+        gradient: "from-primary to-primary-dark",
         description: "Expert guidance for sponsor licence applications and maintenance",
         features: ["Full application support", "Compliance audit", "Suspension defense"],
       },
       "immigration compliance": {
-        color: "#10B981",
-        gradient: "from-emerald-500 to-teal-600",
+        color: "#16a34a",
+        gradient: "from-success to-success/80",
         description: "Stay compliant with Home Office regulations and avoid penalties",
         features: ["Right to work checks", "Compliance visits", "Civil penalty defense"],
       },
       "skilled worker visas": {
-        color: "#8B5CF6",
-        gradient: "from-purple-500 to-purple-700",
+        color: "#127afe",
+        gradient: "from-primary-bright to-primary-light",
         description: "Visa solutions for skilled professionals coming to the UK",
         features: ["Certificate of sponsorship", "Visa processing", "Dependent visas"],
       },
       "temporary (tier 5) visas": {
-        color: "#F59E0B",
-        gradient: "from-amber-500 to-orange-600",
+        color: "#f59e0b",
+        gradient: "from-warning to-warning/80",
         description: "Temporary work visas for cultural and charitable workers",
         features: ["Tier 5 sponsorship", "Short-term assignments", "Cultural exchange"],
       },
       "partner and family visas": {
-        color: "#EC4899",
-        gradient: "from-pink-500 to-rose-600",
+        color: "#dc2626",
+        gradient: "from-danger to-danger/80",
         description: "Family reunion and partner visa applications",
         features: ["Spouse visa support", "Document preparation", "Priority service"],
       },
       "global business mobility": {
-        color: "#06B6D4",
-        gradient: "from-cyan-500 to-blue-600",
+        color: "#234a89",
+        gradient: "from-primary-light to-primary",
         description: "International business mobility and expansion solutions",
         features: ["UK Expansion visa", "Global talent mobility", "Compliance support"],
       },
       "standard visitor visa": {
-        color: "#3B82F6",
-        gradient: "from-blue-500 to-indigo-600",
+        color: "#182e72",
+        gradient: "from-primary to-primary-dark",
         description: "Visitor visas for tourism, business, and family visits",
         features: ["Standard visitor", "Business visitor", "Family visitor"],
       },
       "study visas": {
-        color: "#14B8A6",
-        gradient: "from-teal-500 to-emerald-600",
+        color: "#16a34a",
+        gradient: "from-success to-success/80",
         description: "Student visas for academic and educational pursuits",
         features: ["CAS support", "Maintenance funds", "Dependent visas"],
       },
       "business visas": {
-        color: "#F97316",
-        gradient: "from-orange-500 to-red-600",
+        color: "#f59e0b",
+        gradient: "from-warning to-warning/80",
         description: "Entrepreneur and business founder visa solutions",
         features: ["Self-sponsorship", "Innovator visa", "Business plan review"],
       },
       "scale up visa": {
-        color: "#8B5CF6",
-        gradient: "from-violet-500 to-purple-600",
+        color: "#127afe",
+        gradient: "from-primary-bright to-primary-light",
         description: "Fast-track visas for rapidly growing businesses",
         features: ["Scale-up sponsorship", "Fast-track processing", "Talent attraction"],
       },
     };
     return styleMap[name?.toLowerCase()] || {
-      color: "#2563EB",
-      gradient: "from-blue-500 to-blue-700",
+      color: "#182e72",
+      gradient: "from-primary to-primary-dark",
       description: "Professional immigration services",
       features: ["Expert guidance", "Comprehensive support", "Tailored solutions"],
     };
@@ -141,12 +141,12 @@ const ServServiceOverviewSection = ({ categories }) => {
   // If no categories, show a fallback
   if (!categories || categories.length === 0) {
     return (
-      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-muted via-surface to-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 text-text">
             Immigration Services
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-text-light max-w-2xl mx-auto">
             No services available at the moment. Please check back later.
           </p>
         </div>
@@ -155,22 +155,23 @@ const ServServiceOverviewSection = ({ categories }) => {
   }
 
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <section className="py-20 lg:py-28 bg-gradient-to-br from-muted via-surface to-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with modern design */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/20 mb-6">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-white text-xs sm:text-sm font-semibold mb-4">
+            <Sparkles className="w-4 h-4 text-white" />
+            <span className="text-sm font-semibold uppercase tracking-wider text-white">
               Our Expertise
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            Immigration Services
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
+            <span className="text-text">Immigration</span>
+            <span className="text-primary"> Services</span>
           </h2>
 
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-text-light max-w-2xl mx-auto">
             Comprehensive visa and immigration solutions tailored to your unique
             needs
           </p>
@@ -192,8 +193,8 @@ const ServServiceOverviewSection = ({ categories }) => {
                     w-full text-left p-4 rounded-2xl transition-all duration-300 group
                     ${
                       isActive
-                        ? "bg-white shadow-xl border-l-4"
-                        : "bg-transparent hover:bg-white/50 border-l-4 border-transparent"
+                        ? "bg-surface shadow-card border-l-4"
+                        : "bg-transparent hover:bg-muted/50 border-l-4 border-transparent"
                     }
                   `}
                   style={{
@@ -214,12 +215,12 @@ const ServServiceOverviewSection = ({ categories }) => {
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`font-semibold ${isActive ? "text-gray-900" : "text-gray-700"}`}
+                        className={`font-semibold ${isActive ? "text-text" : "text-text-light"}`}
                       >
                         {service.label}
                       </h3>
                       {isActive && (
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm text-text-light mt-1">
                           {service.description}
                         </p>
                       )}
@@ -242,7 +243,7 @@ const ServServiceOverviewSection = ({ categories }) => {
           {activeServiceData && (
             <div className="lg:sticky lg:top-24">
               <div
-                className="bg-white rounded-3xl overflow-hidden shadow-2xl transition-all duration-500"
+                className="bg-surface rounded-3xl overflow-hidden shadow-card transition-all duration-500"
                 style={{
                   boxShadow: `0 20px 40px -12px ${activeServiceData.color}20`,
                 }}
@@ -268,29 +269,11 @@ const ServServiceOverviewSection = ({ categories }) => {
                   </div>
                 </div>
 
-                {/* Features List */}
-                {/* <div className="p-8 border-b border-gray-100">
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
-                    Key Features
-                  </h4>
-                  <div className="space-y-3">
-                    {activeServiceData.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
-                        <CheckCircle2
-                          className="w-5 h-5"
-                          style={{ color: activeServiceData.color }}
-                        />
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-
                 {/* Service Links */}
                 {activeServiceData.nestedDropdown &&
                   activeServiceData.nestedDropdown.length > 0 && (
                     <div className="p-8">
-                      <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
+                      <h4 className="text-sm font-semibold uppercase tracking-wider text-text-muted mb-4">
                         Available Services
                       </h4>
                       <div className="space-y-2">
@@ -298,14 +281,14 @@ const ServServiceOverviewSection = ({ categories }) => {
                           <a
                             key={idx}
                             href={item.path}
-                            className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-all duration-200 group/link"
+                            className="flex items-center justify-between p-3 rounded-xl hover:bg-muted transition-all duration-200 group/link"
                           >
                             <div className="flex items-center gap-3">
                               <div
                                 className="w-1.5 h-1.5 rounded-full"
                                 style={{ background: activeServiceData.color }}
                               />
-                              <span className="text-gray-700 group-hover/link:text-gray-900 transition-colors">
+                              <span className="text-text hover:text-text transition-colors">
                                 {item.label}
                               </span>
                               {item.popular && (
@@ -321,7 +304,7 @@ const ServServiceOverviewSection = ({ categories }) => {
                               )}
                             </div>
                             <ArrowRight
-                              className="w-4 h-4 text-gray-400 opacity-0 group-hover/link:opacity-100 transition-all"
+                              className="w-4 h-4 text-text-muted opacity-0 group-hover/link:opacity-100 transition-all"
                               style={{ color: activeServiceData.color }}
                             />
                           </a>
