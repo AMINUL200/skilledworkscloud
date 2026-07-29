@@ -5,6 +5,7 @@ import TaxCalculatorForm from "./TaxCalculatorForm";
 import TaxResultsSection from "./TaxResultsSection";
 import TaxPayslipSimulator from "./TaxPayslipSimulator";
 import TaxHowToUseSection from "./TaxHowToUseSection";
+import TaxBandsSection from "./TaxBandsSection";
 
 const SalaryTaxCalculator = () => {
   const [loading, setLoading] = useState(false);
@@ -299,6 +300,13 @@ const SalaryTaxCalculator = () => {
               formatCurrency={formatCurrency}
             />
           </div>
+        </div>
+      </section>
+
+      {/* Tax Bands Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TaxBandsSection formatCurrency={formatCurrency} />
         </div>
       </section>
 

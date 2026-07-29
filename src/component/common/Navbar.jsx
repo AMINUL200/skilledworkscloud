@@ -158,8 +158,27 @@ const Navbar = ({ toggleMenu }) => {
         },
       ],
     },
+    {
+      id: "calculator",
+      label: "Calculator",
+      dropdown: [
+        {
+          id: "tax-calculator",
+          label: "Salary Calculator",
+          path: "/salary-calculator",
+        },
+        {
+          id: "percentage-calculator",
+          label: "Percentage Calculator",
+          path: "/percentage-calculator",
+        },
+       
 
-    { id: "tax-calculator", label: "Tax Calculator", path: "/tax-calculator" },
+      
+      ],
+    },
+
+    // { id: "tax-calculator", label: "Tax Calculator", path: "/tax-calculator" },
     { id: "blogs", label: "Blogs", path: "/blogs" },
     { id: "contact", label: "Contact", path: "/contact" },
   ];

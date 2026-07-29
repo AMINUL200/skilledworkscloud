@@ -67,6 +67,7 @@ import ILREligibilityPage from "./pages/tools/ILREligibilityPage";
 import SponsoredJobPage from "./pages/tools/SponsoredJobPage";
 import ScrollToTop from "./component/common/ScrollToTop";
 import SalaryTaxCalculate from "./pages/taxs/SalaryTaxCalculate";
+import PercentageCalculator from "./pages/taxs/PercentageCalculator";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -144,8 +145,12 @@ const App = () => {
             element={<SponsoredJobPage />}
           />
           <Route
-            path="/tax-calculator"
+            path="/salary-calculator"
             element={<SalaryTaxCalculate />}
+          />
+          <Route
+            path="/percentage-calculator"
+            element={<PercentageCalculator />}
           />
         </Route>
 
