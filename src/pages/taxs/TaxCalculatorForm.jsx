@@ -7,16 +7,13 @@ import {
   GraduationCap,
   Gift,
   ChevronDown,
-  ChevronUp,
+  Sparkles,
 } from "lucide-react";
 
 /**
  * Collapse
  * Reusable animated wrapper that expands/collapses to the natural
  * height of its children using the CSS grid "0fr -> 1fr" technique.
- * No JS height measurement, no fixed/min heights, no layout jumps.
- * Content stays mounted at all times so form state/validation is
- * never lost when a section is hidden.
  */
 const Collapse = ({ isOpen, children, className = "" }) => (
   <div
@@ -36,21 +33,108 @@ const Collapse = ({ isOpen, children, className = "" }) => (
   </div>
 );
 
-const SectionHeader = ({ title, icon: Icon, isVisible, onToggle }) => (
-  <button
-    type="button"
-    className="w-full flex items-center justify-between group"
-    aria-expanded={isVisible}
-  >
-    <div className="flex items-center gap-2">
-      <Icon className="w-4 h-4 text-primary" />
-      <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">
-        {title}
-      </h3>
-    </div>
-    
-  </button>
-);
+/* Colour tokens per section, so each collapsible group gets its own
+   quiet accent rather than one flat repeating blue. */
+const sectionTheme = {
+  salary: { 
+    icon: "text-blue-600", 
+    chip: "bg-blue-50", 
+    ring: "ring-blue-100",
+    focus: "focus:ring-blue-500/40 focus:border-blue-500",
+    gradient: "from-blue-50 to-blue-100/50",
+    border: "border-blue-200",
+    label: "text-blue-700",
+  },
+  employment: {
+    icon: "text-indigo-600",
+    chip: "bg-indigo-50",
+    ring: "ring-indigo-100",
+    focus: "focus:ring-indigo-500/40 focus:border-indigo-500",
+    gradient: "from-indigo-50 to-indigo-100/50",
+    border: "border-indigo-200",
+    label: "text-indigo-700",
+  },
+  studentLoan: {
+    icon: "text-sky-600",
+    chip: "bg-sky-50",
+    ring: "ring-sky-100",
+    focus: "focus:ring-sky-500/40 focus:border-sky-500",
+    gradient: "from-sky-50 to-sky-100/50",
+    border: "border-sky-200",
+    label: "text-sky-700",
+  },
+  additionalIncome: {
+    icon: "text-cyan-600",
+    chip: "bg-cyan-50",
+    ring: "ring-cyan-100",
+    focus: "focus:ring-cyan-500/40 focus:border-cyan-500",
+    gradient: "from-cyan-50 to-cyan-100/50",
+    border: "border-cyan-200",
+    label: "text-cyan-700",
+  },
+  benefits: {
+    icon: "text-blue-700",
+    chip: "bg-blue-50",
+    ring: "ring-blue-100",
+    focus: "focus:ring-blue-500/40 focus:border-blue-500",
+    gradient: "from-blue-50 to-blue-100/50",
+    border: "border-blue-200",
+    label: "text-blue-700",
+  },
+};
+
+const SectionHeader = ({ title, icon: Icon, isVisible, onToggle, section }) => {
+  const theme = sectionTheme[section] || sectionTheme.salary;
+  return (
+    <button
+      type="button"
+      className="w-full flex items-center justify-between group py-1"
+      aria-expanded={isVisible}
+    >
+      <div className="flex items-center gap-3">
+        <span
+          className={`flex items-center justify-center w-8 h-8 rounded-lg ${theme.chip} ring-1 ${theme.ring}`}
+        >
+          <Icon className={`w-4 h-4 ${theme.icon}`} />
+        </span>
+        <h3 className="text-[13px] font-semibold text-slate-700 uppercase tracking-wider">
+          {title}
+        </h3>
+      </div>
+    </button>
+  );
+};
+
+/* Premium input field styling */
+const inputClass = (theme = 'salary') => {
+  const t = sectionTheme[theme] || sectionTheme.salary;
+  return `w-full px-4 py-3 rounded-xl border-2 
+    bg-white/80 text-slate-900 placeholder:text-slate-400 
+    ${t.focus} outline-none transition-all duration-200 
+    border-slate-200 hover:border-slate-300 
+    shadow-[inset_0_1px_3px_rgba(0,0,0,0.02)]
+    hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.04)]
+    focus:shadow-[inset_0_1px_3px_rgba(0,0,0,0.02),0_0_0_3px_rgba(37,99,235,0.08)]
+    text-[15px] font-medium`;
+};
+
+const labelClass = "block text-xs font-semibold text-slate-600 mb-1.5 tracking-wide uppercase";
+
+/* Premium select styling */
+const selectClass = (theme = 'salary') => {
+  const t = sectionTheme[theme] || sectionTheme.salary;
+  return `w-full px-4 py-3 rounded-xl border-2 
+    bg-white/80 text-slate-900 
+    ${t.focus} outline-none transition-all duration-200 
+    border-slate-200 hover:border-slate-300
+    shadow-[inset_0_1px_3px_rgba(0,0,0,0.02)]
+    hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.04)]
+    focus:shadow-[inset_0_1px_3px_rgba(0,0,0,0.02),0_0_0_3px_rgba(37,99,235,0.08)]
+    text-[15px] font-medium appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_16px_center] bg-no-repeat pr-12`;
+};
+
+/* Premium checkbox styling */
+const checkboxClass = "w-4 h-4 rounded-md border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/40 focus:ring-offset-0 transition-all duration-200 cursor-pointer";
 
 const TaxCalculatorForm = ({
   formData,
@@ -92,21 +176,27 @@ const TaxCalculatorForm = ({
 
   return (
     <div
-      className="relative bg-white p-6 lg:p-8 rounded-3xl h-fit self-start
-                 border-2 border-blue-200
-                 shadow-[0_4px_8px_rgba(24,46,114,0.10),0_16px_32px_-4px_rgba(24,46,114,0.16),0_32px_64px_-12px_rgba(30,64,175,0.22)]
-                 hover:shadow-[0_4px_8px_rgba(24,46,114,0.12),0_20px_40px_-4px_rgba(24,46,114,0.20),0_40px_80px_-12px_rgba(30,64,175,0.28)]
-                 hover:-translate-y-0.5
-                 hover:border-blue-300
-                 transition-all duration-300 ease-out"
+      className="relative bg-white p-6 lg:p-8 rounded-[28px] h-fit self-start overflow-hidden
+                 border border-blue-100
+                 shadow-[0_2px_6px_rgba(15,23,42,0.04),0_16px_40px_-8px_rgba(37,99,235,0.14)]
+                 hover:shadow-[0_2px_8px_rgba(15,23,42,0.06),0_24px_56px_-8px_rgba(37,99,235,0.20)]
+                 transition-shadow duration-300 ease-out"
     >
-      {/* subtle premium accent line along the top edge */}
-      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/70 to-transparent" />
+      {/* ambient corner glow */}
+      <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-indigo-100/0 blur-2xl" />
 
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-        <Calculator className="w-6 h-6 text-primary" />
-        Salary Details
-      </h2>
+      <div className="relative flex items-center justify-between mb-7">
+        <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+          <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25">
+            <Calculator className="w-5 h-5 text-white" />
+          </span>
+          Salary Details
+        </h2>
+        <span className="hidden sm:flex items-center gap-1 text-[11px] font-medium text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full ring-1 ring-blue-100">
+          <Sparkles className="w-3 h-3" />
+          Live results
+        </span>
+      </div>
 
       {/* Section 1: Salary Information - always rendered, header togglable */}
       <div className="space-y-4">
@@ -115,33 +205,35 @@ const TaxCalculatorForm = ({
           icon={Wallet}
           isVisible={visibleSections.salary}
           onToggle={() => toggleSection("salary")}
+          section="salary"
         />
 
         <Collapse isOpen={visibleSections.salary}>
-          <div className="space-y-4 pt-2 pb-2">
+          <div className="space-y-4 pt-3 pb-2 pl-11">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Gross Salary (£)
-              </label>
-              <input
-                type="number"
-                name="grossSalary"
-                value={formData.grossSalary}
-                onChange={handleNumberChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-              />
+              <label className={labelClass}>Gross Salary (£)</label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-lg">
+                  £
+                </span>
+                <input
+                  type="number"
+                  name="grossSalary"
+                  value={formData.grossSalary}
+                  onChange={handleNumberChange}
+                  className={`${inputClass('salary')} pl-8 text-lg font-semibold`}
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Salary Period
-                </label>
+                <label className={labelClass}>Salary Period</label>
                 <select
                   name="salaryPeriod"
                   value={formData.salaryPeriod}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                  className={selectClass('salary')}
                 >
                   {salaryPeriods.map((period) => (
                     <option key={period} value={period.toLowerCase()}>
@@ -151,14 +243,12 @@ const TaxCalculatorForm = ({
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Tax Year
-                </label>
+                <label className={labelClass}>Tax Year</label>
                 <select
                   name="taxYear"
                   value={formData.taxYear}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                  className={selectClass('salary')}
                 >
                   <option value="2024-2025">2024-2025</option>
                   <option value="2023-2024">2023-2024</option>
@@ -167,14 +257,12 @@ const TaxCalculatorForm = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Country
-              </label>
+              <label className={labelClass}>Country</label>
               <select
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                className={selectClass('salary')}
               >
                 {countries.map((country) => (
                   <option key={country} value={country}>
@@ -191,19 +279,14 @@ const TaxCalculatorForm = ({
       <button
         type="button"
         onClick={toggleAllSections}
-        className="w-full my-6 py-2 text-sm font-medium text-primary hover:text-primary-dark transition-colors flex items-center justify-center gap-2 border-t border-gray-200 pt-4"
+        className="w-full my-6 py-2.5 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors flex items-center justify-center gap-2 border-t border-slate-100 pt-5"
       >
-        {showAllSections ? (
-          <>
-            <ChevronUp className="w-4 h-4" />
-            Show Less Options
-          </>
-        ) : (
-          <>
-            <ChevronDown className="w-4 h-4" />
-            Show More Options
-          </>
-        )}
+        <ChevronDown
+          className={`w-4 h-4 transition-transform duration-300 ${
+            showAllSections ? "rotate-180" : "rotate-0"
+          }`}
+        />
+        {showAllSections ? "Show Less Options" : "Show More Options"}
       </button>
 
       {/* Sections 2-5: always mounted, height/opacity animated by Collapse */}
@@ -216,57 +299,50 @@ const TaxCalculatorForm = ({
               icon={Briefcase}
               isVisible={visibleSections.employment}
               onToggle={() => toggleSection("employment")}
+              section="employment"
             />
-            <div className="space-y-4 pt-2">
+            <div className="space-y-4 pt-3 pl-11">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Tax Code
-                  </label>
+                  <label className={labelClass}>Tax Code</label>
                   <input
                     type="text"
                     name="taxCode"
                     value={formData.taxCode}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                    className={inputClass('employment')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Working Hours/Week
-                  </label>
+                  <label className={labelClass}>Working Hours/Week</label>
                   <input
                     type="number"
                     name="workingHours"
                     value={formData.workingHours}
                     onChange={handleNumberChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                    className={inputClass('employment')}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Pension Contribution (%)
-                  </label>
+                  <label className={labelClass}>Pension Contribution (%)</label>
                   <input
                     type="number"
                     name="pensionContribution"
                     value={formData.pensionContribution}
                     onChange={handleNumberChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                    className={inputClass('employment')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Pension Type
-                  </label>
+                  <label className={labelClass}>Pension Type</label>
                   <select
                     name="pensionType"
                     value={formData.pensionType}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                    className={selectClass('employment')}
                   >
                     <option value="auto-enrolment">Auto-Enrolment</option>
                     <option value="salary-sacrifice">Salary Sacrifice</option>
@@ -286,13 +362,14 @@ const TaxCalculatorForm = ({
               icon={GraduationCap}
               isVisible={visibleSections.studentLoan}
               onToggle={() => toggleSection("studentLoan")}
+              section="studentLoan"
             />
-            <div className="pt-2">
+            <div className="pt-3 pl-11">
               <select
                 name="studentLoan"
                 value={formData.studentLoan}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                className={selectClass('studentLoan')}
               >
                 <option value="none">None</option>
                 <option value="plan1">Plan 1</option>
@@ -313,30 +390,27 @@ const TaxCalculatorForm = ({
               icon={TrendingUp}
               isVisible={visibleSections.additionalIncome}
               onToggle={() => toggleSection("additionalIncome")}
+              section="additionalIncome"
             />
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-2 gap-4 pt-3 pl-11">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Annual Bonus (£)
-                </label>
+                <label className={labelClass}>Annual Bonus (£)</label>
                 <input
                   type="number"
                   name="annualBonus"
                   value={formData.annualBonus}
                   onChange={handleNumberChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                  className={inputClass('additionalIncome')}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Dividend Income (£)
-                </label>
+                <label className={labelClass}>Dividend Income (£)</label>
                 <input
                   type="number"
                   name="dividendIncome"
                   value={formData.dividendIncome}
                   onChange={handleNumberChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                  className={inputClass('additionalIncome')}
                 />
               </div>
             </div>
@@ -351,60 +425,39 @@ const TaxCalculatorForm = ({
               icon={Gift}
               isVisible={visibleSections.benefits}
               onToggle={() => toggleSection("benefits")}
+              section="benefits"
             />
-            <div className="pt-2">
+            <div className="pt-3 pl-11">
               <div className="grid grid-cols-2 gap-3">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    name="companyCar"
-                    checked={formData.companyCar}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-primary"
-                  />
-                  Company Car
-                </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    name="fuelBenefit"
-                    checked={formData.fuelBenefit}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-primary"
-                  />
-                  Fuel Benefit
-                </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    name="marriageAllowance"
-                    checked={formData.marriageAllowance}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-primary"
-                  />
-                  Marriage Allowance
-                </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    name="blindAllowance"
-                    checked={formData.blindAllowance}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-primary"
-                  />
-                  Blind Allowance
-                </label>
+                {[
+                  { name: "companyCar", label: "Company Car" },
+                  { name: "fuelBenefit", label: "Fuel Benefit" },
+                  { name: "marriageAllowance", label: "Marriage Allowance" },
+                  { name: "blindAllowance", label: "Blind Allowance" },
+                ].map((item) => (
+                  <label
+                    key={item.name}
+                    className="flex items-center gap-2.5 text-sm text-slate-600 bg-white border-2 border-slate-200 rounded-xl px-3 py-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/40 transition-all duration-200"
+                  >
+                    <input
+                      type="checkbox"
+                      name={item.name}
+                      checked={formData[item.name]}
+                      onChange={handleInputChange}
+                      className={checkboxClass}
+                    />
+                    {item.label}
+                  </label>
+                ))}
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Salary Sacrifice (£)
-                </label>
+                <label className={labelClass}>Salary Sacrifice (£)</label>
                 <input
                   type="number"
                   name="salarySacrifice"
                   value={formData.salarySacrifice}
                   onChange={handleNumberChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                  className={inputClass('benefits')}
                 />
               </div>
             </div>
@@ -412,16 +465,21 @@ const TaxCalculatorForm = ({
         </Collapse>
       </div>
 
-      {/* Calculate Button - Now at the bottom after all sections */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      {/* Calculate Button */}
+      <div className="mt-7 pt-6 border-t border-slate-100">
         <button
           onClick={calculateTax}
           disabled={loading}
-          className="w-full btn btn-primary py-4 text-lg font-semibold rounded-xl flex items-center justify-center gap-2"
+          className="w-full py-4 text-base font-semibold rounded-2xl flex items-center justify-center gap-2
+                     bg-gradient-to-r from-blue-600 to-indigo-600 text-white
+                     shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40
+                     hover:-translate-y-0.5 active:translate-y-0
+                     disabled:opacity-70 disabled:hover:translate-y-0
+                     transition-all duration-200"
         >
           {loading ? (
             <>
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/60 border-t-white rounded-full animate-spin" />
               Calculating...
             </>
           ) : (
