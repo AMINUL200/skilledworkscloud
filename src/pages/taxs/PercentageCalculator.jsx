@@ -15,7 +15,52 @@ import {
   Sparkles,
 } from 'lucide-react';
 
- const CalculatorCard = ({ title, description, children, icon: Icon, id, active }) => (
+  // Result Card Component for inside calculators
+  const InlineResultCard = ({ result, steps, formula, type, title }) => {
+    if (!result) return null;
+    
+    const isError = result === 'Please enter valid numbers';
+    
+    if (isError) {
+      return (
+        <div className="mt-4 p-4 rounded-xl bg-red-50 border border-red-200 animate-fadeIn">
+          <p className="text-sm text-red-600">{result}</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-primary/5 to-primary-light/5 border border-primary/20 animate-fadeIn">
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Result</h4>
+            <div className="text-2xl font-bold text-primary mt-1">{result}</div>
+            {type && (
+              <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full mt-1 ${type === 'Increase' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                {type === 'Increase' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                {type}
+              </span>
+            )}
+          </div>
+          <CheckCircle className="w-8 h-8 text-success opacity-50" />
+        </div>
+        {formula && (
+          <div className="mt-2 text-sm">
+            <span className="text-gray-500">Formula: </span>
+            <span className="font-medium text-gray-700">{formula}</span>
+          </div>
+        )}
+        {steps && (
+          <div className="mt-1 text-sm">
+            <span className="text-gray-500">Steps: </span>
+            <span className="text-gray-700">{steps}</span>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const CalculatorCard = ({ title, description, children, icon: Icon, id, active }) => (
     <div
       id={id}
       className={`bg-white rounded-3xl shadow-xl p-6 lg:p-8 border transition-all duration-300 ${
@@ -92,7 +137,6 @@ import {
 
 const PercentageCalculator = () => {
   const [activeFaq, setActiveFaq] = useState(null);
-  const [loading, setLoading] = useState(false);
   
   // Refs to track which input is currently focused
   const inputRefs = {
@@ -158,7 +202,6 @@ const PercentageCalculator = () => {
   const resetCalc1 = () => {
     setCalc1({ percentage: '', number: '', result: null, steps: '', formula: '' });
     setLastCalculated((prev) => (prev === 'calc1' ? null : prev));
-    // Focus the first input after reset
     setTimeout(() => inputRefs.calc1.percentage.current?.focus(), 0);
   };
 
@@ -215,7 +258,6 @@ const PercentageCalculator = () => {
     setTimeout(() => inputRefs.calc3.original.current?.focus(), 0);
   };
 
-  // Handle Enter key press
   const handleKeyPress = (e, calculator) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -224,6 +266,8 @@ const PercentageCalculator = () => {
       else if (calculator === 'calc3') handleCalc3();
     }
   };
+
+
 
   const examples = [
     { title: '20% of 500 = 100', calc: 'What is X% of Y?' },
@@ -253,8 +297,6 @@ const PercentageCalculator = () => {
       answer: 'The basic formula for percentage is: (Part ÷ Whole) × 100. For "X% of Y": (X × Y) ÷ 100. For percentage change: ((New - Original) ÷ Original) × 100.',
     },
   ];
-
- 
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -341,6 +383,14 @@ const PercentageCalculator = () => {
                       Reset
                     </button>
                   </div>
+
+                  {/* Inline Result Card */}
+                  <InlineResultCard
+                    result={calc1.result}
+                    steps={calc1.steps}
+                    formula={calc1.formula}
+                    title="What is X% of Y?"
+                  />
                 </div>
               </CalculatorCard>
 
@@ -399,6 +449,14 @@ const PercentageCalculator = () => {
                       Reset
                     </button>
                   </div>
+
+                  {/* Inline Result Card */}
+                  <InlineResultCard
+                    result={calc2.result}
+                    steps={calc2.steps}
+                    formula={calc2.formula}
+                    title="X is What Percent of Y?"
+                  />
                 </div>
               </CalculatorCard>
 
@@ -457,6 +515,15 @@ const PercentageCalculator = () => {
                       Reset
                     </button>
                   </div>
+
+                  {/* Inline Result Card */}
+                  <InlineResultCard
+                    result={calc3.result}
+                    steps={calc3.steps}
+                    formula={calc3.formula}
+                    type={calc3.type}
+                    title="Percentage Increase / Decrease"
+                  />
                 </div>
               </CalculatorCard>
             </div>

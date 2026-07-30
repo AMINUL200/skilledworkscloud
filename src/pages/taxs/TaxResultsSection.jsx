@@ -36,7 +36,15 @@ const TaxResultsSection = ({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-3xl shadow-xl p-6 lg:p-8 border border-gray-200">
+      <div
+        className="relative bg-white p-6 lg:p-8 rounded-3xl h-fit self-start
+                 border-2 border-blue-200
+                 shadow-[0_4px_8px_rgba(24,46,114,0.10),0_16px_32px_-4px_rgba(24,46,114,0.16),0_32px_64px_-12px_rgba(30,64,175,0.22)]
+                 hover:shadow-[0_4px_8px_rgba(24,46,114,0.12),0_20px_40px_-4px_rgba(24,46,114,0.20),0_40px_80px_-12px_rgba(30,64,175,0.28)]
+                 hover:-translate-y-0.5
+                 hover:border-blue-300
+                 transition-all duration-300 ease-out"
+      >
         <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center justify-between">
           <span>Results</span>
           <div className="flex gap-2">

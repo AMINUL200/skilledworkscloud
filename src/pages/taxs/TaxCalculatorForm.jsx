@@ -39,7 +39,6 @@ const Collapse = ({ isOpen, children, className = "" }) => (
 const SectionHeader = ({ title, icon: Icon, isVisible, onToggle }) => (
   <button
     type="button"
-    onClick={onToggle}
     className="w-full flex items-center justify-between group"
     aria-expanded={isVisible}
   >
@@ -49,13 +48,7 @@ const SectionHeader = ({ title, icon: Icon, isVisible, onToggle }) => (
         {title}
       </h3>
     </div>
-    <div className="text-gray-400 group-hover:text-primary transition-colors">
-      {isVisible ? (
-        <ChevronUp className="w-4 h-4" />
-      ) : (
-        <ChevronDown className="w-4 h-4" />
-      )}
-    </div>
+    
   </button>
 );
 
@@ -63,6 +56,7 @@ const TaxCalculatorForm = ({
   formData,
   handleInputChange,
   handleNumberChange,
+  calculateTax,
   loading,
   salaryPeriods,
   countries,
@@ -97,9 +91,18 @@ const TaxCalculatorForm = ({
   };
 
   return (
-    // h-fit + self-start ensure this card never stretches to match a
-    // sibling (e.g. the results panel) in a two-column grid/flex layout.
-    <div className="bg-white rounded-3xl shadow-xl p-6 lg:p-8 border border-gray-200 h-fit self-start">
+    <div
+      className="relative bg-white p-6 lg:p-8 rounded-3xl h-fit self-start
+                 border-2 border-blue-200
+                 shadow-[0_4px_8px_rgba(24,46,114,0.10),0_16px_32px_-4px_rgba(24,46,114,0.16),0_32px_64px_-12px_rgba(30,64,175,0.22)]
+                 hover:shadow-[0_4px_8px_rgba(24,46,114,0.12),0_20px_40px_-4px_rgba(24,46,114,0.20),0_40px_80px_-12px_rgba(30,64,175,0.28)]
+                 hover:-translate-y-0.5
+                 hover:border-blue-300
+                 transition-all duration-300 ease-out"
+    >
+      {/* subtle premium accent line along the top edge */}
+      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/70 to-transparent" />
+
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
         <Calculator className="w-6 h-6 text-primary" />
         Salary Details
@@ -407,6 +410,27 @@ const TaxCalculatorForm = ({
             </div>
           </div>
         </Collapse>
+      </div>
+
+      {/* Calculate Button - Now at the bottom after all sections */}
+      <div className="mt-6 pt-6 border-t border-gray-200">
+        <button
+          onClick={calculateTax}
+          disabled={loading}
+          className="w-full btn btn-primary py-4 text-lg font-semibold rounded-xl flex items-center justify-center gap-2"
+        >
+          {loading ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Calculating...
+            </>
+          ) : (
+            <>
+              <Calculator className="w-5 h-5" />
+              Calculate Now
+            </>
+          )}
+        </button>
       </div>
     </div>
   );
