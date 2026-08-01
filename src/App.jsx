@@ -68,6 +68,11 @@ import SponsoredJobPage from "./pages/tools/SponsoredJobPage";
 import ScrollToTop from "./component/common/ScrollToTop";
 import SalaryTaxCalculate from "./pages/taxs/SalaryTaxCalculate";
 import PercentageCalculator from "./pages/taxs/PercentageCalculator";
+import Managecountry from "./pages/admin/salary_calculator/Managecountry";
+import ManageTaxYear from "./pages/admin/salary_calculator/ManageTaxYear";
+import ManageNationalInsuranceCategory from "./pages/admin/salary_calculator/ManageNationalInsuranceCategory";
+import ManageStudentLoanPlan from "./pages/admin/salary_calculator/ManageStudentLoanPlan";
+import ManagePensionOption from "./pages/admin/salary_calculator/ManagePensionOption";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -124,10 +129,7 @@ const App = () => {
           {/* Service details route */}
           <Route path="/tools/:slug" element={<ToolDetailsPage />} />{" "}
           {/* Tool details route */}
-          <Route
-            path="/tool/right-to-work"
-            element={<RightToWorkPage />}
-          />
+          <Route path="/tool/right-to-work" element={<RightToWorkPage />} />
           <Route
             path="/tool/sponsor-license-eligibility"
             element={<SponSorLicensePage />}
@@ -144,10 +146,7 @@ const App = () => {
             path="/tool/sponsored-job-eligibility"
             element={<SponsoredJobPage />}
           />
-          <Route
-            path="/salary-calculator"
-            element={<SalaryTaxCalculate />}
-          />
+          <Route path="/salary-calculator" element={<SalaryTaxCalculate />} />
           <Route
             path="/percentage-calculator"
             element={<PercentageCalculator />}
@@ -237,10 +236,7 @@ const App = () => {
               element={<ServiceDetailsTestimonial />}
             />
 
-            <Route
-              path="tools/master-type"
-              element={<ManageToolsType />}
-            />
+            <Route path="tools/master-type" element={<ManageToolsType />} />
             <Route
               path="tools/question-and-options"
               element={<ManageToolsQuestionAnswer />}
@@ -249,6 +245,28 @@ const App = () => {
               path="tools/rtw/first-section"
               element={<ManageRTWFirstSection />}
             />
+
+            {/* salary calculator routes */}
+            <Route
+              path="salary-calculator/countries"
+              element={<Managecountry />}
+            />
+            <Route
+              path="salary-calculator/tax-years"
+              element={<ManageTaxYear />}
+            />
+            <Route
+              path="salary-calculator/national-insurance"
+              element={<ManageNationalInsuranceCategory />}
+            />
+            <Route
+              path="salary-calculator/student-loan-plans"
+              element={<ManageStudentLoanPlan />}
+            />
+            <Route
+              path="salary-calculator/pension-options"
+              element={<ManagePensionOption />} />
+            
           </Route>
         </Route>
       </Routes>

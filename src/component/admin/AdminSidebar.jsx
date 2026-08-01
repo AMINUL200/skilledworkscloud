@@ -189,34 +189,69 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       label: "HR Compliance",
       icon: <Shield className="w-5 h-5" />,
       path: "/admin/manage-hr-compliance",
-      
     },
     {
       id: "tools-master-type",
       label: "Tools Type",
       icon: <Shield className="w-5 h-5" />,
       path: "/admin/tools/master-type",
-      
     },
     {
       id: "tools-question-and-options",
       label: "Question & Options",
       icon: <Shield className="w-5 h-5" />,
       path: "/admin/tools/question-and-options",
-      
     },
     {
       id: "tools-rtw",
-      label:"Tools RTW",
+      label: "Tools RTW",
       icon: <ToolCase className="w-5 h-5" />,
-      children:[
+      children: [
         {
           id: "rtw-first-section",
           label: "First Section",
           icon: <Settings className="w-4 h-4" />,
           path: "/admin/tools/rtw/first-section",
         },
-      ]
+      ],
+    },
+    {
+      id: "salary-calculator",
+      label: "Salary Calculator",
+      icon: <DollarSign className="w-5 h-5" />,
+      children: [
+        {
+          id: "salary-calculator-countries",
+          label: "Countries",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/salary-calculator/countries",
+        },
+        {
+          id: "salary-calculator-tax-years",
+          label: "Tax Years",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/salary-calculator/tax-years",
+        },
+        {
+          id: "salary-calculator-ni",
+          label: "National Insurance",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/salary-calculator/national-insurance",
+        },
+        {
+          id: "salary-calculator-student-loan-plans",
+          label: "Student Loan Plans",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/salary-calculator/student-loan-plans",
+        },
+        {
+          id: "salary-calculator-pension-options",
+          label: "Pension Options",
+          icon: <Settings className="w-4 h-4" />,
+          path: "/admin/salary-calculator/pension-options",
+        }
+
+      ],
     },
     {
       id: "settings",
