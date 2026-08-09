@@ -7,6 +7,7 @@ import {
   GraduationCap,
   Gift,
   ChevronDown,
+  ChevronUp,
   Sparkles,
 } from "lucide-react";
 
@@ -33,8 +34,7 @@ const Collapse = ({ isOpen, children, className = "" }) => (
   </div>
 );
 
-/* Colour tokens per section, so each collapsible group gets its own
-   quiet accent rather than one flat repeating blue. */
+/* Colour tokens per section */
 const sectionTheme = {
   salary: { 
     icon: "text-blue-600", 
@@ -88,6 +88,7 @@ const SectionHeader = ({ title, icon: Icon, isVisible, onToggle, section }) => {
   return (
     <button
       type="button"
+      onClick={onToggle}
       className="w-full flex items-center justify-between group py-1"
       aria-expanded={isVisible}
     >
@@ -100,6 +101,9 @@ const SectionHeader = ({ title, icon: Icon, isVisible, onToggle, section }) => {
         <h3 className="text-[13px] font-semibold text-slate-700 uppercase tracking-wider">
           {title}
         </h3>
+      </div>
+      <div className="text-gray-400 group-hover:text-primary transition-colors">
+        {isVisible ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
       </div>
     </button>
   );
@@ -143,7 +147,11 @@ const TaxCalculatorForm = ({
   calculateTax,
   loading,
   salaryPeriods,
-  countries,
+  regions,
+  taxCodes,
+  niCategories,
+  studentLoanPlans,
+  pensionOptions,
 }) => {
   const [showAllSections, setShowAllSections] = useState(false);
 
@@ -226,6 +234,40 @@ const TaxCalculatorForm = ({
               </div>
             </div>
 
+            <div>
+              <label className={labelClass}>Region</label>
+              <select
+                name="region_id"
+                value={formData.region_id}
+                onChange={handleInputChange}
+                className={selectClass('salary')}
+              >
+                <option value="">Select Region</option>
+                {regions?.map((region) => (
+                  <option key={region.id} value={region.id}>
+                    {region.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass}>Tax Code</label>
+              <select
+                name="tax_code_id"
+                value={formData.tax_code_id}
+                onChange={handleInputChange}
+                className={selectClass('salary')}
+              >
+                <option value="">Select Tax Code</option>
+                {taxCodes?.map((taxCode) => (
+                  <option key={taxCode.id} value={taxCode.id}>
+                    {taxCode.code} - {taxCode.description} (£{parseFloat(taxCode.personal_allowance).toLocaleString()})
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Salary Period</label>
@@ -235,7 +277,7 @@ const TaxCalculatorForm = ({
                   onChange={handleInputChange}
                   className={selectClass('salary')}
                 >
-                  {salaryPeriods.map((period) => (
+                  {salaryPeriods?.map((period) => (
                     <option key={period} value={period.toLowerCase()}>
                       {period}
                     </option>
@@ -243,33 +285,15 @@ const TaxCalculatorForm = ({
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Tax Year</label>
-                <select
-                  name="taxYear"
-                  value={formData.taxYear}
-                  onChange={handleInputChange}
-                  className={selectClass('salary')}
-                >
-                  <option value="2024-2025">2024-2025</option>
-                  <option value="2023-2024">2023-2024</option>
-                </select>
+                <label className={labelClass}>Working Hours/Week</label>
+                <input
+                  type="number"
+                  name="workingHours"
+                  value={formData.workingHours}
+                  onChange={handleNumberChange}
+                  className={inputClass('salary')}
+                />
               </div>
-            </div>
-
-            <div>
-              <label className={labelClass}>Country</label>
-              <select
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className={selectClass('salary')}
-              >
-                {countries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
         </Collapse>
@@ -291,7 +315,7 @@ const TaxCalculatorForm = ({
 
       {/* Sections 2-5: always mounted, height/opacity animated by Collapse */}
       <div className="space-y-6">
-        {/* Employment */}
+        {/* Section 2: Employment */}
         <Collapse isOpen={visibleSections.employment}>
           <div className="space-y-4">
             <SectionHeader
@@ -302,27 +326,21 @@ const TaxCalculatorForm = ({
               section="employment"
             />
             <div className="space-y-4 pt-3 pl-11">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Tax Code</label>
-                  <input
-                    type="text"
-                    name="taxCode"
-                    value={formData.taxCode}
-                    onChange={handleInputChange}
-                    className={inputClass('employment')}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>Working Hours/Week</label>
-                  <input
-                    type="number"
-                    name="workingHours"
-                    value={formData.workingHours}
-                    onChange={handleNumberChange}
-                    className={inputClass('employment')}
-                  />
-                </div>
+              <div>
+                <label className={labelClass}>NI Category</label>
+                <select
+                  name="ni_category_id"
+                  value={formData.ni_category_id}
+                  onChange={handleInputChange}
+                  className={selectClass('employment')}
+                >
+                  <option value="">Select NI Category</option>
+                  {niCategories?.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.code} - {category.description}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -339,14 +357,17 @@ const TaxCalculatorForm = ({
                 <div>
                   <label className={labelClass}>Pension Type</label>
                   <select
-                    name="pensionType"
-                    value={formData.pensionType}
+                    name="pension_option_id"
+                    value={formData.pension_option_id}
                     onChange={handleInputChange}
                     className={selectClass('employment')}
                   >
-                    <option value="auto-enrolment">Auto-Enrolment</option>
-                    <option value="salary-sacrifice">Salary Sacrifice</option>
-                    <option value="relief-at-source">Relief at Source</option>
+                    <option value="">Select Pension Type</option>
+                    {pensionOptions?.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.name} ({option.code})
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -354,7 +375,7 @@ const TaxCalculatorForm = ({
           </div>
         </Collapse>
 
-        {/* Student Loan */}
+        {/* Section 3: Student Loan */}
         <Collapse isOpen={visibleSections.studentLoan}>
           <div className="space-y-4">
             <SectionHeader
@@ -366,23 +387,23 @@ const TaxCalculatorForm = ({
             />
             <div className="pt-3 pl-11">
               <select
-                name="studentLoan"
-                value={formData.studentLoan}
+                name="student_loan_plan_id"
+                value={formData.student_loan_plan_id}
                 onChange={handleInputChange}
                 className={selectClass('studentLoan')}
               >
-                <option value="none">None</option>
-                <option value="plan1">Plan 1</option>
-                <option value="plan2">Plan 2</option>
-                <option value="plan4">Plan 4</option>
-                <option value="plan5">Plan 5</option>
-                <option value="postgraduate">Postgraduate</option>
+                <option value="">None</option>
+                {studentLoanPlans?.map((plan) => (
+                  <option key={plan.id} value={plan.id}>
+                    {plan.name} - Threshold: £{parseFloat(plan.threshold).toLocaleString()}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
         </Collapse>
 
-        {/* Additional Income */}
+        {/* Section 4: Additional Income */}
         <Collapse isOpen={visibleSections.additionalIncome}>
           <div className="space-y-4">
             <SectionHeader
@@ -417,7 +438,7 @@ const TaxCalculatorForm = ({
           </div>
         </Collapse>
 
-        {/* Benefits */}
+        {/* Section 5: Benefits */}
         <Collapse isOpen={visibleSections.benefits}>
           <div className="space-y-4">
             <SectionHeader

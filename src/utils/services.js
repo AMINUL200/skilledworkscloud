@@ -12,13 +12,13 @@ const fullServiceSections = [
   { type: "timeline", order: 10 },
   
   // { type: "technologies", order: 11 },
-  { type: "pricing", order: 12 },
+  // { type: "pricing", order: 12 },
   // { type: "portfolio", order: 13 },
   { type: "case-study", order: 14 },
-   {
-    type: "why_choose",
-    order: 15,
-  },
+  //  {
+  //   type: "why_choose",
+  //   order: 15,
+  // },
   {
     type: "req_doc",
     order: 16,

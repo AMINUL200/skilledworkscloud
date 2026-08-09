@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from "react";
-
 import TaxHeroSection from "./TaxHeroSection";
 import TaxCalculatorForm from "./TaxCalculatorForm";
 import TaxResultsSection from "./TaxResultsSection";
 import TaxPayslipSimulator from "./TaxPayslipSimulator";
 import TaxHowToUseSection from "./TaxHowToUseSection";
 import TaxBandsSection from "./TaxBandsSection";
+import PageLoader from "../../component/common/PageLoader";
+import { api } from "../../utils/app";
 
 const SalaryTaxCalculator = () => {
   const [loading, setLoading] = useState(false);
   const [showPayslip, setShowPayslip] = useState(false);
+  const [regions, setRegions] = useState([]);
+  const [taxCodes, setTaxCodes] = useState([]);
+  const [niCategories, setNiCategories] = useState([]);
+  const [studentLoanPlans, setStudentLoanPlans] = useState([]);
+  const [pensionOptions, setPensionOptions] = useState([]);
+  const [fetching, setFetching] = useState(true);
+  const [apiResults, setApiResults] = useState(null);
   const [formData, setFormData] = useState({
-    grossSalary: 50000,
+    grossSalary: 0,
     salaryPeriod: "annually",
     taxYear: "2024-2025",
     country: "England",
+    region_id: '',
     taxCode: "1257L",
+    tax_code_id: '',
     workingHours: 37.5,
     pensionContribution: 5,
     pensionType: "auto-enrolment",
+    pension_option_id: '',
     studentLoan: "none",
+    student_loan_plan_id: '',
     annualBonus: 0,
     overtimeHours: 0,
     overtimeRate: 1.5,
@@ -30,6 +42,7 @@ const SalaryTaxCalculator = () => {
     marriageAllowance: false,
     blindAllowance: false,
     salarySacrifice: 0,
+    ni_category_id: '',
   });
 
   const [results, setResults] = useState({
@@ -47,72 +60,84 @@ const SalaryTaxCalculator = () => {
     hourlyNet: 0,
   });
 
-  // Tax bands for England 2024-2025
-  const taxBands = {
-    England: {
-      personalAllowance: 12570,
-      basicRate: 0.2,
-      basicThreshold: 37700,
-      higherRate: 0.4,
-      higherThreshold: 125140,
-      additionalRate: 0.45,
-    },
-    Scotland: {
-      personalAllowance: 12570,
-      starterRate: 0.19,
-      starterThreshold: 2322,
-      basicRate: 0.2,
-      basicThreshold: 13922,
-      intermediateRate: 0.21,
-      intermediateThreshold: 23262,
-      higherRate: 0.42,
-      higherThreshold: 43662,
-      topRate: 0.48,
-      topThreshold: 125140,
-    },
-    Wales: {
-      personalAllowance: 12570,
-      basicRate: 0.2,
-      basicThreshold: 37700,
-      higherRate: 0.4,
-      higherThreshold: 125140,
-      additionalRate: 0.45,
-    },
-    "Northern Ireland": {
-      personalAllowance: 12570,
-      basicRate: 0.2,
-      basicThreshold: 37700,
-      higherRate: 0.4,
-      higherThreshold: 125140,
-      additionalRate: 0.45,
-    },
-  };
+  // Fetch all data on component mount
+  useEffect(() => {
+    fetchAllData();
+  }, []);
 
-  // NI bands 2024-2025
-  const niBands = {
-    primaryThreshold: 12570,
-    upperEarningsLimit: 50270,
-    mainRate: 0.08,
-    additionalRate: 0.02,
-    employerMainRate: 0.138,
-    employerAdditionalRate: 0.138,
-  };
+  const fetchAllData = async () => {
+    try {
+      setFetching(true);
+      
+      // Fetch regions
+      const regionsRes = await api.get('/calculator/region/list');
+      if (regionsRes.data.status && regionsRes.data.data) {
+        setRegions(regionsRes.data.data);
+        const england = regionsRes.data.data.find(r => r.name === 'England');
+        if (england) {
+          setFormData(prev => ({ ...prev, region_id: england.id }));
+        }
+      }
 
-  // Student loan plans
-  const studentLoanPlans = {
-    none: { threshold: Infinity, rate: 0 },
-    plan1: { threshold: 22315, rate: 0.09 },
-    plan2: { threshold: 27295, rate: 0.09 },
-    plan4: { threshold: 27660, rate: 0.09 },
-    plan5: { threshold: 25000, rate: 0.09 },
-    postgraduate: { threshold: 21000, rate: 0.06 },
+      // Fetch tax codes
+      const taxCodesRes = await api.get('/calculator/tax-code/list');
+      if (taxCodesRes.data.status && taxCodesRes.data.data) {
+        setTaxCodes(taxCodesRes.data.data);
+        const defaultTaxCode = taxCodesRes.data.data.find(t => t.code === '1257L');
+        if (defaultTaxCode) {
+          setFormData(prev => ({ ...prev, tax_code_id: defaultTaxCode.id }));
+        }
+      }
+
+      // Fetch NI categories
+      const niRes = await api.get('/calculator/ni-category/list');
+      if (niRes.data.status && niRes.data.data) {
+        setNiCategories(niRes.data.data);
+        const defaultNi = niRes.data.data.find(n => n.code === 'A');
+        if (defaultNi) {
+          setFormData(prev => ({ ...prev, ni_category_id: defaultNi.id }));
+        }
+      }
+
+      // Fetch student loan plans
+      const studentLoanRes = await api.get('/calculator/student-loan-plan/list');
+      if (studentLoanRes.data.status && studentLoanRes.data.data) {
+        setStudentLoanPlans(studentLoanRes.data.data);
+        const defaultPlan = studentLoanRes.data.data.find(p => p.name === 'Plan 2');
+        if (defaultPlan) {
+          setFormData(prev => ({ ...prev, student_loan_plan_id: defaultPlan.id }));
+        }
+      }
+
+      // Fetch pension options
+      const pensionRes = await api.get('/calculator/pension-option/list');
+      if (pensionRes.data.status && pensionRes.data.data) {
+        setPensionOptions(pensionRes.data.data);
+        const defaultPension = pensionRes.data.data.find(p => p.name === 'Auto Enrolment');
+        if (defaultPension) {
+          setFormData(prev => ({ ...prev, pension_option_id: defaultPension.id }));
+        }
+      }
+
+      // Initial calculation after data is loaded
+      setTimeout(() => {
+        calculateTax();
+      }, 300);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setFetching(false);
+    }
   };
 
   const salaryPeriods = ["Hourly", "Daily", "Weekly", "Monthly", "Annually"];
-  const countries = ["England", "Scotland", "Wales", "Northern Ireland"];
 
   useEffect(() => {
-    calculateTax();
+    // Only calculate if we have the required IDs
+    if (formData.region_id && formData.tax_code_id && formData.ni_category_id) {
+      calculateTax();
+    }
   }, [formData]);
 
   const handleInputChange = (e) => {
@@ -131,139 +156,56 @@ const SalaryTaxCalculator = () => {
     }));
   };
 
-  const calculateTax = () => {
+  const calculateTax = async () => {
     setLoading(true);
 
-    setTimeout(() => {
-      const annualSalary = formData.grossSalary;
-      const taxBandsData = taxBands[formData.country] || taxBands.England;
-      const loanPlan =
-        studentLoanPlans[formData.studentLoan] || studentLoanPlans.none;
+    try {
+      // Prepare request body
+      const requestBody = {
+        salary: formData.grossSalary,
+        salary_type: formData.salaryPeriod === 'monthly' ? 'monthly' : 'yearly',
+        region_id: parseInt(formData.region_id),
+        tax_code_id: parseInt(formData.tax_code_id),
+        ni_category_id: parseInt(formData.ni_category_id),
+      };
 
-      // Calculate Income Tax
-      let incomeTax = 0;
-      let taxableIncome = annualSalary - taxBandsData.personalAllowance;
-
-      if (taxableIncome > 0) {
-        if (formData.country === "Scotland") {
-          // Scottish tax calculation
-          if (taxableIncome > taxBandsData.topThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.topThreshold) *
-              taxBandsData.topRate;
-            taxableIncome = taxBandsData.topThreshold;
-          }
-          if (taxableIncome > taxBandsData.higherThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.higherThreshold) *
-              taxBandsData.higherRate;
-            taxableIncome = taxBandsData.higherThreshold;
-          }
-          if (taxableIncome > taxBandsData.intermediateThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.intermediateThreshold) *
-              taxBandsData.intermediateRate;
-            taxableIncome = taxBandsData.intermediateThreshold;
-          }
-          if (taxableIncome > taxBandsData.basicThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.basicThreshold) *
-              taxBandsData.basicRate;
-            taxableIncome = taxBandsData.basicThreshold;
-          }
-          if (taxableIncome > taxBandsData.starterThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.starterThreshold) *
-              taxBandsData.starterRate;
-          }
-        } else {
-          // England/Wales/NI tax calculation
-          if (taxableIncome > taxBandsData.higherThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.higherThreshold) *
-              taxBandsData.additionalRate;
-            taxableIncome = taxBandsData.higherThreshold;
-          }
-          if (taxableIncome > taxBandsData.basicThreshold) {
-            incomeTax +=
-              (taxableIncome - taxBandsData.basicThreshold) *
-              taxBandsData.higherRate;
-            taxableIncome = taxBandsData.basicThreshold;
-          }
-          incomeTax += taxableIncome * taxBandsData.basicRate;
-        }
+      // Add optional fields if they have values
+      if (formData.student_loan_plan_id) {
+        requestBody.student_loan_plan_id = parseInt(formData.student_loan_plan_id);
+      }
+      if (formData.pension_option_id) {
+        requestBody.pension_option_id = parseInt(formData.pension_option_id);
       }
 
-      // Calculate National Insurance
-      let nationalInsurance = 0;
-      const niThreshold = niBands.primaryThreshold;
-      const niUpperLimit = niBands.upperEarningsLimit;
+      const response = await api.post('/calculator/calculate', requestBody);
 
-      if (annualSalary > niThreshold) {
-        const niBase = Math.min(annualSalary, niUpperLimit) - niThreshold;
-        nationalInsurance += niBase * niBands.mainRate;
-        if (annualSalary > niUpperLimit) {
-          nationalInsurance +=
-            (annualSalary - niUpperLimit) * niBands.additionalRate;
-        }
+      if (response.data.status && response.data.data) {
+        const data = response.data.data;
+        
+        // Map API response to results state
+        setResults({
+          grossSalary: data.salary?.yearly || 0,
+          incomeTax: data.income_tax || 0,
+          nationalInsurance: data.employee_ni || 0,
+          studentLoan: data.student_loan_deduction || 0,
+          pension: data.employee_pension || 0,
+          employerNI: data.employer_ni || 0,
+          employerCost: data.employer_ni + data.salary?.yearly || 0,
+          netSalary: data.net_salary || 0,
+          monthlyNet: data.salary?.monthly || 0,
+          weeklyNet: data.salary?.weekly || 0,
+          dailyNet: data.salary?.daily || 0,
+          hourlyNet: data.salary?.hourly || 0,
+        });
+
+        // Store full API response for detailed display
+        setApiResults(data);
       }
-
-      // Calculate Student Loan
-      let studentLoan = 0;
-      if (formData.studentLoan !== "none") {
-        const loanableIncome = annualSalary - loanPlan.threshold;
-        if (loanableIncome > 0) {
-          studentLoan = loanableIncome * loanPlan.rate;
-        }
-      }
-
-      // Calculate Pension
-      let pension = 0;
-      if (formData.pensionContribution > 0) {
-        const pensionableSalary =
-          annualSalary * (formData.pensionContribution / 100);
-        pension = pensionableSalary;
-      }
-
-      // Calculate Employer NI
-      let employerNI = 0;
-      const employerThreshold = 9100;
-      if (annualSalary > employerThreshold) {
-        employerNI =
-          (annualSalary - employerThreshold) * niBands.employerMainRate;
-      }
-
-      // Calculate Net Salary
-      const totalDeductions =
-        incomeTax + nationalInsurance + studentLoan + pension;
-      const netSalary = annualSalary - totalDeductions;
-
-      // Calculate Employer Cost
-      const employerCost = annualSalary + employerNI;
-
-      // Calculate periodic breakdowns
-      const monthlyNet = netSalary / 12;
-      const weeklyNet = netSalary / 52;
-      const dailyNet = netSalary / 260;
-      const hourlyNet = netSalary / (formData.workingHours * 52);
-
-      setResults({
-        grossSalary: annualSalary,
-        incomeTax: incomeTax,
-        nationalInsurance: nationalInsurance,
-        studentLoan: studentLoan,
-        pension: pension,
-        employerNI: employerNI,
-        employerCost: employerCost,
-        netSalary: netSalary,
-        monthlyNet: monthlyNet,
-        weeklyNet: weeklyNet,
-        dailyNet: dailyNet,
-        hourlyNet: hourlyNet,
-      });
-
+    } catch (error) {
+      console.error('Error calculating tax:', error);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   const formatCurrency = (amount) => {
@@ -272,8 +214,12 @@ const SalaryTaxCalculator = () => {
       currency: "GBP",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount || 0);
   };
+
+  if (fetching) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -290,7 +236,11 @@ const SalaryTaxCalculator = () => {
               calculateTax={calculateTax}
               loading={loading}
               salaryPeriods={salaryPeriods}
-              countries={countries}
+              regions={regions}
+              taxCodes={taxCodes}
+              niCategories={niCategories}
+              studentLoanPlans={studentLoanPlans}
+              pensionOptions={pensionOptions}
             />
 
             <TaxResultsSection
@@ -298,6 +248,7 @@ const SalaryTaxCalculator = () => {
               showPayslip={showPayslip}
               setShowPayslip={setShowPayslip}
               formatCurrency={formatCurrency}
+              apiData={apiResults}
             />
           </div>
         </div>
@@ -306,14 +257,21 @@ const SalaryTaxCalculator = () => {
       {/* Tax Bands Section */}
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <TaxBandsSection formatCurrency={formatCurrency} />
+          <TaxBandsSection 
+            formatCurrency={formatCurrency} 
+            annualSalary={formData.grossSalary}
+            apiData={apiResults}
+          />
         </div>
       </section>
 
       {/* Payslip Simulator Section */}
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <TaxPayslipSimulator formatCurrency={formatCurrency} />
+          <TaxPayslipSimulator 
+            formatCurrency={formatCurrency}
+            apiData={apiResults}
+          />
         </div>
       </section>
 

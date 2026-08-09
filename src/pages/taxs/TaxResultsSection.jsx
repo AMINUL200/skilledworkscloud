@@ -20,12 +20,34 @@ const TaxResultsSection = ({
   showPayslip,
   setShowPayslip,
   formatCurrency,
+  apiData,
 }) => {
-  const grossSalary = results.grossSalary || 1;
+  // Use API data if available, otherwise fallback to results
+  const grossSalary = apiData?.salary?.yearly || results.grossSalary || 1;
+  const netSalary = apiData?.net_salary || results.netSalary || 0;
   const takeHomePct = Math.max(
     0,
-    Math.min(100, Math.round((results.netSalary / grossSalary) * 100))
+    Math.min(100, Math.round((netSalary / grossSalary) * 100))
   );
+
+  // Get data from API or results
+  const getValue = (apiKey, resultKey) => {
+    if (apiData && apiData[apiKey] !== undefined) {
+      return apiData[apiKey];
+    }
+    return results[resultKey] || 0;
+  };
+
+  const incomeTax = getValue('income_tax', 'incomeTax');
+  const nationalInsurance = getValue('employee_ni', 'nationalInsurance');
+  const studentLoan = getValue('student_loan_deduction', 'studentLoan');
+  const pension = getValue('employee_pension', 'pension');
+  const employerNI = getValue('employer_ni', 'employerNI');
+  const employerCost = getValue('employer_ni', 'employerCost') + grossSalary;
+  const monthlyNet = apiData?.salary?.monthly || results.monthlyNet || 0;
+  const weeklyNet = apiData?.salary?.weekly || results.weeklyNet || 0;
+  const dailyNet = apiData?.salary?.daily || results.dailyNet || 0;
+  const hourlyNet = apiData?.salary?.hourly || results.hourlyNet || 0;
 
   const ResultCard = ({ title, value, icon: Icon, accent, subtext }) => (
     <div className="group relative p-4 rounded-2xl bg-white border border-slate-200/80 hover:border-blue-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden">
@@ -95,10 +117,10 @@ const TaxResultsSection = ({
                 Annual Take-Home Pay
               </p>
               <p className="text-4xl font-bold tracking-tight">
-                {formatCurrency(results.netSalary)}
+                {formatCurrency(netSalary)}
               </p>
               <p className="text-sm text-blue-100 mt-1">
-                {formatCurrency(results.monthlyNet)} / month &middot;{" "}
+                {formatCurrency(monthlyNet)} / month &middot;{" "}
                 {takeHomePct}% of gross
               </p>
             </div>
@@ -106,7 +128,6 @@ const TaxResultsSection = ({
               <TrendingUp className="w-8 h-8 text-white" />
             </div>
           </div>
-          {/* take-home progress bar */}
           <div className="relative mt-4 h-1.5 rounded-full bg-white/20 overflow-hidden">
             <div
               className="h-full rounded-full bg-white transition-all duration-700 ease-out"
@@ -119,49 +140,49 @@ const TaxResultsSection = ({
         <div className="grid grid-cols-2 gap-3 mb-6">
           <ResultCard
             title="Gross Salary"
-            value={results.grossSalary}
+            value={grossSalary}
             icon={Wallet}
             accent={accents.gross}
           />
           <ResultCard
             title="Income Tax"
-            value={results.incomeTax}
+            value={incomeTax}
             icon={TrendingDown}
             accent={accents.tax}
           />
           <ResultCard
             title="National Insurance"
-            value={results.nationalInsurance}
+            value={nationalInsurance}
             icon={Users}
             accent={accents.ni}
           />
           <ResultCard
             title="Student Loan"
-            value={results.studentLoan}
+            value={studentLoan}
             icon={GraduationCap}
             accent={accents.loan}
           />
           <ResultCard
             title="Pension"
-            value={results.pension}
+            value={pension}
             icon={Clock}
             accent={accents.pension}
           />
           <ResultCard
             title="Net Salary"
-            value={results.netSalary}
+            value={netSalary}
             icon={TrendingUp}
             accent={accents.net}
           />
           <ResultCard
             title="Employer NI"
-            value={results.employerNI}
+            value={employerNI}
             icon={Users}
             accent={accents.employerNI}
           />
           <ResultCard
             title="Employer Cost"
-            value={results.employerCost}
+            value={employerCost}
             icon={Briefcase}
             accent={accents.employerCost}
           />
@@ -199,38 +220,38 @@ const TaxResultsSection = ({
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Gross Pay</span>
                   <span className="font-semibold text-slate-900">
-                    {formatCurrency(results.grossSalary)}
+                    {formatCurrency(grossSalary)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Income Tax</span>
                   <span className="font-semibold text-rose-600">
-                    -{formatCurrency(results.incomeTax)}
+                    -{formatCurrency(incomeTax)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">National Insurance</span>
                   <span className="font-semibold text-amber-600">
-                    -{formatCurrency(results.nationalInsurance)}
+                    -{formatCurrency(nationalInsurance)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Student Loan</span>
                   <span className="font-semibold text-violet-600">
-                    -{formatCurrency(results.studentLoan)}
+                    -{formatCurrency(studentLoan)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Pension</span>
                   <span className="font-semibold text-teal-600">
-                    -{formatCurrency(results.pension)}
+                    -{formatCurrency(pension)}
                   </span>
                 </div>
                 <div className="border-t border-slate-300 pt-3 mt-1">
                   <div className="flex justify-between text-sm font-bold">
                     <span className="text-slate-900">Net Pay</span>
                     <span className="text-emerald-600">
-                      {formatCurrency(results.netSalary)}
+                      {formatCurrency(netSalary)}
                     </span>
                   </div>
                 </div>
@@ -247,11 +268,11 @@ const TaxResultsSection = ({
           </h3>
           <div className="divide-y divide-slate-200">
             {[
-              { label: "Yearly", value: results.netSalary },
-              { label: "Monthly", value: results.monthlyNet },
-              { label: "Weekly", value: results.weeklyNet },
-              { label: "Daily", value: results.dailyNet },
-              { label: "Hourly", value: results.hourlyNet },
+              { label: "Yearly", value: netSalary },
+              { label: "Monthly", value: monthlyNet },
+              { label: "Weekly", value: weeklyNet },
+              { label: "Daily", value: dailyNet },
+              { label: "Hourly", value: hourlyNet },
             ].map((row) => (
               <div key={row.label} className="flex justify-between text-sm py-2">
                 <span className="text-slate-500">{row.label}</span>

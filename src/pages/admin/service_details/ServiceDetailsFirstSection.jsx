@@ -1,42 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { api } from '../../../utils/app';
-import { Save, Plus, Edit, Trash2, X, Image, Heart, Star, Users, Briefcase } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { api } from "../../../utils/app";
+import {
+  Save,
+  Plus,
+  Edit,
+  Trash2,
+  X,
+  Image,
+  Heart,
+  Star,
+  Users,
+  Briefcase,
+} from "lucide-react";
 
 const ServiceDetailsFirstSection = () => {
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [showForm, setShowForm] = useState(false);
   const [editingSection, setEditingSection] = useState(null);
-  const [featureInput, setFeatureInput] = useState('');
+  const [featureInput, setFeatureInput] = useState("");
   const [formData, setFormData] = useState({
-    batch: '',
-    title: '',
-    highlighted_title: '',
-    description: '',
-    title_meta: '',
-    desc_meta: '',
-    button1_name: '',
-    button1_url: '',
-    button2_name: '',
-    button2_url: '',
+    batch: "",
+    title: "",
+    highlighted_title: "",
+    description: "",
+    title_meta: "",
+    desc_meta: "",
+    button1_name: "",
+    button1_url: "",
+    button2_name: "",
+    button2_url: "",
     feature: [],
-    image_alt: '',
+    image_alt: "",
     f_card: {
-      number: '',
-      title: ''
+      number: "",
+      title: "",
     },
     s_card: {
-      number: '',
-      title: ''
+      number: "",
+      title: "",
     },
     t_card: {
-      number: '',
-      title: ''
+      number: "",
+      title: "",
     },
-    status: 1
+    status: 1,
   });
 
   const [webImage, setWebImage] = useState(null);
@@ -52,10 +63,10 @@ const ServiceDetailsFirstSection = () => {
   // Cleanup preview URLs
   useEffect(() => {
     return () => {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
     };
@@ -64,18 +75,18 @@ const ServiceDetailsFirstSection = () => {
   const fetchSections = async () => {
     try {
       setFetching(true);
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
 
-      const response = await api.get('/admin/sv-first-section/list');
+      const response = await api.get("/admin/sv-first-section/list");
 
       if (response.data.status && response.data.data) {
         setSections(response.data.data);
       }
     } catch (error) {
-      console.error('Error fetching sections:', error);
+      console.error("Error fetching sections:", error);
       setMessage({
-        type: 'error',
-        text: error.message || 'Failed to fetch sections'
+        type: "error",
+        text: error.message || "Failed to fetch sections",
       });
     } finally {
       setFetching(false);
@@ -84,44 +95,44 @@ const ServiceDetailsFirstSection = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     // Handle nested card fields
-    if (name.startsWith('f_card_')) {
-      const field = name.replace('f_card_', '');
-      setFormData(prev => ({
+    if (name.startsWith("f_card_")) {
+      const field = name.replace("f_card_", "");
+      setFormData((prev) => ({
         ...prev,
         f_card: {
           ...prev.f_card,
-          [field]: value
-        }
+          [field]: value,
+        },
       }));
-    } else if (name.startsWith('s_card_')) {
-      const field = name.replace('s_card_', '');
-      setFormData(prev => ({
+    } else if (name.startsWith("s_card_")) {
+      const field = name.replace("s_card_", "");
+      setFormData((prev) => ({
         ...prev,
         s_card: {
           ...prev.s_card,
-          [field]: value
-        }
+          [field]: value,
+        },
       }));
-    } else if (name.startsWith('t_card_')) {
-      const field = name.replace('t_card_', '');
-      setFormData(prev => ({
+    } else if (name.startsWith("t_card_")) {
+      const field = name.replace("t_card_", "");
+      setFormData((prev) => ({
         ...prev,
         t_card: {
           ...prev.t_card,
-          [field]: value
-        }
+          [field]: value,
+        },
       }));
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+        [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
       }));
     }
 
     if (message.text) {
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
@@ -129,28 +140,34 @@ const ServiceDetailsFirstSection = () => {
     const file = e.target.files[0];
 
     if (file) {
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/svg+xml'];
+      const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/webp",
+        "image/svg+xml",
+      ];
       if (!validTypes.includes(file.type)) {
         setMessage({
-          type: 'error',
-          text: 'Please upload a valid image file (JPEG, PNG, WEBP, or SVG)'
+          type: "error",
+          text: "Please upload a valid image file (JPEG, PNG, WEBP, or SVG)",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       if (file.size > 2 * 1024 * 1024) {
         setMessage({
-          type: 'error',
-          text: 'Image size should be less than 2MB'
+          type: "error",
+          text: "Image size should be less than 2MB",
         });
-        e.target.value = '';
+        e.target.value = "";
         return;
       }
 
       const previewUrl = URL.createObjectURL(file);
 
-      if (type === 'web') {
+      if (type === "web") {
         setWebImage(file);
         setWebImagePreview(previewUrl);
       } else {
@@ -158,50 +175,50 @@ const ServiceDetailsFirstSection = () => {
         setMobileImagePreview(previewUrl);
       }
 
-      setMessage({ type: '', text: '' });
+      setMessage({ type: "", text: "" });
     }
   };
 
   const removeImage = (type) => {
-    if (type === 'web') {
-      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+    if (type === "web") {
+      if (webImagePreview && webImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(webImagePreview);
       }
       setWebImage(null);
       setWebImagePreview(null);
       const input = document.querySelector('input[name="web_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     } else {
-      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+      if (mobileImagePreview && mobileImagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(mobileImagePreview);
       }
       setMobileImage(null);
       setMobileImagePreview(null);
       const input = document.querySelector('input[name="mobile_image"]');
-      if (input) input.value = '';
+      if (input) input.value = "";
     }
   };
 
   // Feature management
   const handleAddFeature = () => {
     if (featureInput.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        feature: [...prev.feature, featureInput.trim()]
+        feature: [...prev.feature, featureInput.trim()],
       }));
-      setFeatureInput('');
+      setFeatureInput("");
     }
   };
 
   const handleRemoveFeature = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      feature: prev.feature.filter((_, i) => i !== index)
+      feature: prev.feature.filter((_, i) => i !== index),
     }));
   };
 
   const handleFeatureKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleAddFeature();
     }
@@ -210,91 +227,91 @@ const ServiceDetailsFirstSection = () => {
   const handleAddNew = () => {
     setEditingSection(null);
     setFormData({
-      batch: '',
-      title: '',
-      highlighted_title: '',
-      description: '',
-      title_meta: '',
-      desc_meta: '',
-      button1_name: '',
-      button1_url: '',
-      button2_name: '',
-      button2_url: '',
+      batch: "",
+      title: "",
+      highlighted_title: "",
+      description: "",
+      title_meta: "",
+      desc_meta: "",
+      button1_name: "",
+      button1_url: "",
+      button2_name: "",
+      button2_url: "",
       feature: [],
-      image_alt: '',
+      image_alt: "",
       f_card: {
-        number: '',
-        title: ''
+        number: "",
+        title: "",
       },
       s_card: {
-        number: '',
-        title: ''
+        number: "",
+        title: "",
       },
       t_card: {
-        number: '',
-        title: ''
+        number: "",
+        title: "",
       },
-      status: 1
+      status: 1,
     });
     setWebImage(null);
     setMobileImage(null);
     setWebImagePreview(null);
     setMobileImagePreview(null);
-    setFeatureInput('');
+    setFeatureInput("");
     setShowForm(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
   };
 
   const handleEdit = (section) => {
     setEditingSection(section);
     setFormData({
-      batch: section.batch || '',
-      title: section.title || '',
-      highlighted_title: section.highlighted_title || '',
-      description: section.description || '',
-      title_meta: section.title_meta || '',
-      desc_meta: section.desc_meta || '',
-      button1_name: section.button1_name || '',
-      button1_url: section.button1_url || '',
-      button2_name: section.button2_name || '',
-      button2_url: section.button2_url || '',
+      batch: section.batch || "",
+      title: section.title || "",
+      highlighted_title: section.highlighted_title || "",
+      description: section.description || "",
+      title_meta: section.title_meta || "",
+      desc_meta: section.desc_meta || "",
+      button1_name: section.button1_name || "",
+      button1_url: section.button1_url || "",
+      button2_name: section.button2_name || "",
+      button2_url: section.button2_url || "",
       feature: section.feature || [],
-      image_alt: section.image_alt || '',
+      image_alt: section.image_alt || "",
       f_card: {
-        number: section.f_card?.number || '',
-        title: section.f_card?.title || ''
+        number: section.f_card?.number || "",
+        title: section.f_card?.title || "",
       },
       s_card: {
-        number: section.s_card?.number || '',
-        title: section.s_card?.title || ''
+        number: section.s_card?.number || "",
+        title: section.s_card?.title || "",
       },
       t_card: {
-        number: section.t_card?.number || '',
-        title: section.t_card?.title || ''
+        number: section.t_card?.number || "",
+        title: section.t_card?.title || "",
       },
-      status: section.status !== undefined ? section.status : 1
+      status: section.status !== undefined ? section.status : 1,
     });
 
     // Set image previews
     if (section.web_image) {
-      const url = section.web_image.startsWith('http')
+      const url = section.web_image.startsWith("http")
         ? section.web_image
-        : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.web_image}`;
+        : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${section.web_image}`;
       setWebImagePreview(url);
     }
     if (section.mobile_image) {
-      const url = section.mobile_image.startsWith('http')
+      const url = section.mobile_image.startsWith("http")
         ? section.mobile_image
-        : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.mobile_image}`;
+        : `${import.meta.env.VITE_STORAGE_BASE_URL || ""}${section.mobile_image}`;
       setMobileImagePreview(url);
     }
 
     setShowForm(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this section?')) {
+    if (!window.confirm("Are you sure you want to delete this section?")) {
       return;
     }
 
@@ -304,17 +321,17 @@ const ServiceDetailsFirstSection = () => {
 
       if (response.data.status) {
         setMessage({
-          type: 'success',
-          text: 'Section deleted successfully!'
+          type: "success",
+          text: "Section deleted successfully!",
         });
         await fetchSections();
-        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+        setTimeout(() => setMessage({ type: "", text: "" }), 3000);
       }
     } catch (error) {
-      console.error('Error deleting section:', error);
+      console.error("Error deleting section:", error);
       setMessage({
-        type: 'error',
-        text: error.message || 'Failed to delete section'
+        type: "error",
+        text: error.message || "Failed to delete section",
       });
     } finally {
       setLoading(false);
@@ -323,28 +340,16 @@ const ServiceDetailsFirstSection = () => {
 
   const validateForm = () => {
     if (!formData.title) {
-      setMessage({ type: 'error', text: 'Title is required!' });
+      setMessage({ type: "error", text: "Title is required!" });
       return false;
     }
 
     if (!formData.description) {
-      setMessage({ type: 'error', text: 'Description is required!' });
+      setMessage({ type: "error", text: "Description is required!" });
       return false;
     }
 
     // Validate URLs if provided
-    const urlFields = ['button1_url', 'button2_url'];
-    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-
-    for (const field of urlFields) {
-      if (formData[field] && !urlRegex.test(formData[field])) {
-        setMessage({
-          type: 'error',
-          text: `Please enter a valid URL for ${field.replace('_', ' ')}`
-        });
-        return false;
-      }
-    }
 
     return true;
   };
@@ -357,50 +362,75 @@ const ServiceDetailsFirstSection = () => {
     }
 
     setSaving(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
 
     try {
       const submitData = new FormData();
 
       // Append all form data
-      Object.keys(formData).forEach(key => {
-        if (key === 'feature') {
-          // Send feature as JSON string
-          submitData.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'f_card' || key === 's_card' || key === 't_card') {
-          // Send card objects as JSON strings
-          submitData.append(key, JSON.stringify(formData[key]));
-        } else if (formData[key] !== null && formData[key] !== '') {
+      Object.keys(formData).forEach((key) => {
+        // Feature array
+        if (key === "feature") {
+          formData.feature.forEach((item, index) => {
+            submitData.append(`feature[${index}]`, item);
+          });
+        }
+
+        // First card
+        else if (key === "f_card") {
+          submitData.append("f_card[number]", formData.f_card.number);
+
+          submitData.append("f_card[title]", formData.f_card.title);
+        }
+
+        // Second card
+        else if (key === "s_card") {
+          submitData.append("s_card[number]", formData.s_card.number);
+
+          submitData.append("s_card[title]", formData.s_card.title);
+        }
+
+        // Third card
+        else if (key === "t_card") {
+          submitData.append("t_card[number]", formData.t_card.number);
+
+          submitData.append("t_card[title]", formData.t_card.title);
+        }
+
+        // Normal fields
+        else if (formData[key] !== null && formData[key] !== "") {
           submitData.append(key, formData[key]);
         }
       });
 
       // Append images if exist
-      if (webImage) submitData.append('web_image', webImage);
-      if (mobileImage) submitData.append('mobile_image', mobileImage);
+      if (webImage) submitData.append("web_image", webImage);
+      if (mobileImage) submitData.append("mobile_image", mobileImage);
 
       let response;
       if (editingSection) {
         // Update existing section
-        submitData.append('id', editingSection.id);
-        response = await api.post('/admin/sv-first-section/save', submitData, {
+        submitData.append("id", editingSection.id);
+        response = await api.post("/admin/sv-first-section/save", submitData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+          },
         });
       } else {
         // Create new section
-        response = await api.post('/admin/sv-first-section/save', submitData, {
+        response = await api.post("/admin/sv-first-section/save", submitData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+          },
         });
       }
 
       if (response.data.status) {
         setMessage({
-          type: 'success',
-          text: response.data.message || `Section ${editingSection ? 'updated' : 'added'} successfully!`
+          type: "success",
+          text:
+            response.data.message ||
+            `Section ${editingSection ? "updated" : "added"} successfully!`,
         });
 
         await fetchSections();
@@ -408,28 +438,28 @@ const ServiceDetailsFirstSection = () => {
         setEditingSection(null);
 
         setTimeout(() => {
-          setMessage({ type: '', text: '' });
+          setMessage({ type: "", text: "" });
         }, 5000);
       } else {
         setMessage({
-          type: 'error',
-          text: response.data.message || 'Failed to save section'
+          type: "error",
+          text: response.data.message || "Failed to save section",
         });
       }
     } catch (error) {
-      console.error('Error saving section:', error);
+      console.error("Error saving section:", error);
 
       if (error.response?.data?.errors) {
         const errors = error.response.data.errors;
-        const errorMessages = Object.values(errors).flat().join(', ');
+        const errorMessages = Object.values(errors).flat().join(", ");
         setMessage({
-          type: 'error',
-          text: `Validation Error: ${errorMessages}`
+          type: "error",
+          text: `Validation Error: ${errorMessages}`,
         });
       } else {
         setMessage({
-          type: 'error',
-          text: error.message || 'Failed to save. Please try again.'
+          type: "error",
+          text: error.message || "Failed to save. Please try again.",
         });
       }
     } finally {
@@ -440,7 +470,7 @@ const ServiceDetailsFirstSection = () => {
   const handleCancel = () => {
     setShowForm(false);
     setEditingSection(null);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: "", text: "" });
   };
 
   if (fetching) {
@@ -453,7 +483,9 @@ const ServiceDetailsFirstSection = () => {
                 <Briefcase className="w-5 h-5 text-blue-600" />
                 Service Details First Section
               </h2>
-              <p className="text-sm text-gray-600">Manage service details hero section</p>
+              <p className="text-sm text-gray-600">
+                Manage service details hero section
+              </p>
             </div>
           </div>
         </div>
@@ -476,7 +508,9 @@ const ServiceDetailsFirstSection = () => {
               <Briefcase className="w-5 h-5 text-blue-600" />
               Service Details First Section
             </h2>
-            <p className="text-sm text-gray-600">Manage service details hero section</p>
+            <p className="text-sm text-gray-600">
+              Manage service details hero section
+            </p>
           </div>
           {!showForm && (
             <button
@@ -492,17 +526,19 @@ const ServiceDetailsFirstSection = () => {
 
       <div className="p-6">
         {message.text && (
-          <div className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
-            message.type === 'success'
-              ? 'bg-green-50 text-green-800 border border-green-200'
-              : message.type === 'info'
-              ? 'bg-blue-50 text-blue-800 border border-blue-200'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}>
+          <div
+            className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
+              message.type === "success"
+                ? "bg-green-50 text-green-800 border border-green-200"
+                : message.type === "info"
+                  ? "bg-blue-50 text-blue-800 border border-blue-200"
+                  : "bg-red-50 text-red-800 border border-red-200"
+            }`}
+          >
             <span className="flex-1">{message.text}</span>
             <button
               type="button"
-              onClick={() => setMessage({ type: '', text: '' })}
+              onClick={() => setMessage({ type: "", text: "" })}
               className="text-gray-400 hover:text-gray-600"
             >
               <X className="w-4 h-4" />
@@ -629,7 +665,9 @@ const ServiceDetailsFirstSection = () => {
 
               {/* Buttons Section */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Call-to-Action Buttons</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Call-to-Action Buttons
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -692,7 +730,9 @@ const ServiceDetailsFirstSection = () => {
 
               {/* Features Section */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Features</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Features
+                </h3>
                 <div className="space-y-4">
                   <div className="flex gap-2">
                     <input
@@ -742,11 +782,15 @@ const ServiceDetailsFirstSection = () => {
 
               {/* Stats Cards */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Statistics Cards</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Statistics Cards
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {/* First Card */}
                   <div className="border border-gray-200 rounded-lg p-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">Card 1</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Card 1
+                    </h4>
                     <div className="space-y-3">
                       <input
                         type="text"
@@ -771,7 +815,9 @@ const ServiceDetailsFirstSection = () => {
 
                   {/* Second Card */}
                   <div className="border border-gray-200 rounded-lg p-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">Card 2</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Card 2
+                    </h4>
                     <div className="space-y-3">
                       <input
                         type="text"
@@ -796,7 +842,9 @@ const ServiceDetailsFirstSection = () => {
 
                   {/* Third Card */}
                   <div className="border border-gray-200 rounded-lg p-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">Card 3</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Card 3
+                    </h4>
                     <div className="space-y-3">
                       <input
                         type="text"
@@ -823,7 +871,9 @@ const ServiceDetailsFirstSection = () => {
 
               {/* Images Section */}
               <div className="md:col-span-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Images</h3>
+                <h3 className="text-sm font-medium text-gray-700 mb-4">
+                  Images
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Web Image */}
                   <div>
@@ -833,12 +883,14 @@ const ServiceDetailsFirstSection = () => {
                     <input
                       type="file"
                       name="web_image"
-                      onChange={(e) => handleImageChange(e, 'web')}
+                      onChange={(e) => handleImageChange(e, "web")}
                       accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                       disabled={saving}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Recommended: 1920x600px. Max: 2MB</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Recommended: 1920x600px. Max: 2MB
+                    </p>
 
                     {webImagePreview && (
                       <div className="mt-3">
@@ -849,12 +901,13 @@ const ServiceDetailsFirstSection = () => {
                             className="max-w-full h-32 object-cover border border-gray-300 rounded"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                              e.target.src =
+                                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                             }}
                           />
                           <button
                             type="button"
-                            onClick={() => removeImage('web')}
+                            onClick={() => removeImage("web")}
                             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                             disabled={saving}
                           >
@@ -873,12 +926,14 @@ const ServiceDetailsFirstSection = () => {
                     <input
                       type="file"
                       name="mobile_image"
-                      onChange={(e) => handleImageChange(e, 'mobile')}
+                      onChange={(e) => handleImageChange(e, "mobile")}
                       accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                       disabled={saving}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Recommended: 768x400px. Max: 2MB</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Recommended: 768x400px. Max: 2MB
+                    </p>
 
                     {mobileImagePreview && (
                       <div className="mt-3">
@@ -889,12 +944,13 @@ const ServiceDetailsFirstSection = () => {
                             className="max-w-full h-32 object-cover border border-gray-300 rounded"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                              e.target.src =
+                                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
                             }}
                           />
                           <button
                             type="button"
-                            onClick={() => removeImage('mobile')}
+                            onClick={() => removeImage("mobile")}
                             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
                             disabled={saving}
                           >
@@ -918,9 +974,13 @@ const ServiceDetailsFirstSection = () => {
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     disabled={saving}
                   />
-                  <span className="text-sm font-medium text-gray-700">Active</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Active
+                  </span>
                 </label>
-                <p className="text-xs text-gray-500 mt-1">When inactive, this section won't be displayed</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  When inactive, this section won't be displayed
+                </p>
               </div>
             </div>
 
@@ -939,7 +999,7 @@ const ServiceDetailsFirstSection = () => {
                 ) : (
                   <>
                     <Save className="w-4 h-4" />
-                    {editingSection ? 'Update Section' : 'Add Section'}
+                    {editingSection ? "Update Section" : "Add Section"}
                   </>
                 )}
               </button>
@@ -979,28 +1039,37 @@ const ServiceDetailsFirstSection = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <Briefcase className="w-5 h-5 text-blue-600" />
-                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-                            section.status === 1
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}>
-                            {section.status === 1 ? 'Active' : 'Inactive'}
+                          <span
+                            className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                              section.status === 1
+                                ? "bg-green-100 text-green-800"
+                                : "bg-red-100 text-red-800"
+                            }`}
+                          >
+                            {section.status === 1 ? "Active" : "Inactive"}
                           </span>
                         </div>
-                        
+
                         {section.batch && (
-                          <p className="text-sm text-blue-600 font-medium">{section.batch}</p>
+                          <p className="text-sm text-blue-600 font-medium">
+                            {section.batch}
+                          </p>
                         )}
-                        
+
                         <h3 className="text-xl font-semibold text-gray-800 mt-1">
                           {section.title}
                           {section.highlighted_title && (
-                            <span className="text-blue-600"> {section.highlighted_title}</span>
+                            <span className="text-blue-600">
+                              {" "}
+                              {section.highlighted_title}
+                            </span>
                           )}
                         </h3>
-                        
-                        <p className="text-gray-600 mt-2">{section.description}</p>
-                        
+
+                        <p className="text-gray-600 mt-2">
+                          {section.description}
+                        </p>
+
                         {/* Features */}
                         {section.feature && section.feature.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-3">
@@ -1014,29 +1083,41 @@ const ServiceDetailsFirstSection = () => {
                             ))}
                           </div>
                         )}
-                        
+
                         {/* Stats Cards */}
                         <div className="grid grid-cols-3 gap-3 mt-4">
                           {section.f_card && section.f_card.number && (
                             <div className="bg-white rounded-lg p-3 text-center border border-blue-100">
-                              <p className="text-lg font-bold text-blue-600">{section.f_card.number}</p>
-                              <p className="text-xs text-gray-500">{section.f_card.title}</p>
+                              <p className="text-lg font-bold text-blue-600">
+                                {section.f_card.number}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {section.f_card.title}
+                              </p>
                             </div>
                           )}
                           {section.s_card && section.s_card.number && (
                             <div className="bg-white rounded-lg p-3 text-center border border-blue-100">
-                              <p className="text-lg font-bold text-blue-600">{section.s_card.number}</p>
-                              <p className="text-xs text-gray-500">{section.s_card.title}</p>
+                              <p className="text-lg font-bold text-blue-600">
+                                {section.s_card.number}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {section.s_card.title}
+                              </p>
                             </div>
                           )}
                           {section.t_card && section.t_card.number && (
                             <div className="bg-white rounded-lg p-3 text-center border border-blue-100">
-                              <p className="text-lg font-bold text-blue-600">{section.t_card.number}</p>
-                              <p className="text-xs text-gray-500">{section.t_card.title}</p>
+                              <p className="text-lg font-bold text-blue-600">
+                                {section.t_card.number}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {section.t_card.title}
+                              </p>
                             </div>
                           )}
                         </div>
-                        
+
                         {/* Buttons */}
                         <div className="flex flex-wrap gap-2 mt-4">
                           {section.button1_name && (
@@ -1050,9 +1131,10 @@ const ServiceDetailsFirstSection = () => {
                             </span>
                           )}
                         </div>
-                        
+
                         <p className="text-xs text-gray-400 mt-3">
-                          Updated: {new Date(section.updated_at).toLocaleDateString()}
+                          Updated:{" "}
+                          {new Date(section.updated_at).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">
