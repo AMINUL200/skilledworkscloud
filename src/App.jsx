@@ -73,6 +73,9 @@ import ManageTaxYear from "./pages/admin/salary_calculator/ManageTaxYear";
 import ManageNationalInsuranceCategory from "./pages/admin/salary_calculator/ManageNationalInsuranceCategory";
 import ManageStudentLoanPlan from "./pages/admin/salary_calculator/ManageStudentLoanPlan";
 import ManagePensionOption from "./pages/admin/salary_calculator/ManagePensionOption";
+import SponsorLicenceStatusCheckPage from "./pages/tools/SponsorLicenceStatusCheckPage";
+import IHSVisaFeeCalculatorPage from "./pages/tools/IHSVisaFeeCalculatorPage";
+import CanITakeAdditionalWorkPage from "./pages/tools/CanITakeAdditionalWorkPage";
 
 const App = () => {
   const ProtectedRoute = () => {
@@ -127,7 +130,12 @@ const App = () => {
           {/* Services page route */}
           <Route path="/services/:slug" element={<ServiceDetailsPage />} />{" "}
           {/* Service details route */}
+
+
+
           <Route path="/tools/:slug" element={<ToolDetailsPage />} />{" "}
+
+
           {/* Tool details route */}
           <Route path="/tool/right-to-work" element={<RightToWorkPage />} />
           <Route
@@ -146,6 +154,24 @@ const App = () => {
             path="/tool/sponsored-job-eligibility"
             element={<SponsoredJobPage />}
           />
+          
+          <Route
+            path="/tool/sponsored-licence-status-check"
+            element={<SponsorLicenceStatusCheckPage />}
+          />
+          <Route
+            path="/tool/ish-visa-fee-calculator"
+            element={<IHSVisaFeeCalculatorPage />}
+          />
+          <Route
+            path="/tool/can-i-take-additional-work"
+            element={<CanITakeAdditionalWorkPage />}
+          />
+
+
+
+
+
           <Route path="/salary-calculator" element={<SalaryTaxCalculate />} />
           <Route
             path="/percentage-calculator"

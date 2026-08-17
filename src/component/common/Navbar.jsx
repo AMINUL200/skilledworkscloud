@@ -96,7 +96,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "sponsor-status",
           label: "Sponsor Licence Status Check",
-          path: "/tools/sponsor-licence-status-check",
+          path: "/tool/sponsored-licence-status-check",
         },
         {
           id: "ilr-eligibility",
@@ -106,7 +106,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "ihs",
           label: "IHS & Visa Fee Calculator",
-          path: "/tools/ihs-visa-fee-calculator",
+          path: "/tool/ish-visa-fee-calculator",
         },
         {
           id: "right-to-work",
@@ -116,7 +116,7 @@ const Navbar = ({ toggleMenu }) => {
         {
           id: "additional-work",
           label: "Can I Take Additional Work?",
-          path: "/tools/can-i-take-additional-work",
+          path: "/tool/can-i-take-additional-work",
         },
         {
           id: "sponsored-job",

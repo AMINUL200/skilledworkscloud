@@ -6,6 +6,7 @@ const ManageServiceCategory = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [sections, setSections] = useState([]);
+  const [sectionOptions, setSectionOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -18,7 +19,7 @@ const ManageServiceCategory = () => {
   const [editingSection, setEditingSection] = useState(null);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [expandedSubcategories, setExpandedSubcategories] = useState({});
-  const [activeTab, setActiveTab] = useState('categories'); // 'categories' or 'sections'
+  const [activeTab, setActiveTab] = useState('categories');
   const [formData, setFormData] = useState({
     name: '',
     order: 0,
@@ -38,10 +39,35 @@ const ManageServiceCategory = () => {
     status: 1
   });
 
+  // Section name options
+  const sectionNameOptions = [
+    'sv_first',
+    'sv_second',
+    'sv_third',
+    'sv_forth',
+    'sv_fifth',
+    'sv_sixth',
+    'sv_seventh',
+    'sv_eighth',
+    'sv_nineth',
+    'sv_tenth',
+    'sv_eleventh',
+    'sv_twelveth'
+  ];
+
   // Fetch all data on component mount
   useEffect(() => {
     fetchAllData();
   }, []);
+
+  // Fetch section options when section_name changes
+  useEffect(() => {
+    if (sectionFormData.section_name) {
+      fetchSectionOptions(sectionFormData.section_name);
+    } else {
+      setSectionOptions([]);
+    }
+  }, [sectionFormData.section_name]);
 
   const fetchAllData = async () => {
     try {
@@ -79,6 +105,27 @@ const ManageServiceCategory = () => {
       });
     } finally {
       setFetching(false);
+    }
+  };
+
+  // Fetch section options based on section name
+  const fetchSectionOptions = async (sectionName) => {
+    try {
+      const response = await api.get(`/admin/service-section-list/${sectionName}`);
+      
+      if (response.data.status && response.data.data) {
+        setSectionOptions(response.data.data);
+      } else {
+        setSectionOptions([]);
+      }
+    } catch (error) {
+      console.error('Error fetching section options:', error);
+      setSectionOptions([]);
+      setMessage({
+        type: 'error',
+        text: 'Failed to fetch section options'
+      });
+      setTimeout(() => setMessage({ type: '', text: '' }), 3000);
     }
   };
 
@@ -272,10 +319,20 @@ const ManageServiceCategory = () => {
   // Section CRUD operations
   const handleSectionChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setSectionFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
-    }));
+    
+    // Reset section_id when section_name changes
+    if (name === 'section_name') {
+      setSectionFormData(prev => ({
+        ...prev,
+        [name]: value,
+        section_id: '' // Reset section_id when section_name changes
+      }));
+    } else {
+      setSectionFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+      }));
+    }
 
     if (message.text) {
       setMessage({ type: '', text: '' });
@@ -291,6 +348,7 @@ const ManageServiceCategory = () => {
       order_by: sections.length,
       status: 1
     });
+    setSectionOptions([]);
     setShowSectionForm(true);
     setShowForm(false);
     setShowSubForm(false);
@@ -306,6 +364,12 @@ const ManageServiceCategory = () => {
       order_by: section.order_by || 0,
       status: section.status !== undefined ? section.status : 1
     });
+    
+    // Fetch section options for the selected section_name
+    if (section.section_name) {
+      fetchSectionOptions(section.section_name);
+    }
+    
     setShowSectionForm(true);
     setShowForm(false);
     setShowSubForm(false);
@@ -549,24 +613,25 @@ const ManageServiceCategory = () => {
       return false;
     }
 
-    if (!sectionFormData.section_name.trim()) {
-      setMessage({ type: 'error', text: 'Section name is required!' });
+    if (!sectionFormData.section_name) {
+      setMessage({ type: 'error', text: 'Please select a section name!' });
       return false;
     }
 
-    if (!sectionFormData.section_id.trim()) {
-      setMessage({ type: 'error', text: 'Section ID is required!' });
+    if (!sectionFormData.section_id) {
+      setMessage({ type: 'error', text: 'Please select a section ID!' });
       return false;
     }
 
     const duplicate = sections.some(section => 
-      section.section_name.toLowerCase() === sectionFormData.section_name.toLowerCase() && 
+      section.section_name === sectionFormData.section_name && 
+      section.section_id === sectionFormData.section_id &&
       section.service_sub_category_id === parseInt(sectionFormData.service_sub_category_id) &&
       section.id !== editingSection?.id
     );
 
     if (duplicate) {
-      setMessage({ type: 'error', text: 'A section with this name already exists in this subcategory!' });
+      setMessage({ type: 'error', text: 'This section already exists in this subcategory!' });
       return false;
     }
 
@@ -1294,31 +1359,48 @@ const ManageServiceCategory = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Section Name *
                     </label>
-                    <input
-                      type="text"
+                    <select
                       name="section_name"
                       value={sectionFormData.section_name}
                       onChange={handleSectionChange}
-                      placeholder="e.g., sv_first"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
                       disabled={saving}
-                    />
+                    >
+                      <option value="">Select a section name</option>
+                      {sectionNameOptions.map(name => (
+                        <option key={name} value={name}>
+                          {name.replace('_', ' ').toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Section ID *
                     </label>
-                    <input
-                      type="text"
+                    <select
                       name="section_id"
                       value={sectionFormData.section_id}
                       onChange={handleSectionChange}
-                      placeholder="e.g., 1"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
-                      disabled={saving}
-                    />
+                      disabled={saving || !sectionFormData.section_name}
+                    >
+                      <option value="">
+                        {sectionFormData.section_name ? 'Select a section ID' : 'Select section name first'}
+                      </option>
+                      {sectionOptions.map(option => (
+                        <option key={option.id} value={option.id}>
+                          {option.batch} - {option.title} {option.highlighted_title}
+                        </option>
+                      ))}
+                    </select>
+                    {sectionFormData.section_name && sectionOptions.length === 0 && (
+                      <p className="text-sm text-yellow-600 mt-1">
+                        No options available for this section name
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1463,7 +1545,7 @@ const ManageServiceCategory = () => {
                               <div className="flex items-center">
                                 <Layers className="w-4 h-4 text-green-500 mr-2" />
                                 <span className="text-sm font-medium text-gray-900">
-                                  {section.section_name}
+                                  {section.section_name.replace('_', ' ').toUpperCase()}
                                 </span>
                               </div>
                             </td>
