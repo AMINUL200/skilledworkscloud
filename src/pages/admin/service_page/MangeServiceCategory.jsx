@@ -94,6 +94,7 @@ const ManageServiceCategory = () => {
       }
 
       if (sectionResponse.data.status && sectionResponse.data.data) {
+        // Sort sections by order_by
         const sortedData = sectionResponse.data.data.sort((a, b) => a.order_by - b.order_by);
         setSections(sortedData);
       }
@@ -132,6 +133,11 @@ const ManageServiceCategory = () => {
   // Get subcategories for a specific category
   const getSubcategoriesForCategory = (categoryId) => {
     return subcategories.filter(sub => sub.service_category_id === categoryId);
+  };
+
+  // Get sections for a specific subcategory
+  const getSectionsForSubcategory = (subcategoryId) => {
+    return sections.filter(section => section.service_sub_category_id === subcategoryId);
   };
 
   // Get category name by ID
@@ -827,8 +833,61 @@ const ManageServiceCategory = () => {
     setMessage({ type: '', text: '' });
   };
 
-  // Render subcategory list for a category
-  const renderSubcategories = (categoryId) => {
+  // Render sections for a subcategory
+  const renderSections = (subcategoryId) => {
+    const subSections = getSectionsForSubcategory(subcategoryId);
+    
+    if (subSections.length === 0) {
+      return (
+        <div className="text-sm text-gray-500 py-2 px-4 italic ml-4">
+          No sections yet
+        </div>
+      );
+    }
+
+    return (
+      <div className="ml-8 mt-2 space-y-2">
+        {subSections.map((section, index) => (
+          <div key={section.id} className="border border-gray-200 rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 transition-colors">
+              <div className="flex items-center gap-3 flex-1">
+                <Layers className="w-4 h-4 text-green-500" />
+                <span className="text-xs text-gray-400 w-8">{section.order_by || index}</span>
+                <span className="text-sm font-medium text-gray-700">
+                  {section.section_name.replace('_', ' ').toUpperCase()}
+                </span>
+                <span className="text-xs text-gray-400">ID: {section.section_id}</span>
+                <span className={`px-2 py-0.5 text-xs rounded-full ${
+                  section.status === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                  {section.status === 1 ? 'Active' : 'Inactive'}
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => handleEditSection(section)}
+                  className="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                  title="Edit"
+                >
+                  <Edit className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleDeleteSection(section.id)}
+                  className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                  title="Delete"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Render subcategory list for a category with sections
+  const renderSubcategoriesWithSections = (categoryId) => {
     const subs = getSubcategoriesForCategory(categoryId);
     
     if (subs.length === 0) {
@@ -843,6 +902,7 @@ const ManageServiceCategory = () => {
       <div className="ml-8 mt-2 space-y-2">
         {subs.map((sub, index) => {
           const isExpanded = expandedSubcategories[sub.id] || false;
+          const subSections = getSectionsForSubcategory(sub.id);
           
           return (
             <div key={sub.id} className="border border-gray-200 rounded-lg overflow-hidden">
@@ -867,31 +927,17 @@ const ManageServiceCategory = () => {
                   }`}>
                     {sub.status === 1 ? 'Active' : 'Inactive'}
                   </span>
+                  <span className="text-xs text-gray-400">
+                    ({subSections.length} sections)
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={() => handleMoveUp(index, 'subcategory', subs)}
-                    disabled={index === 0}
-                    className={`p-1 rounded transition-colors ${
-                      index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:text-purple-600 hover:bg-purple-50'
-                    }`}
-                    title="Move Up"
+                    onClick={() => handleAddSection()}
+                    className="p-1 text-green-600 hover:bg-green-50 rounded transition-colors"
+                    title="Add Section"
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => handleMoveDown(index, 'subcategory', subs)}
-                    disabled={index === subs.length - 1}
-                    className={`p-1 rounded transition-colors ${
-                      index === subs.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:text-purple-600 hover:bg-purple-50'
-                    }`}
-                    title="Move Down"
-                  >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <Plus className="w-3 h-3" />
                   </button>
                   <button
                     onClick={() => handleEditSubCategory(sub)}
@@ -909,6 +955,13 @@ const ManageServiceCategory = () => {
                   </button>
                 </div>
               </div>
+              
+              {/* Sections */}
+              {isExpanded && (
+                <div className="p-4 bg-white border-t border-gray-200">
+                  {renderSections(sub.id)}
+                </div>
+              )}
             </div>
           );
         })}
@@ -980,7 +1033,7 @@ const ManageServiceCategory = () => {
           >
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4" />
-              Sections
+              All Sections
             </div>
           </button>
         </nav>
@@ -1009,7 +1062,7 @@ const ManageServiceCategory = () => {
         {/* Categories Tab */}
         {activeTab === 'categories' && (
           <>
-            {!showForm && !showSubForm && (
+            {!showForm && !showSubForm && !showSectionForm && (
               <div className="flex gap-2 mb-4">
                 <button
                   onClick={handleAddCategory}
@@ -1024,6 +1077,13 @@ const ManageServiceCategory = () => {
                 >
                   <Plus className="w-4 h-4" />
                   Add Subcategory
+                </button>
+                <button
+                  onClick={handleAddSection}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center gap-2 transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add Section
                 </button>
               </div>
             )}
@@ -1204,8 +1264,138 @@ const ManageServiceCategory = () => {
               </form>
             )}
 
-            {/* Categories List */}
-            {!showForm && !showSubForm && (
+            {/* Section Form */}
+            {showSectionForm && (
+              <form onSubmit={handleSectionSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Parent Subcategory *
+                    </label>
+                    <select
+                      name="service_sub_category_id"
+                      value={sectionFormData.service_sub_category_id}
+                      onChange={handleSectionChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      required
+                      disabled={saving}
+                    >
+                      <option value="">Select a subcategory</option>
+                      {subcategories.map(sub => (
+                        <option key={sub.id} value={sub.id}>
+                          {sub.name} ({getCategoryName(sub.service_category_id)})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Section Name *
+                    </label>
+                    <select
+                      name="section_name"
+                      value={sectionFormData.section_name}
+                      onChange={handleSectionChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      required
+                      disabled={saving}
+                    >
+                      <option value="">Select a section name</option>
+                      {sectionNameOptions.map(name => (
+                        <option key={name} value={name}>
+                          {name.replace('_', ' ').toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Section ID *
+                    </label>
+                    <select
+                      name="section_id"
+                      value={sectionFormData.section_id}
+                      onChange={handleSectionChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      required
+                      disabled={saving || !sectionFormData.section_name}
+                    >
+                      <option value="">
+                        {sectionFormData.section_name ? 'Select a section ID' : 'Select section name first'}
+                      </option>
+                      {sectionOptions.map(option => (
+                        <option key={option.id} value={option.id}>
+                          {option?.identifier} - {option.batch} - {option.title} {option.highlighted_title}
+                        </option>
+                      ))}
+                    </select>
+                    {sectionFormData.section_name && sectionOptions.length === 0 && (
+                      <p className="text-sm text-yellow-600 mt-1">
+                        No options available for this section name
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Order
+                    </label>
+                    <input
+                      type="number"
+                      name="order_by"
+                      value={sectionFormData.order_by}
+                      onChange={handleSectionChange}
+                      placeholder="0"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      disabled={saving}
+                      min="0"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="flex items-center space-x-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="status"
+                        checked={sectionFormData.status === 1}
+                        onChange={handleSectionChange}
+                        className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                        disabled={saving}
+                      />
+                      <span className="text-sm font-medium text-gray-700">Active</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-200">
+                  <button
+                    type="submit"
+                    disabled={saving}
+                    className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+                  >
+                    {saving ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        {editingSection ? 'Update Section' : 'Add Section'}
+                      </>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    disabled={saving}
+                    className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Categories List with Subcategories and Sections */}
+            {!showForm && !showSubForm && !showSectionForm && (
               <>
                 {categories.length === 0 ? (
                   <div className="text-center py-12">
@@ -1300,10 +1490,10 @@ const ManageServiceCategory = () => {
                             </div>
                           </div>
                           
-                          {/* Subcategories */}
+                          {/* Subcategories with Sections */}
                           {isExpanded && (
                             <div className="p-4 bg-white border-t border-gray-200">
-                              {renderSubcategories(category.id)}
+                              {renderSubcategoriesWithSections(category.id)}
                             </div>
                           )}
                         </div>
@@ -1316,7 +1506,7 @@ const ManageServiceCategory = () => {
           </>
         )}
 
-        {/* Sections Tab */}
+        {/* All Sections Tab */}
         {activeTab === 'sections' && (
           <>
             {!showSectionForm && (
@@ -1392,7 +1582,7 @@ const ManageServiceCategory = () => {
                       </option>
                       {sectionOptions.map(option => (
                         <option key={option.id} value={option.id}>
-                          {option.batch} - {option.title} {option.highlighted_title}
+                          {option?.identifier} - {option.batch} - {option.title} {option.highlighted_title}
                         </option>
                       ))}
                     </select>
@@ -1461,7 +1651,7 @@ const ManageServiceCategory = () => {
               </form>
             )}
 
-            {/* Sections List */}
+            {/* All Sections List with Grouping */}
             {!showSectionForm && (
               <>
                 {sections.length === 0 ? (
@@ -1476,123 +1666,67 @@ const ManageServiceCategory = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Order
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Section Name
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Section ID
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Subcategory
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Category
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {sections.map((section, index) => (
-                          <tr key={section.id} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium">{section.order_by || index}</span>
-                                <div className="flex flex-col">
-                                  <button
-                                    onClick={() => handleSectionMoveUp(index)}
-                                    disabled={index === 0}
-                                    className={`p-1 rounded transition-colors ${
-                                      index === 0
-                                        ? 'text-gray-300 cursor-not-allowed'
-                                        : 'text-gray-500 hover:text-green-600 hover:bg-green-50'
-                                    }`}
-                                    title="Move Up"
-                                  >
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                                    </svg>
-                                  </button>
-                                  <button
-                                    onClick={() => handleSectionMoveDown(index)}
-                                    disabled={index === sections.length - 1}
-                                    className={`p-1 rounded transition-colors ${
-                                      index === sections.length - 1
-                                        ? 'text-gray-300 cursor-not-allowed'
-                                        : 'text-gray-500 hover:text-green-600 hover:bg-green-50'
-                                    }`}
-                                    title="Move Down"
-                                  >
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                <Layers className="w-4 h-4 text-green-500 mr-2" />
-                                <span className="text-sm font-medium text-gray-900">
-                                  {section.section_name.replace('_', ' ').toUpperCase()}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {section.section_id}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {getSubcategoryName(section.service_sub_category_id)}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {getCategoryName(
-                                subcategories.find(
-                                  sub => sub.id === section.service_sub_category_id
-                                )?.service_category_id
-                              )}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                section.status === 1
-                                  ? 'bg-green-100 text-green-800'
-                                  : 'bg-red-100 text-red-800'
-                              }`}>
-                                {section.status === 1 ? 'Active' : 'Inactive'}
+                  <div className="space-y-6">
+                    {/* Group sections by subcategory */}
+                    {subcategories.map(subcategory => {
+                      const subSections = sections.filter(s => s.service_sub_category_id === subcategory.id);
+                      if (subSections.length === 0) return null;
+                      
+                      return (
+                        <div key={subcategory.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                          <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                            <div className="flex items-center gap-3">
+                              <FolderTree className="w-4 h-4 text-purple-500" />
+                              <span className="font-medium text-gray-900">{subcategory.name}</span>
+                              <span className="text-xs text-gray-400">({subcategory.slug})</span>
+                              <span className="text-xs text-gray-400 ml-2">
+                                Category: {getCategoryName(subcategory.service_category_id)}
                               </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <div className="flex items-center gap-2">
-                                <button
-                                  onClick={() => handleEditSection(section)}
-                                  className="text-green-600 hover:text-green-900 p-1 hover:bg-green-50 rounded transition-colors"
-                                  title="Edit"
-                                >
-                                  <Edit className="w-4 h-4" />
-                                </button>
-                                <button
-                                  onClick={() => handleDeleteSection(section.id)}
-                                  className="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded transition-colors"
-                                  title="Delete"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                              <span className="text-xs text-gray-500 ml-2">
+                                ({subSections.length} sections)
+                              </span>
+                            </div>
+                          </div>
+                          <div className="p-4 bg-white">
+                            <div className="space-y-2">
+                              {subSections.map((section, index) => (
+                                <div key={section.id} className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
+                                  <div className="flex items-center gap-3 flex-1">
+                                    <span className="text-xs text-gray-400 w-8">{section.order_by || index}</span>
+                                    <Layers className="w-4 h-4 text-green-500" />
+                                    <span className="text-sm font-medium text-gray-700">
+                                      {section.section_name.replace('_', ' ').toUpperCase()}
+                                    </span>
+                                    <span className="text-xs text-gray-400">ID: {section.section_id}</span>
+                                    <span className={`px-2 py-0.5 text-xs rounded-full ${
+                                      section.status === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    }`}>
+                                      {section.status === 1 ? 'Active' : 'Inactive'}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <button
+                                      onClick={() => handleEditSection(section)}
+                                      className="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                      title="Edit"
+                                    >
+                                      <Edit className="w-3 h-3" />
+                                    </button>
+                                    <button
+                                      onClick={() => handleDeleteSection(section.id)}
+                                      className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                      title="Delete"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </>

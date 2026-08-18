@@ -19,6 +19,7 @@ const ServiceDetailsTwelvethSection = () => {
     desc_meta: '',
     note: '',
     cards: [],
+    identifier: '', // Added identifier field
     status: 1
   });
 
@@ -44,6 +45,7 @@ const ServiceDetailsTwelvethSection = () => {
 
       if (response.data.status && response.data.data) {
         setSections(response.data.data);
+        // console.log("Fetched sections:", response.data.data);
       }
     } catch (error) {
       console.error('Error fetching sections:', error);
@@ -214,6 +216,7 @@ const ServiceDetailsTwelvethSection = () => {
       desc_meta: '',
       note: '',
       cards: [],
+      identifier: '', // Reset identifier
       status: 1
     });
     setCardFormData({
@@ -237,6 +240,7 @@ const ServiceDetailsTwelvethSection = () => {
       desc_meta: section.desc_meta || '',
       note: section.note || '',
       cards: section.cards || [],
+      identifier: section.identifier || '', // Load identifier from section
       status: section.status !== undefined ? section.status : 1
     });
     setCardFormData({
@@ -290,6 +294,11 @@ const ServiceDetailsTwelvethSection = () => {
 
     if (!formData.note) {
       setMessage({ type: 'error', text: 'Note is required!' });
+      return false;
+    }
+
+    if (!formData.identifier) {
+      setMessage({ type: 'error', text: 'Identifier is required!' });
       return false;
     }
 
@@ -468,6 +477,26 @@ const ServiceDetailsTwelvethSection = () => {
         {showForm ? (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Identifier - New Field */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Identifier *
+                </label>
+                <input
+                  type="text"
+                  name="identifier"
+                  value={formData.identifier}
+                  onChange={handleChange}
+                  placeholder="e.g., service_twelfth_section"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                  required
+                  disabled={saving}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Unique identifier for this section (e.g., service_twelfth_section)
+                </p>
+              </div>
+
               {/* Batch */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -789,6 +818,11 @@ const ServiceDetailsTwelvethSection = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <FileText className="w-5 h-5 text-sky-600" />
+                          {section.identifier && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 rounded-full">
+                              {section.identifier}
+                            </span>
+                          )}
                           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
                             section.status === 1
                               ? 'bg-green-100 text-green-800'

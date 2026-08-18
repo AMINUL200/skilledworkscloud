@@ -18,6 +18,7 @@ const ServiceDetailsEleventhSection = () => {
     title_meta: '',
     desc_meta: '',
     cards: [],
+    identifier: '', // Added identifier field
     status: 1
   });
 
@@ -43,6 +44,7 @@ const ServiceDetailsEleventhSection = () => {
 
       if (response.data.status && response.data.data) {
         setSections(response.data.data);
+        // console.log("Fetched sections:", response.data.data);
       }
     } catch (error) {
       console.error('Error fetching sections:', error);
@@ -212,6 +214,7 @@ const ServiceDetailsEleventhSection = () => {
       title_meta: '',
       desc_meta: '',
       cards: [],
+      identifier: '', // Reset identifier
       status: 1
     });
     setCardFormData({
@@ -234,6 +237,7 @@ const ServiceDetailsEleventhSection = () => {
       title_meta: section.title_meta || '',
       desc_meta: section.desc_meta || '',
       cards: section.cards || [],
+      identifier: section.identifier || '', // Load identifier from section
       status: section.status !== undefined ? section.status : 1
     });
     setCardFormData({
@@ -282,6 +286,11 @@ const ServiceDetailsEleventhSection = () => {
 
     if (!formData.description) {
       setMessage({ type: 'error', text: 'Description is required!' });
+      return false;
+    }
+
+    if (!formData.identifier) {
+      setMessage({ type: 'error', text: 'Identifier is required!' });
       return false;
     }
 
@@ -460,6 +469,26 @@ const ServiceDetailsEleventhSection = () => {
         {showForm ? (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Identifier - New Field */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Identifier *
+                </label>
+                <input
+                  type="text"
+                  name="identifier"
+                  value={formData.identifier}
+                  onChange={handleChange}
+                  placeholder="e.g., service_eleventh_section"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                  disabled={saving}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Unique identifier for this section (e.g., service_eleventh_section)
+                </p>
+              </div>
+
               {/* Batch */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -764,6 +793,11 @@ const ServiceDetailsEleventhSection = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <Heart className="w-5 h-5 text-pink-600" />
+                          {section.identifier && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 rounded-full">
+                              {section.identifier}
+                            </span>
+                          )}
                           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
                             section.status === 1
                               ? 'bg-green-100 text-green-800'

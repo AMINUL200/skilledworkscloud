@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../../utils/app';
-import { Save, Plus, Edit, Trash2, X, Layers, Users, Lightbulb, Shield, TrendingUp, MessageCircle } from 'lucide-react';
+import { Save, Plus, Edit, Trash2, X, Layers, Users, Lightbulb, Shield, TrendingUp, MessageCircle, Image } from 'lucide-react';
 
 const ServiceDetailsThirdSection = () => {
   const [sections, setSections] = useState([]);
@@ -10,6 +10,11 @@ const ServiceDetailsThirdSection = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [showForm, setShowForm] = useState(false);
   const [editingSection, setEditingSection] = useState(null);
+  const [webImage, setWebImage] = useState(null);
+  const [mobileImage, setMobileImage] = useState(null);
+  const [webImagePreview, setWebImagePreview] = useState(null);
+  const [mobileImagePreview, setMobileImagePreview] = useState(null);
+  
   const [formData, setFormData] = useState({
     batch: '',
     title: '',
@@ -25,6 +30,8 @@ const ServiceDetailsThirdSection = () => {
     short_desc: '',
     button_name: '',
     button_url: '',
+    identifier: '',
+    image_alt: '', // Added image_alt field
     status: 1
   });
 
@@ -32,6 +39,18 @@ const ServiceDetailsThirdSection = () => {
   useEffect(() => {
     fetchSections();
   }, []);
+
+  // Cleanup preview URLs
+  useEffect(() => {
+    return () => {
+      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(webImagePreview);
+      }
+      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(mobileImagePreview);
+      }
+    };
+  }, [webImagePreview, mobileImagePreview]);
 
   const fetchSections = async () => {
     try {
@@ -42,6 +61,7 @@ const ServiceDetailsThirdSection = () => {
 
       if (response.data.status && response.data.data) {
         setSections(response.data.data);
+        console.log('Fetched sections:', response.data.data);
       }
     } catch (error) {
       console.error('Error fetching sections:', error);
@@ -66,6 +86,69 @@ const ServiceDetailsThirdSection = () => {
     }
   };
 
+  const handleImageChange = (e, type) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const validTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/jpg',
+        'image/webp',
+        'image/svg+xml'
+      ];
+      if (!validTypes.includes(file.type)) {
+        setMessage({
+          type: 'error',
+          text: 'Please upload a valid image file (JPEG, PNG, WEBP, or SVG)'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        setMessage({
+          type: 'error',
+          text: 'Image size should be less than 2MB'
+        });
+        e.target.value = '';
+        return;
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+
+      if (type === 'web') {
+        setWebImage(file);
+        setWebImagePreview(previewUrl);
+      } else {
+        setMobileImage(file);
+        setMobileImagePreview(previewUrl);
+      }
+
+      setMessage({ type: '', text: '' });
+    }
+  };
+
+  const removeImage = (type) => {
+    if (type === 'web') {
+      if (webImagePreview && webImagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(webImagePreview);
+      }
+      setWebImage(null);
+      setWebImagePreview(null);
+      const input = document.querySelector('input[name="web_image"]');
+      if (input) input.value = '';
+    } else {
+      if (mobileImagePreview && mobileImagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(mobileImagePreview);
+      }
+      setMobileImage(null);
+      setMobileImagePreview(null);
+      const input = document.querySelector('input[name="mobile_image"]');
+      if (input) input.value = '';
+    }
+  };
+
   const handleAddNew = () => {
     setEditingSection(null);
     setFormData({
@@ -83,8 +166,14 @@ const ServiceDetailsThirdSection = () => {
       short_desc: '',
       button_name: '',
       button_url: '',
+      identifier: '',
+      image_alt: '',
       status: 1
     });
+    setWebImage(null);
+    setMobileImage(null);
+    setWebImagePreview(null);
+    setMobileImagePreview(null);
     setShowForm(true);
     setMessage({ type: '', text: '' });
   };
@@ -106,8 +195,25 @@ const ServiceDetailsThirdSection = () => {
       short_desc: section.short_desc || '',
       button_name: section.button_name || '',
       button_url: section.button_url || '',
+      identifier: section.identifier || '',
+      image_alt: section.image_alt || '',
       status: section.status !== undefined ? section.status : 1
     });
+
+    // Set image previews
+    if (section.web_image) {
+      const url = section.web_image.startsWith('http')
+        ? section.web_image
+        : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.web_image}`;
+      setWebImagePreview(url);
+    }
+    if (section.mobile_image) {
+      const url = section.mobile_image.startsWith('http')
+        ? section.mobile_image
+        : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.mobile_image}`;
+      setMobileImagePreview(url);
+    }
+
     setShowForm(true);
     setMessage({ type: '', text: '' });
   };
@@ -201,6 +307,11 @@ const ServiceDetailsThirdSection = () => {
       return false;
     }
 
+    if (!formData.identifier) {
+      setMessage({ type: 'error', text: 'Identifier is required!' });
+      return false;
+    }
+
     return true;
   };
 
@@ -223,6 +334,10 @@ const ServiceDetailsThirdSection = () => {
           submitData.append(key, formData[key]);
         }
       });
+
+      // Append images if exist
+      if (webImage) submitData.append('web_image', webImage);
+      if (mobileImage) submitData.append('mobile_image', mobileImage);
 
       let response;
       if (editingSection) {
@@ -285,6 +400,10 @@ const ServiceDetailsThirdSection = () => {
   const handleCancel = () => {
     setShowForm(false);
     setEditingSection(null);
+    setWebImage(null);
+    setMobileImage(null);
+    setWebImagePreview(null);
+    setMobileImagePreview(null);
     setMessage({ type: '', text: '' });
   };
 
@@ -358,6 +477,42 @@ const ServiceDetailsThirdSection = () => {
         {showForm ? (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Identifier */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Identifier *
+                </label>
+                <input
+                  type="text"
+                  name="identifier"
+                  value={formData.identifier}
+                  onChange={handleChange}
+                  placeholder="e.g., service_third_section"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                  disabled={saving}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Unique identifier for this section (e.g., service_third_section)
+                </p>
+              </div>
+
+              {/* Image Alt */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Image Alt Text
+                </label>
+                <input
+                  type="text"
+                  name="image_alt"
+                  value={formData.image_alt}
+                  onChange={handleChange}
+                  placeholder="Alt text for images"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={saving}
+                />
+              </div>
+
               {/* Batch */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -551,6 +706,96 @@ const ServiceDetailsThirdSection = () => {
               </div>
             </div>
 
+            {/* Images Section */}
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-sm font-medium text-gray-700 mb-4">Images</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Web Image */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Web Image
+                  </label>
+                  <input
+                    type="file"
+                    name="web_image"
+                    onChange={(e) => handleImageChange(e, 'web')}
+                    accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    disabled={saving}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Recommended: 1920x600px. Max: 2MB
+                  </p>
+
+                  {webImagePreview && (
+                    <div className="mt-3">
+                      <div className="relative inline-block">
+                        <img
+                          src={webImagePreview}
+                          alt="Web Image Preview"
+                          className="max-w-full h-32 object-cover border border-gray-300 rounded"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeImage('web')}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
+                          disabled={saving}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile Image */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Mobile Image
+                  </label>
+                  <input
+                    type="file"
+                    name="mobile_image"
+                    onChange={(e) => handleImageChange(e, 'mobile')}
+                    accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    disabled={saving}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Recommended: 768x400px. Max: 2MB
+                  </p>
+
+                  {mobileImagePreview && (
+                    <div className="mt-3">
+                      <div className="relative inline-block">
+                        <img
+                          src={mobileImagePreview}
+                          alt="Mobile Image Preview"
+                          className="max-w-full h-32 object-cover border border-gray-300 rounded"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="200" y="100" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeImage('mobile')}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
+                          disabled={saving}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
             {/* Status */}
             <div>
               <label className="flex items-center space-x-3 cursor-pointer">
@@ -622,6 +867,11 @@ const ServiceDetailsThirdSection = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <MessageCircle className="w-5 h-5 text-blue-600" />
+                          {section.identifier && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 rounded-full">
+                              {section.identifier}
+                            </span>
+                          )}
                           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
                             section.status === 1
                               ? 'bg-green-100 text-green-800'
@@ -667,6 +917,40 @@ const ServiceDetailsThirdSection = () => {
                             )
                           ))}
                         </div>
+                        
+                        {/* Images */}
+                        {(section.web_image || section.mobile_image) && (
+                          <div className="flex gap-2 mt-4">
+                            {section.web_image && (
+                              <div className="relative">
+                                <img
+                                  src={section.web_image.startsWith('http') ? section.web_image : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.web_image}`}
+                                  alt={section.image_alt || 'Web Image'}
+                                  className="w-24 h-16 object-cover rounded border border-gray-200"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="12" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                                  }}
+                                />
+                                <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center py-0.5">Web</span>
+                              </div>
+                            )}
+                            {section.mobile_image && (
+                              <div className="relative">
+                                <img
+                                  src={section.mobile_image.startsWith('http') ? section.mobile_image : `${import.meta.env.VITE_STORAGE_BASE_URL || ''}${section.mobile_image}`}
+                                  alt={section.image_alt || 'Mobile Image'}
+                                  className="w-24 h-16 object-cover rounded border border-gray-200"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="12" fill="%23999" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+                                  }}
+                                />
+                                <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center py-0.5">Mobile</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
                         
                         {/* CTA Section */}
                         <div className="mt-4 p-4 bg-white rounded-lg border border-blue-200">

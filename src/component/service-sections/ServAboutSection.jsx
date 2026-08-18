@@ -4,25 +4,68 @@ import {
   Award,
   ShieldCheck,
   Rocket,
+  Users,
+  Lightbulb,
+  TrendingUp,
+  MessageCircle,
 } from "lucide-react";
 
-const ServAboutSection = () => {
+const ServAboutSection = ({ data }) => {
+  console.log("ServAboutSection data:", data);
+
+  // Extract data with fallbacks
+  const {
+    batch = "ABOUT OUR SERVICES",
+    title = "We Build Modern Solutions",
+    highlighted_title = "For Growing Businesses",
+    description = "Our mission is to help businesses accelerate growth through innovative digital solutions, expert consulting, and long-term strategic partnerships. We focus on delivering measurable results while maintaining the highest standards of quality and customer satisfaction.",
+    card1_title = "Experienced Team",
+    card2_title = "Innovative Solutions",
+    card3_title = "Trusted Support",
+    card4_title = "Proven Results",
+    title2 = "Ready to Transform Your Business?",
+    short_desc = "Let our experts help you build scalable, innovative, and future-ready solutions.",
+    button_name = "Talk To Our Experts",
+    button_url = "/contact-us",
+    web_image = null,
+    mobile_image = null,
+    image_alt = null,
+  } = data || {};
+
+  // Get storage URL from env
+  const storageUrl = import.meta.env.VITE_STORAGE_BASE_URL || '';
+
+  // Determine which image to use (web_image priority, then fallback)
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+    if (imagePath.startsWith('/storage')) return `${storageUrl}${imagePath}`;
+    return `${storageUrl}${imagePath}`;
+  };
+
+  const heroImage = getImageUrl(web_image) || 
+                   getImageUrl(mobile_image) || 
+                   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200";
+
+  const fallbackImage = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200";
+
+  // Feature cards data with icons
   const features = [
     {
       icon: <Award className="w-6 h-6 text-white" />,
-      title: "Experienced Team",
+      title: card1_title,
     },
     {
       icon: <Rocket className="w-6 h-6 text-white" />,
-      title: "Innovative Solutions",
+      title: card2_title,
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-white" />,
-      title: "Trusted Support",
+      title: card3_title,
     },
     {
       icon: <CheckCircle2 className="w-6 h-6 text-white" />,
-      title: "Proven Results",
+      title: card4_title,
     },
   ];
 
@@ -47,58 +90,104 @@ const ServAboutSection = () => {
               "
             >
               <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
-                alt="About Service"
+                src={heroImage}
+                alt={image_alt || data?.title || "About Service"}
                 className="
                   w-full
                   h-[550px]
                   object-cover
                   rounded-[24px]
                 "
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = fallbackImage;
+                }}
               />
             </div>
 
-            {/* Floating Card */}
-            <div
-              className="
-                absolute
-                -bottom-8
-                right-8
-                bg-white
-                p-6
-                rounded-3xl
-                shadow-card
-                border border-border
-              "
-            >
-              <h4 className="text-3xl font-black text-primary">
-                10+
-              </h4>
+            {/* Mobile Image Badge - Show if mobile image exists */}
+            {mobile_image && (
+              <div
+                className="
+                  absolute
+                  -bottom-8
+                  right-8
+                  bg-white
+                  p-4
+                  rounded-3xl
+                  shadow-card
+                  border border-border
+                  flex
+                  items-center
+                  gap-3
+                "
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-200">
+                  <img
+                    src={getImageUrl(mobile_image)}
+                    alt="Mobile Preview"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-primary">
+                    Mobile
+                  </h4>
+                  <p className="text-xs text-text-light">
+                    Optimized View
+                  </p>
+                </div>
+              </div>
+            )}
 
-              <p className="text-text-light font-medium">
-                Years Industry Experience
-              </p>
-            </div>
+            {/* If no mobile image, show static card */}
+            {!mobile_image && (
+              <div
+                className="
+                  absolute
+                  -bottom-8
+                  right-8
+                  bg-white
+                  p-6
+                  rounded-3xl
+                  shadow-card
+                  border border-border
+                "
+              >
+                <h4 className="text-3xl font-black text-primary">
+                  10+
+                </h4>
+                <p className="text-text-light font-medium">
+                  Years Industry Experience
+                </p>
+              </div>
+            )}
           </div>
 
           {/* RIGHT CONTENT */}
           <div>
             {/* Small Label */}
-            <div
-              className="
-                inline-flex
-                items-center
-                px-5 py-2
-                rounded-full
-                bg-primary-light
-                text-white
-                font-semibold
-                text-sm
-                mb-6
-              "
-            >
-              ABOUT OUR SERVICES
-            </div>
+            {batch && (
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  px-5 py-2
+                  rounded-full
+                  bg-primary-light
+                  text-white
+                  font-semibold
+                  text-sm
+                  mb-6
+                "
+              >
+                {batch}
+              </div>
+            )}
 
             {/* Heading */}
             <h2
@@ -110,41 +199,45 @@ const ServAboutSection = () => {
                 leading-tight
               "
             >
-              We Build Modern Solutions
-              <span className="block text-primary">
-                For Growing Businesses
-              </span>
+              {title}
+              {highlighted_title && (
+                <span className="block text-primary">
+                  {highlighted_title}
+                </span>
+              )}
             </h2>
 
             {/* Description */}
-            <p
-              className="
-                mt-8
-                text-lg
-                leading-relaxed
-                text-text-light
-              "
-            >
-              Our mission is to help businesses accelerate
-              growth through innovative digital solutions,
-              expert consulting, and long-term strategic
-              partnerships. We focus on delivering measurable
-              results while maintaining the highest standards
-              of quality and customer satisfaction.
-            </p>
+            {description && (
+              <>
+                <p
+                  className="
+                    mt-8
+                    text-lg
+                    leading-relaxed
+                    text-text-light
+                  "
+                >
+                  {description}
+                </p>
 
-            <p
-              className="
-                mt-5
-                text-lg
-                leading-relaxed
-                text-text-light
-              "
-            >
-              From startups to enterprise organizations,
-              we provide scalable services tailored to your
-              unique business requirements and future goals.
-            </p>
+                {/* Second paragraph - if description is long, it might be split */}
+                {description.length > 100 && (
+                  <p
+                    className="
+                      mt-5
+                      text-lg
+                      leading-relaxed
+                      text-text-light
+                    "
+                  >
+                    From startups to enterprise organizations,
+                    we provide scalable services tailored to your
+                    unique business requirements and future goals.
+                  </p>
+                )}
+              </>
+            )}
 
             {/* Feature Grid */}
             <div className="grid sm:grid-cols-2 gap-5 mt-10">
@@ -186,30 +279,40 @@ const ServAboutSection = () => {
             </div>
 
             {/* Bottom CTA */}
-            <div
-              className="
-                mt-10
-                p-6
-                rounded-3xl
-                bg-gradient-to-r
-                from-primary-light
-                to-white
-                border border-primary/10
-              "
-            >
-              <h4 className="text-xl font-bold text-text">
-                Ready to Transform Your Business?
-              </h4>
+            {(title2 || short_desc || button_name) && (
+              <div
+                className="
+                  mt-10
+                  p-6
+                  rounded-3xl
+                  bg-gradient-to-r
+                  from-primary-light
+                  to-primary
+                  border border-primary/10
+                "
+              >
+                {title2 && (
+                  <h4 className="text-xl font-bold text-white">
+                    {title2}
+                  </h4>
+                )}
 
-              <p className="mt-2 text-text-light">
-                Let our experts help you build scalable,
-                innovative, and future-ready solutions.
-              </p>
+                {short_desc && (
+                  <p className="mt-2 text-white">
+                    {short_desc}
+                  </p>
+                )}
 
-              <button className="btn btn-primary mt-5">
-                Talk To Our Experts
-              </button>
-            </div>
+                {button_name && button_url && (
+                  <a
+                    href={button_url}
+                    className="inline-block btn btn-primary mt-5"
+                  >
+                    {button_name}
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

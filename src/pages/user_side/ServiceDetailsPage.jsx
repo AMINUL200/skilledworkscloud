@@ -22,6 +22,8 @@ import { services } from "../../utils/services";
 import PageLoader from "../../component/common/PageLoader";
 import ServWhyChooseUsSection from "../../component/service-sections/ServWhyChooseUsSection";
 import ServRequiredDocumentsSection from "../../component/service-sections/ServRequiredDocumentsSection";
+import { api } from "../../utils/app";
+import ServCommingSoon from "../../component/service-sections/ServCommingSoon";
 
 const sectionMapper = {
   hero: ServHeroSection,
@@ -48,38 +50,56 @@ const sectionMapper = {
 
 const ServiceDetailsPage = () => {
   const { slug } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [serviceData, setServiceData] = useState(null);
 
-  const service = services.find((item) => item.slug === slug);
 
-  
-  const [loading, setLoading] = useState(true);
+  const fetchServiceData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/service/${slug}`);
+
+      if (response.data?.status) {
+        setServiceData(response.data.data);
+        console.log("Fetched service data:", response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+ 
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Adjust the duration as needed
-    return () => clearTimeout(timer);
-  } , []);
+    fetchServiceData();
+  }, [slug]);
 
   if (loading) {
     return <PageLoader />;
   }
 
-  if (!service) {
-    return <div>Service Not Found</div>;
+  if(serviceData?.sections?.length === 0 ) {
+    return <ServCommingSoon sectionName={slug} />;
   }
+
+
   return (
     <div>
-      {service.sections
-        .sort((a, b) => a.order - b.order)
-        .map((section) => {
-          const SectionComponent = sectionMapper[section.type];
+      {serviceData?.sections?.map((section, index) => {
+        const SectionComponent = sectionMapper[section.section_key];
+        console.log("Section Available: ", SectionComponent)
+        if (!SectionComponent) return <ServCommingSoon />;
 
-          if (!SectionComponent) return null;
-
-          return <SectionComponent key={section.type} service={service} />;
-        })}
+        return (
+          <SectionComponent
+            key={index}
+            data={section.data}
+            service={serviceData}
+          />
+        );
+      })}
     </div>
   );
 };
